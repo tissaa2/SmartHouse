@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using SmartHouse.Models;
 
 namespace SmartHouse.Services
 {
@@ -20,8 +21,6 @@ namespace SmartHouse.Services
 
         protected UdpClient socket = null;
 
-        [method: CompilerGenerated]
-        [DebuggerBrowsable, CompilerGenerated]
         public event UDPConnection.OnReceiveDataDelegate OnReceiveData;
 
         protected virtual void ProcessData(IAsyncResult result, IPEndPoint remoteAddress, byte[] data)
@@ -31,7 +30,7 @@ namespace SmartHouse.Services
 
         private void OnUdpData(IAsyncResult result)
         {
-            UdpClient udpClient = result.get_AsyncState() as UdpClient;
+            UdpClient udpClient = result.AsyncState as UdpClient;
             IPEndPoint remoteAddress = new IPEndPoint(0L, 0);
             byte[] array = udpClient.EndReceive(result, ref remoteAddress);
             this.ProcessData(result, remoteAddress, array);
@@ -63,7 +62,7 @@ namespace SmartHouse.Services
 
         public virtual void Send(string message, IPEndPoint remoteAddress)
         {
-            this.Send(Encoding.get_UTF8().GetBytes(message), remoteAddress);
+            this.Send(Encoding.UTF8.GetBytes(message), remoteAddress);
         }
 
         public virtual void Send(byte[] data, IPEndPoint remoteAddress)

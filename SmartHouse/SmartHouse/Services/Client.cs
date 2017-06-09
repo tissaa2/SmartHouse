@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Threading;
+using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Services
 {
@@ -91,7 +92,7 @@ namespace SmartHouse.Services
                 {
                     commandResponsePacket
                 });
-                Client.CurrentServer.RemoteAddress.set_Port(61576 + (int)portFromMask);
+                Client.CurrentServer.RemoteAddress.Port = 61576 + (int)portFromMask;
                 this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
                 this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.InitCANTranslationRequest, "init CAN");
                 Thread.Sleep(1000);

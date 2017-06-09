@@ -17,7 +17,8 @@ namespace SmartHouse
 
 		public static void SetMainPage()
 		{
-            Current.MainPage = new TabbedPage
+            Current.MainPage = new MainPage();
+            /* Current.MainPage = new TabbedPage
             {
                 Children =
                 {
@@ -32,7 +33,7 @@ namespace SmartHouse
                         Icon = Device.OnPlatform<string>("tab_about.png",null,null)
                     },
                 }
-            };
+            }; */ 
         }
-	}
+    }
 }

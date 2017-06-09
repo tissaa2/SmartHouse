@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartHouse;
+using SmartHouse.Views;
 
 namespace SmartHouse.Services
 {
@@ -9,7 +9,7 @@ namespace SmartHouse.Services
     {
         public static void Write(string text)
         {
-            MainPage.Instance.AddToLog(new LogEntry(DateTime.get_Now().ToString("dd.MM.yyyy hh:mm:ss"), text));
+            MainPage.Instance.AddToLog(new LogEntry(DateTime.Now.ToString("dd.MM.yyyy hh:mm:ss"), text));
         }
 
         public static void Write(string template, params object[] items)
@@ -21,9 +21,9 @@ namespace SmartHouse.Services
         {
             Log.Write("{0} {1} {2}", new object[]
             {
-                ex.get_Message(),
-                ex.get_StackTrace(),
-                ex.get_Source()
+                ex.Message,
+                ex.StackTrace,
+                ex.Source
             });
         }
     }
