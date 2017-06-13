@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             x:Class="SmartHouse.Views.DebugPage">
+    <StackLayout Orientation="Vertical">
+        <Label Text="Порт" HorizontalOptions="Fill"/>
+        <Entry x:Name="PortEntry" HorizontalOptions="Fill" Text="61576"/>
+        <Label Text="Сообщение" HorizontalOptions="Fill"/>
+        <Entry x:Name="MessageEntry" HorizontalOptions="Fill" Text="24 48 4c 00 00 00"/>
+        <!-- Button x:Name="BroadcastButton" Text="Broadcast" Clicked="BroadcastButton_Clicked"/ -->
+        <Button x:Name="BroadcastButton" Text="Broadcast" Clicked="BroadcastButton_Clicked"/>
+        <StackLayout Orientation="Horizontal">
+            <Button x:Name="TestButton0" Text="0" Clicked="TestButton0_Clicked"/>
+            <Button x:Name="TestButton1" Text="1" Clicked="TestButton1_Clicked"/>
+            <Button x:Name="TestButton2" Text="2" Clicked="TestButton2_Clicked"/>
+            <Button x:Name="TestButton3" Text="3" Clicked="TestButton3_Clicked"/>
+        </StackLayout>
+        <ListView x:Name="LogListView" HasUnevenRows="True" BackgroundColor="#eeeeee" VerticalOptions="EndAndExpand" HorizontalOptions="Fill">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="75*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Label Grid.Column="0" Text="Time"
+                                FontSize="Small" BackgroundColor="Aqua"/>
+                            <Label Grid.Column="1" Text="Text"
+                                FontSize="Small" BackgroundColor="Green"/ -->
+                            <Label Grid.Column="0" Text="{Binding Time}"
+                                FontSize="Small" BackgroundColor="#eeeeee"/>
+                            <Label Grid.Column="1" Text="{Binding Text}"
+                                FontSize="Small" BackgroundColor="#eeeeee"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

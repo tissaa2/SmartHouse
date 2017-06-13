@@ -48,3 +48,4 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\S
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Xamarin.Forms.Core.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll.mdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\SmartHouse.Droid.Views.DebugPage.xaml.g.cs

@@ -10,6 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -19,6 +22,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Panel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Dimmer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\OutputPort.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\InputPort.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Port.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\UID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scenes\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scenes\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Client.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DuplexStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Log.cs" />
@@ -29,6 +41,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketTypeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Server.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\UDPConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
+      <DependentUpon>DebugPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

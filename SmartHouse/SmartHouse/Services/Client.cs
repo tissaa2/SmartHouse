@@ -9,6 +9,20 @@ namespace SmartHouse.Services
 {
     public class Client : UDPConnection
     {
+        private static Client instance = null;
+        public static Client Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Client(new IPEndPoint(IPAddress.Any, 0));
+                    instance.Start(61576);
+                }
+                return instance;
+            }
+        }
+
         public int BroadcastPort = 0;
 
         public static Server CurrentServer = null;
