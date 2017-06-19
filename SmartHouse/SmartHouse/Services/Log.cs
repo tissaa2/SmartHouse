@@ -9,7 +9,7 @@ namespace SmartHouse.Services
     {
         public static void Write(string text)
         {
-            MainPage.Instance.AddToLog(new LogEntry(DateTime.Now.ToString("dd.MM.yyyy hh:mm:ss"), text));
+            DebugPage.Instance.AddToLog(new LogEntry(DateTime.Now.ToString("dd.MM.yyyy hh:mm:ss"), text));
         }
 
         public static void Write(string template, params object[] items)

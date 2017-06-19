@@ -7,6 +7,49 @@ namespace SmartHouse.Models.CAN
 {
     public class Device
     {
+        private static void Add(int uid, Device d)
+        {
+            d.ID = uid;
+            Devices.Add(d.ID, d);
+        }
+
+        public static Device Dimmer(int outputs)
+        {
+            Dimmer d = new Models.CAN.Dimmer();
+            d.Init(0, outputs, true);
+            return d;
+        }
+
+        public static Device Panel(int inputs, int outputs)
+        {
+            Panel p = new Models.CAN.Panel();
+            p.Init(inputs, outputs, true);
+            return p;
+        }
+
+        public static void Polpulate()
+        {
+            Devices.Clear();
+            Add(1, Dimmer(8));
+            Add(2, Dimmer(8));
+            Add(3, Dimmer(4));
+            Add(4, Dimmer(8));
+            Add(5, Dimmer(4));
+            Add(6, Dimmer(4));
+            Add(7, Dimmer(6));
+            Add(8, Dimmer(8));
+            Add(9, Dimmer(4));
+            Add(10, Panel(10, 8));
+            Add(11, Panel(10, 4));
+            Add(12, Panel(10, 6));
+            Add(13, Panel(10, 6));
+            Add(14, Panel(10, 4));
+            Add(15, Panel(10, 8));
+            Add(16, Panel(10, 4));
+            Add(17, Panel(10, 2));
+            Add(18, Panel(10, 4));
+        }
+
         public static Dictionary<UID, Device> Devices = new Dictionary<UID, Device>();
         public static Device GetDevice(UID id)
         {
@@ -22,12 +65,22 @@ namespace SmartHouse.Models.CAN
         public List<InputPort> Inputs;
         public List<OutputPort> Outputs;
 
-        public virtual void Init(int inputsCount, int outputsCount)
+        public virtual void Init(int inputsCount, int outputsCount, bool randomValues = false)
         {
+            double v;
+            Random rnd = new Random();
             Inputs = new List<InputPort>();
             Outputs = new List<OutputPort>();
             for (int i = 0; i < inputsCount; i++)
-                Inputs.Add(new InputPort() {ID = i, Value = 0 });
+            {
+                v = randomValues ? rnd.NextDouble() : 0;
+                Inputs.Add(new InputPort() { ID = i, Value = v });
+            }
+            for (int i = 0; i < outputsCount; i++)
+            {
+                v = randomValues ? rnd.NextDouble() : 0;
+                Outputs.Add(new OutputPort() { ID = i, Value = v });
+            }
         }
 
         private List<T> CloneList<T>(List<T> source) where T: Port
@@ -63,6 +116,11 @@ namespace SmartHouse.Models.CAN
         public void SendCommand()
         {
 
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} {1}(in: {2}, out: {3})", this.ID, this.GetType().Name, Inputs.Count, Outputs.Count);
         }
     }
 }

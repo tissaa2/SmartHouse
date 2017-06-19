@@ -17,7 +17,9 @@ namespace SmartHouse.Views
         public MainPage()
         {
             Instance = this;
-            Children.Add(new DebugPage());
+            Children.Add(new DefaultPage() { Title = "Default" });
+            Children.Add(new DebugPage() { Title = "Debug" });
+            Children.Add(new EditorPage() { Title = "Editor" });
             this.InitializeComponent();
         }
     }
