@@ -6,10 +6,10 @@ namespace SmartHouse.Models.CAN
 {
     public class Dimmer: Device
     {
-        public override void Init(int inputsCount, int outputsCount)
+        /* public override void Init(int inputsCount, int outputsCount)
         {
             base.Init(inputsCount, outputsCount);
-        }
+        } */
 
         public override Device Assign(Device source)
         {

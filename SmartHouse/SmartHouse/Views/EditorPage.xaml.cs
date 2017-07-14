@@ -15,7 +15,7 @@ namespace SmartHouse.Views
         public EditorPage()
         {
             Instance = this;
-            this.InitializeComponent();
+            // this.InitializeComponent();
         }
 
     }
