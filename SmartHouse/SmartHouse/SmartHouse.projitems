@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DefaultPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LightsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml">
@@ -24,7 +24,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ImageButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SuperButton.xaml.cs">
+      <DependentUpon>SuperButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\ChannelCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\BaseEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\House.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\GroupEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\UIDEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Event.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Panel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Dimmer.cs" />
@@ -32,9 +42,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\InputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\Port.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CAN\UID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Scenes\Groups.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Scenes\Scene.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Scenes\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scenes\GroupOld.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Client.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DuplexStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Log.cs" />
@@ -45,11 +56,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketTypeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Server.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\UDPConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\GroupItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DefaultPage.xaml.cs">
-      <DependentUpon>DefaultPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LightsPage.xaml.cs">
+      <DependentUpon>LightsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\EditorPage.xaml.cs">
       <DependentUpon>EditorPage.xaml</DependentUpon>
@@ -62,9 +74,37 @@
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\SuperButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <Page Include="$(MSBuildThisFileDirectory)Views\EditorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\away.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\bedroom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\flat.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\hall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\home.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\kitchen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\livingroom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\morning.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\proceed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\sleep.png" />
   </ItemGroup>
 </Project>

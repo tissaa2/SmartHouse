@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using SmartHouse.Models.CAN;
 using System.Xml.Serialization;
+using SmartHouse.Models.Core;
 
 namespace SmartHouse.Models.Scenes
 {

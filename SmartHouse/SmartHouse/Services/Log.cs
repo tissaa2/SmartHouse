@@ -9,6 +9,8 @@ namespace SmartHouse.Services
     {
         public static void Write(string text)
         {
+            if (DebugPage.Instance == null)
+                return;
             DebugPage.Instance.AddToLog(new LogEntry(DateTime.Now.ToString("dd.MM.yyyy hh:mm:ss"), text));
         }
 
