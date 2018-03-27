@@ -10,5 +10,18 @@ namespace SmartHouse.Models.Core
         public byte GroupID { get; set; }
         public byte CategoryID { get; set; }
         public byte TimePar { get; set; }
+
+        public GroupEvent()
+        {
+
+        }
+
+        public GroupEvent(byte inputId, byte groupId, byte categoryId, byte timePar)
+        {
+            InputID = inputId;
+            GroupID = groupId;
+            CategoryID = categoryId;
+            TimePar = timePar;
+        }
     }
 }

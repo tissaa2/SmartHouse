@@ -8,17 +8,16 @@ using System.IO;
 
 namespace SmartHouse.Models.Core
 {
-    public class BaseEntity
+    public class BaseEntity<IDType>: IUnique<IDType>
     {
-        public string Name { get; set; }
+        public IDType ID { get; set; }
         public byte SecurityLevel { get; set; }
-        public string Icon { get; set; }
 
-        public static T Load<T>(string fileName) where T : BaseEntity
+        public static T Load<T>(string fileName) where T: class
         {
             try
             {
-                using (StreamReader reader = new StreamReader(fileName))
+                using (StreamReader reader = new StreamReader(new FileStream(fileName, FileMode.Open)))
                 {
                     XmlSerializer deserializer = new XmlSerializer(typeof(T));
                     return deserializer.Deserialize(reader) as T;
@@ -33,7 +32,7 @@ namespace SmartHouse.Models.Core
 
         public void Save(string fileName)
         {
-            using (StreamWriter writer = new StreamWriter(fileName))
+            using (StreamWriter writer = new StreamWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
             {
                 XmlSerializer serializer = new XmlSerializer(this.GetType());
                 serializer.Serialize(writer, this);

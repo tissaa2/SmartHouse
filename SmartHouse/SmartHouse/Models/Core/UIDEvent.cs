@@ -10,5 +10,10 @@ namespace SmartHouse.Models.Core
     {
         public UID UID { get; set; }
         public byte TypeID { get; set; }
+        public UIDEvent(byte inputId, UID uid)
+        {
+            InputID = inputId;
+            UID = uid;
+        }
     }
 }

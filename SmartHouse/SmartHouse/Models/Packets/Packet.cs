@@ -42,15 +42,7 @@ namespace SmartHouse.Models.Packets
             0
         };
 
-        public static byte[] CheckConnectionRequest = new byte[]
-        {
-            36,
-            72,
-            76,
-            0,
-            18,
-            0
-        };
+        public static byte[] CheckConnectionRequest = new byte[] {36, 72, 76, 0, 18, 0};
 
         public static byte[] InitCANTranslationRequest = new byte[]
         {
@@ -62,25 +54,8 @@ namespace SmartHouse.Models.Packets
             0
         };
 
-        public static byte[] ActivateSceneCANRequest = new byte[]
-        {
-            36,
-            72,
-            76,
-            0,
-            48,
-            10,
-            13,
-            1,
-            0,
-            0,
-            80,
-            0,
-            5,
-            0,
-            4,
-            0
-        };
+        // public static byte[] ActivateSceneCANRequest = new byte[] { 36, 72, 76, 0, 48, 10, 13, 1, 0, 0, 80, 0, 5, 0, 4, 0 };
+        public static byte[] ActivateSceneCANRequest = new byte[] { 0x24, 0x48, 0x4c, 0, 0x30, 0xa, 0xd, 0, 0x3, 0x84, 0x50, 0, 5, 0, 4, 0 };
 
         public static byte HEADER_SIZE = 3;
 

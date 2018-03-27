@@ -4,12 +4,22 @@ using System.Text;
 
 namespace SmartHouse.Models.CAN
 {
-    public class Dimmer: Device
+    public class Panel: Device
     {
         /* public override void Init(int inputsCount, int outputsCount)
         {
             base.Init(inputsCount, outputsCount);
         } */
+
+        public Panel()
+        {
+
+        }
+
+        public Panel(UID id, int inputs, int outputs)
+        {
+            Init(id, inputs, outputs, true);
+        }
 
         public override Device Assign(Device source)
         {
@@ -18,8 +28,7 @@ namespace SmartHouse.Models.CAN
 
         public override Device Clone()
         {
-            return (new Dimmer()).Assign(this);
+            return (new Panel()).Assign(this);
         }
-
     }
 }

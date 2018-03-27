@@ -2,20 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using SmartHouse.Models.Core;
 using SmartHouse.Models.CAN;
-using System.Xml.Serialization;
 
 namespace SmartHouse.Models.Core
 {
-    public class Group: BaseEntity
+    public class Group: IconListEntity<int, UID, Scene>
     {
-        public int Id { get; set; }
-        public List<Event> Events { get; set; }
-        public List<ChannelCommand> ChannelCommands { get; set; }
-
-        public override string ToString()
+        public static Group Kitchen()
         {
-            return Name;
+            return new Group() { Name = "Кухня", ID = 1, Icon = "kitchen.png", SecurityLevel = 0, Items = new List<Scene>() { } };
         }
     }
 }

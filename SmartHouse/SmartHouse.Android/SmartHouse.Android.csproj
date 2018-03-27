@@ -125,7 +125,6 @@
     <AndroidResource Include="Resources\drawable\nightLight.png" />
     <AndroidResource Include="Resources\drawable\socket.png" />
     <AndroidResource Include="Resources\drawable\softLight.png" />
-    <AndroidResource Include="Resources\drawable\switch.png" />
     <AndroidResource Include="Resources\drawable\switchOff.png" />
     <AndroidResource Include="Resources\drawable\toilet.png" />
     <AndroidResource Include="Resources\drawable\workLight.png" />

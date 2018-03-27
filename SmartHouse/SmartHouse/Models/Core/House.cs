@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace SmartHouse.Models.Core
 {
-    public class House: BaseEntity
+    public class House: BaseEntity<int>
     {
         public static string FileName { get; set; } = "house.xml";
 
@@ -19,8 +19,8 @@ namespace SmartHouse.Models.Core
             {
                 Name = name,
                 Icon = icon,
-                Id = id,
-                Events = new List<Event>()
+                ID = id
+                /* Events = new List<Event>()
                                 {
                                     new GroupEvent() { CategoryID = 1, GroupID = 1, Icon = "switchOff.png", InputID = 0, Name = "Выключить все", SecurityLevel = 0, TimePar = 0},
                                     new GroupEvent() { CategoryID = 1, GroupID = 1, Icon = "softLight.png", InputID = 0, Name = "Мягкий свет", SecurityLevel = 0, TimePar = 0},
@@ -31,7 +31,7 @@ namespace SmartHouse.Models.Core
                                     new UIDEvent() { Icon = "switch.png", InputID = 0, Name = "Выключатель рабочей зоны", SecurityLevel = 0},
                                     new UIDEvent() { Icon = "fan.png", InputID = 0, Name = "Вентилятор", SecurityLevel = 0},
                                     new UIDEvent() { Icon = "socket.png", InputID = 0, Name = "Розетка плиты", SecurityLevel = 1}
-                                }
+                                } */
             };
         }
 
@@ -41,7 +41,7 @@ namespace SmartHouse.Models.Core
             {
                 if (instance == null)
                 {
-                    instance = BaseEntity.Load<House>(FileName);
+                    instance = Load<House>(FileName);
                     if (instance == null)
                     {
                         instance = new House();

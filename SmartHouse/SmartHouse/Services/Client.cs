@@ -84,6 +84,7 @@ namespace SmartHouse.Services
         protected void MainThreadRun(object arg)
         {
             this.Broadcast(Packet.DiscoverRequest, this.BroadcastPort);
+
             Thread.Sleep(10);
             Packet packet = new Packet();
             CommandResponsePacket commandResponsePacket = new CommandResponsePacket();
