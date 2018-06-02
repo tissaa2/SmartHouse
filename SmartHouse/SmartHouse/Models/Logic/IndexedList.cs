@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using SmartHouse.Models.CAN;
 using System.Xml.Serialization;
-using SmartHouse.Models.Core;
 
-namespace SmartHouse.Models.Scenes
+namespace SmartHouse.Models.Core
 {
-    public class IndexedList<IDType, IndexType, ItemType>: BaseEntity, IEnumerable<ItemType>, IIndexedListItem<IDType> where ItemType: IIndexedListItem<IndexType>
+    public class IndexedList<IDType, IndexType, ItemType>: BaseEntity, IEnumerable<ItemType>, IUnique<IDType> where ItemType: IUnique<IndexType>
     {
         public IDType ID { get; set; }
         public List<ItemType> Items;

@@ -29,28 +29,32 @@
       <DependentUpon>SuperButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\IconEntity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\NamedEntity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\ChannelCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\BaseEntity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\House.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\GroupEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\IUnique.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Projects.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\UIDEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Event.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Device.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Panel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Dimmer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\OutputPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\InputPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Port.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\UID.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\_Group.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\IconListEntity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Project.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Group.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Core\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\ChannelCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\House.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\GroupEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IUnique.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Projects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\UIDEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Event.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\Panel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\Dimmer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\OutputPort.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\InputPort.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\Port.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physique\UID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\_Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconListEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Project.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\GroupPage.xaml.cs">
+      <DependentUpon>GroupPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\Client.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DuplexStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Log.cs" />
@@ -65,6 +69,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LightsPage.xaml.cs">
+      <DependentUpon>LightsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectsPage.xaml.cs">
       <DependentUpon>ProjectsPage.xaml</DependentUpon>
     </Compile>
@@ -76,7 +88,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Logic\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
   <ItemGroup>
@@ -84,10 +95,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\GroupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <Page Include="$(MSBuildThisFileDirectory)Views\EditorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LightsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\away.png" />

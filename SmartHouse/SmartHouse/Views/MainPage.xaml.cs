@@ -17,9 +17,14 @@ namespace SmartHouse.Views
         public MainPage()
         {
             Instance = this;
-            Children.Add(new LightsPage() { Title = "Свет" });
+            Children.Add(new ProjectsPage() { Title = "Проекты" });
+            ProjectPage pp = new ProjectPage() { Title = "Проект" };
+            
+            Children.Add(pp);
+            Children.Add(new GroupPage() { Title = "Группа" });
+            // Children.Add(new ScenesPage() { Title = "Группа" });
             Children.Add(new DebugPage() { Title = "Отладка" });
-            Children.Add(new EditorPage() { Title = "Редактор" });
+            // Children.Add(new EditorPage() { Title = "Редактор" });
             this.InitializeComponent();
         }
     }

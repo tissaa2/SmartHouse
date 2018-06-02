@@ -6,21 +6,26 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SmartHouse.Services;
 using SmartHouse.Models;
-using SmartHouse.Models.Core;
+using SmartHouse.Models.Logic;
 
 namespace SmartHouse.Views
 {
-    public partial class LightsPage : ContentPage
+    public partial class ProjectsPage : ContentPage
     {
-        public static LightsPage Instance = null;
+        public static ProjectsPage Instance = null;
 
-
-        public LightsPage()
+        public ProjectsPage()
         {
             Instance = this;
             this.InitializeComponent();
-            GroupsListView.ItemsSource = House.Instance.Groups;
+            ProjectsListView.ItemsSource = Projects.Instance;
         }
 
+        private void ProjectsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            MainPage.Instance.CurrentPage = ProjectPage.Instance;
+            ProjectPage.Instance.
+            // ProjectPage.Instance.
+        }
     }
 }

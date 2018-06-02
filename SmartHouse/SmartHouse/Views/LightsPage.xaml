@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             x:Class="SmartHouse.Views.LightsPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60*" />
+        </Grid.RowDefinitions>
+
+        <Image x:Name="PhotoImage" HorizontalOptions="Fill" VerticalOptions="Fill" Source="flat.jpg" Aspect="AspectFill"  Grid.Row="0"/>
+
+        <ScrollView x:Name="ToolsScrollView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#eeeeee" Grid.Row="1" HeightRequest="96">
+            <StackLayout Orientation="Horizontal" BackgroundColor="Beige">
+                <local:SuperButton Grid.Row="0" ImageSource="home.png" Caption="Я дома" />
+                <local:SuperButton Grid.Row="0" ImageSource="away.png" Caption="Я ушел" />
+                <local:SuperButton Grid.Row="0" ImageSource="sleep.png" Caption="Спать" />
+                <local:SuperButton Grid.Row="0" ImageSource="morning.png" Caption="Подъем" />
+            </StackLayout>
+        </ScrollView>
+
+        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" Grid.Row="2" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15*" />
+                                <ColumnDefinition Width="85*" />
+                                <!-- <ColumnDefinition Width="15*" /> -->
+                            </Grid.ColumnDefinitions>
+                            <local:ImageButton Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                            <!-- <local:ImageButton Grid.Column="2" Source="proceed.png" VerticalOptions="Fill" HorizontalOptions="Fill"/> -->
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

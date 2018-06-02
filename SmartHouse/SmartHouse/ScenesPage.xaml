@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             x:Class="SmartHouse.Views.ScenesPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60*" />
+        </Grid.RowDefinitions>
+
+        <Label x:Name="NameLabel" HorizontalOptions="Fill" VerticalOptions="Fill" Aspect="AspectFill" Text="Проекты" Grid.Row="0" />
+
+        <ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" Grid.Row="2" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15*" />
+                                <ColumnDefinition Width="85*" />
+                            </Grid.ColumnDefinitions>
+                            <local:ImageButton Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>
