@@ -5,6 +5,6 @@
              x:Class="SmartHouse.Views.EditorPage">
     <StackLayout Orientation="Vertical">
         <Label Text="Editor page" HorizontalOptions="Fill"/>
-        <ListView x:Name="ObjectsListView"  HorizontalOptions="Fill"/>
+        <ListView x:Name="ObjectsListView"  HorizontalOptions="Fill" />
     </StackLayout>
 </ContentPage>

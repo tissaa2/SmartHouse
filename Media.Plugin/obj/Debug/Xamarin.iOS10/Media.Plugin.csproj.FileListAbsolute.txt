@@ -1,0 +1,10 @@
+C:\HouseLink\SmartHouse\Media.Plugin\bin\Debug\xamarin.ios10\Plugin.Media.dll
+C:\HouseLink\SmartHouse\Media.Plugin\bin\Debug\xamarin.ios10\Plugin.Media.pdb
+C:\HouseLink\SmartHouse\Media.Plugin\bin\Debug\xamarin.ios10\Plugin.Permissions.dll
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\optimized\
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\Media.Plugin.csproj.CoreCompileInputs.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\Media.Plugin.AssemblyInfoInputs.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\Media.Plugin.AssemblyInfo.cs
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\Media.Plugin.csproj.CopyComplete
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\Plugin.Media.dll
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\xamarin.ios10\Plugin.Media.pdb

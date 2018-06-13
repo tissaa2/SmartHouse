@@ -10,6 +10,19 @@ namespace SmartHouse.Models.Logic
 {
     public class NamedEntity<T>: BaseEntity<T>
     {
-        public string Name { get; set; }
+        [XmlIgnore]
+        private string name;
+
+        [XmlAttribute("Name")]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; OnPropertyChanged("Name"); }
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -1,0 +1,9 @@
+C:\HouseLink\SmartHouse\Media.Plugin\bin\Debug\tizen40\Plugin.Media.deps.json
+C:\HouseLink\SmartHouse\Media.Plugin\bin\Debug\tizen40\Plugin.Media.dll
+C:\HouseLink\SmartHouse\Media.Plugin\bin\Debug\tizen40\Plugin.Media.pdb
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\tizen40\Media.Plugin.csprojAssemblyReference.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\tizen40\Media.Plugin.csproj.CoreCompileInputs.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\tizen40\Media.Plugin.AssemblyInfoInputs.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\tizen40\Media.Plugin.AssemblyInfo.cs
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\tizen40\Plugin.Media.dll
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\tizen40\Plugin.Media.pdb

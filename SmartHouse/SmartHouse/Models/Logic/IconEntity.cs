@@ -8,8 +8,18 @@ using System.IO;
 
 namespace SmartHouse.Models.Logic
 {
-    public class IconEntity<T>: NamedEntity<T>
+    public class IconEntity<T> : NamedEntity<T>
     {
-        public string Icon { get; set; }
+        [XmlIgnore]
+        private string icon;
+
+        [XmlAttribute("Icon")]
+        public string Icon
+        {
+            get { return icon; }
+            set { icon = value; OnPropertyChanged("Icon"); }
+        }
+
+
     }
 }

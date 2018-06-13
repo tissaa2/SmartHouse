@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             x:Class="SmartHouse.Views.ProjectsListPage"
+>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0" x:Name="EditorRow"/>
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                  Grid.Row="0" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!-- <local:ImageButton Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" /> -->
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                        </Grid>
+                    </ViewCell>
+                   
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:ImageButton x:Name="IconImage" Grid.Column="0" Source="{Binding Path=SelectedItem.Icon, Mode=TwoWay}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+            <Button x:Name="IconButton" Grid.Column="0"  Clicked="IconButton_Clicked" BackgroundColor="Transparent" />
+            <Entry x:Name="NameEditor" Grid.Column="1" Text="{Binding Path=SelectedItem.Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
+        </Grid>
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="2"/>
+    </Grid>
+</ContentPage>

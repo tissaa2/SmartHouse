@@ -17,7 +17,7 @@ namespace SmartHouse.Views
         public MainPage()
         {
             Instance = this;
-            Children.Add(new ProjectsPage() { Title = "Проекты" });
+            Children.Add(new ProjectsListPage() { Title = "Проекты" });
             ProjectPage pp = new ProjectPage() { Title = "Проект" };
             
             Children.Add(pp);

@@ -1,0 +1,142 @@
+{
+  "runtimeTarget": {
+    "name": "Tizen,Version=v4.0/",
+    "signature": "b4c5f1cce21b6b2d2a6448e6b6fd5005216861a2"
+  },
+  "compilationOptions": {},
+  "targets": {
+    "Tizen,Version=v4.0": {},
+    "Tizen,Version=v4.0/": {
+      "Plugin.Media/1.0.0.0": {
+        "dependencies": {
+          "MSBuild.Sdk.Extras": "1.4.0",
+          "Plugin.Permissions": "3.0.0.12",
+          "Tizen.NET": "4.0.0"
+        },
+        "runtime": {
+          "Plugin.Media.dll": {}
+        }
+      },
+      "MSBuild.Sdk.Extras/1.4.0": {},
+      "Plugin.Permissions/3.0.0.12": {
+        "runtime": {
+          "lib/netstandard2.0/Plugin.Permissions.dll": {}
+        }
+      },
+      "Tizen.NET/4.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/ElmSharp.Wearable.dll": {},
+          "lib/netstandard2.0/ElmSharp.dll": {},
+          "lib/netstandard2.0/Tizen.Account.AccountManager.dll": {},
+          "lib/netstandard2.0/Tizen.Account.FidoClient.dll": {},
+          "lib/netstandard2.0/Tizen.Account.OAuth2.dll": {},
+          "lib/netstandard2.0/Tizen.Account.SyncManager.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Alarm.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.AttachPanel.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Badge.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Common.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.DataControl.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.MessagePort.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Notification.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.NotificationEventListener.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.PackageManager.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Preference.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.RemoteView.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Service.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.Shortcut.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.ToastMessage.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.UI.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.WatchApplication.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.WidgetApplication.dll": {},
+          "lib/netstandard2.0/Tizen.Applications.WidgetControl.dll": {},
+          "lib/netstandard2.0/Tizen.Content.Download.dll": {},
+          "lib/netstandard2.0/Tizen.Content.MediaContent.dll": {},
+          "lib/netstandard2.0/Tizen.Content.MimeType.dll": {},
+          "lib/netstandard2.0/Tizen.Context.dll": {},
+          "lib/netstandard2.0/Tizen.Location.Geofence.dll": {},
+          "lib/netstandard2.0/Tizen.Location.dll": {},
+          "lib/netstandard2.0/Tizen.Log.dll": {},
+          "lib/netstandard2.0/Tizen.Maps.dll": {},
+          "lib/netstandard2.0/Tizen.Messaging.Push.dll": {},
+          "lib/netstandard2.0/Tizen.Messaging.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.AudioIO.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Camera.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.MediaCodec.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.MediaPlayer.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Metadata.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Radio.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Recorder.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Remoting.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.StreamRecorder.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Util.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.Vision.dll": {},
+          "lib/netstandard2.0/Tizen.Multimedia.dll": {},
+          "lib/netstandard2.0/Tizen.NUI.dll": {},
+          "lib/netstandard2.0/Tizen.Network.Bluetooth.dll": {},
+          "lib/netstandard2.0/Tizen.Network.Connection.dll": {},
+          "lib/netstandard2.0/Tizen.Network.IoTConnectivity.dll": {},
+          "lib/netstandard2.0/Tizen.Network.Nfc.dll": {},
+          "lib/netstandard2.0/Tizen.Network.Nsd.dll": {},
+          "lib/netstandard2.0/Tizen.Network.Smartcard.dll": {},
+          "lib/netstandard2.0/Tizen.Network.WiFi.dll": {},
+          "lib/netstandard2.0/Tizen.Network.WiFiDirect.dll": {},
+          "lib/netstandard2.0/Tizen.PhonenumberUtils.dll": {},
+          "lib/netstandard2.0/Tizen.Pims.Calendar.dll": {},
+          "lib/netstandard2.0/Tizen.Pims.Contacts.dll": {},
+          "lib/netstandard2.0/Tizen.Security.PrivacyPrivilegeManager.dll": {},
+          "lib/netstandard2.0/Tizen.Security.SecureRepository.dll": {},
+          "lib/netstandard2.0/Tizen.Security.TEEC.dll": {},
+          "lib/netstandard2.0/Tizen.Security.dll": {},
+          "lib/netstandard2.0/Tizen.Sensor.dll": {},
+          "lib/netstandard2.0/Tizen.System.Feedback.dll": {},
+          "lib/netstandard2.0/Tizen.System.Information.dll": {},
+          "lib/netstandard2.0/Tizen.System.MediaKey.dll": {},
+          "lib/netstandard2.0/Tizen.System.PlatformConfig.dll": {},
+          "lib/netstandard2.0/Tizen.System.Storage.dll": {},
+          "lib/netstandard2.0/Tizen.System.SystemSettings.dll": {},
+          "lib/netstandard2.0/Tizen.System.Usb.dll": {},
+          "lib/netstandard2.0/Tizen.System.dll": {},
+          "lib/netstandard2.0/Tizen.Telephony.dll": {},
+          "lib/netstandard2.0/Tizen.Tracer.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.InputMethod.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.InputMethodManager.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.Stt.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.SttEngine.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.Tts.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.TtsEngine.dll": {},
+          "lib/netstandard2.0/Tizen.Uix.VoiceControl.dll": {},
+          "lib/netstandard2.0/Tizen.WebView.dll": {},
+          "lib/netstandard2.0/Tizen.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Plugin.Media/1.0.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MSBuild.Sdk.Extras/1.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5aPz92TaiJw0RgpRXaBj+fo86AnWUJgKIIAJbXFaf9Kr/ao26YaiPgpcOIA7NzKBSxp9/mQWD/xBz2rJIkVDvA==",
+      "path": "msbuild.sdk.extras/1.4.0",
+      "hashPath": "msbuild.sdk.extras.1.4.0.nupkg.sha512"
+    },
+    "Plugin.Permissions/3.0.0.12": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VrYqI/ufk3bH6gTP1JJlLByjhS0CHu3riKmdozhX9/qXA9hlvLolmcqKJdyAqpzmrVC74m3ZtirUBIrBxvT1Lw==",
+      "path": "plugin.permissions/3.0.0.12",
+      "hashPath": "plugin.permissions.3.0.0.12.nupkg.sha512"
+    },
+    "Tizen.NET/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-e/q/gwwzrcR6LRsQiZbpKYN+GJsiA7/lh6p8ztANDoJLnIlKPmiNsBXxm6Tt8yHzwMywmAXBwyp4mpLCRG0J+A==",
+      "path": "tizen.net/4.0.0",
+      "hashPath": "tizen.net.4.0.0.nupkg.sha512"
+    }
+  }
+}

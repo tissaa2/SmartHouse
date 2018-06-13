@@ -1,0 +1,4 @@
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\uap10.0.10240\Media.Plugin.csprojAssemblyReference.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\uap10.0.10240\Media.Plugin.csproj.CoreCompileInputs.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\uap10.0.10240\Media.Plugin.AssemblyInfoInputs.cache
+C:\HouseLink\SmartHouse\Media.Plugin\obj\Debug\uap10.0.10240\Media.Plugin.AssemblyInfo.cs

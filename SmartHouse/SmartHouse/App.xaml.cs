@@ -21,7 +21,7 @@ namespace SmartHouse
 		{
             Current.MainPage = new MainPage();
             Client = Services.Client.Instance;
-
+            // CrossCurrentActivity.Current.Init(this, bundle);
             /* Current.MainPage = new TabbedPage
             {
                 Children =
