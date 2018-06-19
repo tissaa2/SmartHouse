@@ -32,5 +32,10 @@ namespace SmartHouse.Models.Logic
                 }
             };
         }
+
+        public Project()
+        {
+
+        }
     }
 }

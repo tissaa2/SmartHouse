@@ -13,7 +13,7 @@
 
         <Label x:Name="NameLabel" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Проект" Grid.Row="0" FontSize="Large"/>
 
-        <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" Grid.Row="1" HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" />
+        <!-- <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" Grid.Row="1" HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" />
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell Height="64">
@@ -59,6 +59,6 @@
             </Grid>
 
         </Grid>
-        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="3"/>
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="3"/> -->
     </Grid>
 </ContentPage>

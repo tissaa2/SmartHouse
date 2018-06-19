@@ -15,5 +15,10 @@ namespace SmartHouse.Models.Logic
             InputID = inputId;
             UID = uid;
         }
+
+        public UIDEvent()
+        {
+
+        }
     }
 }

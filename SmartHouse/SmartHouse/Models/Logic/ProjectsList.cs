@@ -34,6 +34,11 @@ namespace SmartHouse.Models.Logic
             }
         }
 
+        public ProjectsList()
+        {
+
+        }
+
         public void Save()
         {
             Save(FileName);

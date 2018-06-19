@@ -92,6 +92,8 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\res\drawable\lig
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\R.cs.flag
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\R.txt
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\uploadflags.txt
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\Newtonsoft.Json.dll
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\Newtonsoft.Json.xml
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\Mono.Android.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\mscorlib.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\System.Core.pdb
@@ -131,7 +133,6 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\Mono.Sec
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\FormsViewGroup.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\SmartHouse.Android.csprojAssemblyReference.cache
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\FormsViewGroup.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\SmartHouse.Android.dll.mdb
@@ -155,3 +156,8 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\S
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\System.Xml.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Xamarin.Forms.Core.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Xamarin.Forms.Xaml.pdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\SmartHouse.Android.csprojAssemblyReference.cache
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\SmartHouse.Android.dll.mdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\FormsViewGroup.dll.mdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\linksrc\Xamarin.Forms.Platform.Android.dll.mdb

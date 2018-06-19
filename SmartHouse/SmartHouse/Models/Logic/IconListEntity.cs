@@ -7,9 +7,13 @@ using System.IO;
 
 namespace SmartHouse.Models.Logic
 {
-    public class IconListEntity<IDType, IndexType, ItemType>: IconEntity<IDType>, IEnumerable<ItemType>, IUnique<IDType> where ItemType: IUnique<IndexType>
+    public class IconListEntity<IDType, IndexType, ItemType>: IconEntity<IDType>/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<IDType> where ItemType: IUnique<IndexType>
     {
-        public ObservableCollection<ItemType> Items { get; set; }
+        public ObservableCollection<ItemType> Items { get; set; } = new ObservableCollection<ItemType>();
+
+        public int Count => Items.Count;
+
+        public bool IsReadOnly => false;
 
         [XmlIgnore]
         private Dictionary<IndexType, ItemType> index = null;
@@ -35,7 +39,7 @@ namespace SmartHouse.Models.Logic
             }
         }
 
-        public IEnumerator<ItemType> GetEnumerator()
+        /* public IEnumerator<ItemType> GetEnumerator()
         {
             return Items.GetEnumerator();
         }
@@ -43,11 +47,31 @@ namespace SmartHouse.Models.Logic
         IEnumerator IEnumerable.GetEnumerator()
         {
             return Items.GetEnumerator();
-        }
+        } */
 
         public void Add(ItemType item)
         {
             Items.Add(item);
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(ItemType item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(ItemType[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(ItemType item)
+        {
+            throw new NotImplementedException();
         }
 
         /* public  void Save(string fileName)

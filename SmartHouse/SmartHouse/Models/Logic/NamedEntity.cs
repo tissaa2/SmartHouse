@@ -10,10 +10,10 @@ namespace SmartHouse.Models.Logic
 {
     public class NamedEntity<T>: BaseEntity<T>
     {
-        [XmlIgnore]
+        // [XmlIgnore]
         private string name;
 
-        [XmlAttribute("Name")]
+        // [XmlAttribute("Name")]
         public string Name
         {
             get { return name; }

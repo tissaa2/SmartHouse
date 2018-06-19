@@ -108,6 +108,7 @@ class MonoPackageManager_Resources {
 		/* We need to ensure that "SmartHouse.Android.dll" comes first in this list. */
 		"SmartHouse.Android.dll",
 		"FormsViewGroup.dll",
+		"Newtonsoft.Json.dll",
 		"Plugin.CurrentActivity.dll",
 		"Plugin.Media.dll",
 		"Plugin.Permissions.dll",

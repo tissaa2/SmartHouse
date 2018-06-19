@@ -3,6 +3,7 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\F
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Java.Interop.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Mono.Android.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\mscorlib.dll
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Newtonsoft.Json.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Plugin.CurrentActivity.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Plugin.Media.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\android\assets\Plugin.Permissions.dll

@@ -1,5 +1,5 @@
 ﻿using SmartHouse.Models.Physics;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SmartHouse.Models.Logic
 {
@@ -34,7 +34,13 @@ namespace SmartHouse.Models.Logic
 
         }
 
+        [JsonIgnore]
         public Event Event { get; set; }
         // public string Event { get; set; }
+
+        public Scene()
+        {
+
+        }
     }
 }

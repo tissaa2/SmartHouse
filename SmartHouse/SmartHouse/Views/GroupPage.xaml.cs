@@ -23,7 +23,7 @@ namespace SmartHouse.Views
             if (target == null)
                 return null;
             Target = target;
-            NameLabel.Text = target.Name;
+            // NameLabel.Text = target.Name;
             Model.Items = Target.Items;
             Model.SelectedItem = null;
             return target;
@@ -32,7 +32,7 @@ namespace SmartHouse.Views
         public GroupPage()
         {
             Instance = this;
-            BindingContext = Model = new ListPageModel<Scene>(null);
+            BindingContext = Model = new ListPageModel<Scene>(new System.Collections.ObjectModel.ObservableCollection<Scene>());
             this.InitializeComponent();
         }
 

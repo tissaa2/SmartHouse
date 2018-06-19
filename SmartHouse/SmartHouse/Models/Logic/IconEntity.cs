@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SmartHouse.Services;
-using System.Xml.Serialization;
-using System.Xml;
-using System.IO;
+﻿using Newtonsoft.Json;
 
 namespace SmartHouse.Models.Logic
 {
     public class IconEntity<T> : NamedEntity<T>
     {
-        [XmlIgnore]
+        // [XmlIgnore]
         private string icon;
 
-        [XmlAttribute("Icon")]
+        // [XmlAttribute("Icon")]
+        [JsonProperty(PropertyName = "Icon")]
         public string Icon
         {
             get { return icon; }
