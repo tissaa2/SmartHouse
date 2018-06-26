@@ -7,36 +7,55 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="0" x:Name="EditorRow"/>
+            <RowDefinition Height="48" x:Name="EditorRow"/>
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
         <Label x:Name="NameLabel" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Проект" Grid.Row="0" FontSize="Large"/>
 
-        <!-- <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" Grid.Row="1" HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" />
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell Height="64">
-                    <Grid Padding="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
-                        <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
+        <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
+                  Grid.Row="1" HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Items}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-
+        <ListView x:Name="ChannelsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
+                  Grid.Row="1" HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Channels}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
                 <RowDefinition Height="32" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-        
+
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="64" />
@@ -46,19 +65,19 @@
                 <Button x:Name="IconButton" Grid.Column="0"  Clicked="IconButton_Clicked" BackgroundColor="Transparent" />
                 <Entry x:Name="NameEditor" Grid.Column="1" Text="{Binding Path=SelectedItem.Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
             </Grid>
-            
+
             <Picker x:Name="EventTypePicker" Grid.Row="1" SelectedIndex="0">
                 <Picker.Items>
                     <x:String>Событие группы</x:String>
                     <x:String>Событие UID</x:String>
                 </Picker.Items>
             </Picker>
-            
+
             <Grid Grid.Row="2">
 
             </Grid>
 
         </Grid>
-        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="3"/> -->
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="3"/>
     </Grid>
 </ContentPage>

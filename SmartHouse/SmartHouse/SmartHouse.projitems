@@ -30,6 +30,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IDGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Fan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Socket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Lamp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\ChannelCommand.cs" />
@@ -45,7 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\OutputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\InputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Port.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\UID.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\UID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\_Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconListEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Project.cs" />

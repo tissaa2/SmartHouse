@@ -24,11 +24,11 @@ namespace SmartHouse.Models.Logic
                             Group.Create("Спальня", "bedroom.png", 4 + bid),
                             Group.Create("Туалет", "toilet.png", 5 + bid) */
                 Items = new ObservableCollection<Group>() {
-                            Group.Create("Прихожая", "hall.png", IntID.NewID()),
-                            Group.Create("Зал", "livingroom.png", IntID.NewID()),
-                            Group.Create("Кухня", "kitchen.png", IntID.NewID()),
-                            Group.Create("Спальня", "bedroom.png", IntID.NewID()),
-                            Group.Create("Туалет", "toilet.png", IntID.NewID())
+                            Group.Create("Прихожая", "groups/hall.png", IntID.NewID()),
+                            Group.Create("Зал", "groups/livingroom.png", IntID.NewID()),
+                            Group.Create("Кухня", "groups/kitchen.png", IntID.NewID()),
+                            Group.Create("Спальня", "groups/bedroom.png", IntID.NewID()),
+                            Group.Create("Туалет", "groups/toilet.png", IntID.NewID())
                 }
             };
         }

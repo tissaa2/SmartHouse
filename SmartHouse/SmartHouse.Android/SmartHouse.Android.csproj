@@ -157,33 +157,33 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\profile_generic.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\bedroom.png" />
-    <AndroidResource Include="Resources\drawable\flat.jpg" />
-    <AndroidResource Include="Resources\drawable\hall.png" />
-    <AndroidResource Include="Resources\drawable\kitchen.png" />
-    <AndroidResource Include="Resources\drawable\livingroom.png" />
+    <AndroidResource Include="Resources\drawable\groups\bedroom.png" />
+    <AndroidResource Include="Resources\drawable\projects\flat.jpg" />
+    <AndroidResource Include="Resources\drawable\groups\hall.png" />
+    <AndroidResource Include="Resources\drawable\groups\kitchen.png" />
+    <AndroidResource Include="Resources\drawable\groups\livingroom.png" />
     <AndroidResource Include="Resources\drawable\proceed.png" />
-    <AndroidResource Include="Resources\drawable\away.png" />
+    <AndroidResource Include="Resources\drawable\scenes\away.png" />
     <AndroidResource Include="Resources\drawable\home.png" />
-    <AndroidResource Include="Resources\drawable\morning.png" />
-    <AndroidResource Include="Resources\drawable\sleep.png" />
-    <AndroidResource Include="Resources\drawable\brightlight.png" />
-    <AndroidResource Include="Resources\drawable\fan.png" />
-    <AndroidResource Include="Resources\drawable\nightlight.png" />
-    <AndroidResource Include="Resources\drawable\socket.png" />
-    <AndroidResource Include="Resources\drawable\softlight.png" />
-    <AndroidResource Include="Resources\drawable\switchoff.png" />
-    <AndroidResource Include="Resources\drawable\toilet.png" />
-    <AndroidResource Include="Resources\drawable\worklight.png" />
+    <AndroidResource Include="Resources\drawable\scenes\morning.png" />
+    <AndroidResource Include="Resources\drawable\scenes\sleep.png" />
+    <AndroidResource Include="Resources\drawable\scenes\brightlight.png" />
+    <AndroidResource Include="Resources\drawable\devices\fan.png" />
+    <AndroidResource Include="Resources\drawable\scenes\nightlight.png" />
+    <AndroidResource Include="Resources\drawable\devices\socket.png" />
+    <AndroidResource Include="Resources\drawable\scenes\softlight.png" />
+    <AndroidResource Include="Resources\drawable\scenes\switchoff.png" />
+    <AndroidResource Include="Resources\drawable\groups\toilet.png" />
+    <AndroidResource Include="Resources\drawable\scenes\worklight.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\house.jpg" />
+    <AndroidResource Include="Resources\drawable\projects\house.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\room.png">
+    <AndroidResource Include="Resources\drawable\groups\room.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -193,6 +193,10 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\devices\lamp.png" />
   </ItemGroup>
   <Import Project="..\SmartHouse\SmartHouse.projitems" Label="Shared" Condition="Exists('..\SmartHouse\SmartHouse.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
