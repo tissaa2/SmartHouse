@@ -15,7 +15,7 @@ namespace SmartHouse.Views
 	public partial class GroupPage : ContentPage
 	{
         public static GroupPage Instance = null;
-        public ListPageModel<Scene> Model { get; set; }
+        public ListViewModel<Scene> Model { get; set; }
         public Group Target { get; set; }
 
         public Group SetTarget(Group target)
@@ -32,7 +32,7 @@ namespace SmartHouse.Views
         public GroupPage()
         {
             Instance = this;
-            BindingContext = Model = new ListPageModel<Scene>(new System.Collections.ObjectModel.ObservableCollection<Scene>());
+            BindingContext = Model = new ListViewModel<Scene>(new System.Collections.ObjectModel.ObservableCollection<Scene>()/* , new ViewEditTemplateSelector() */);
             this.InitializeComponent();
         }
 
@@ -46,7 +46,7 @@ namespace SmartHouse.Views
         {
             if (Model.SelectedItem != e.Item)
             {
-                EditorRow.Height = 48;
+                SceneEditorGrid.HeightRequest = 128;
                 Model.SelectedItem = e.Item as Scene;
                 Model.SelectedItem.Activate();
             }
@@ -54,9 +54,26 @@ namespace SmartHouse.Views
 
         private async void IconButton_Clicked(object sender, EventArgs e)
         {
-            var f = await ProjectMedia.GetPhoto(this);
-            if (f != null)
-                Model.SelectedItem.Icon = f.Path;
+            await ProjectMedia.GetPhoto(this, "group_", (r)=> {
+                if (r != null)
+                    Model.SelectedItem.Icon = r;
+            });
+            
+        }
+
+        private void DevicesListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+
+        }
+
+        private void AddSceneButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SceneIconButton_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

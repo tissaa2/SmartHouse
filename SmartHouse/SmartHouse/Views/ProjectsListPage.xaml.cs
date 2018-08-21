@@ -1,6 +1,5 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.ObjectModel;
+using System.Windows.Input;
 using System.Net;
 using Xamarin.Forms;
 using Plugin.Media;
@@ -13,14 +12,43 @@ namespace SmartHouse.Views
 {
     public partial class ProjectsListPage : ContentPage
     {
+        /* private ViewEditTemplateSelector templateSelector = null;
+        public ViewEditTemplateSelector TemplateSelector
+        {
+            get
+            {
+                if (templateSelector == null)
+                    templateSelector = this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector;
+                return templateSelector;
+            }
+        } */
         public static ProjectsListPage Instance = null;
-        public ListPageModel<Project> Model { get; set;}
+        public ListViewModel<Project> Model { get; set;}
+        // public ICommand EditItemCommand { get; set; }
+        public ICommand DeleteItemCommand { get; set; }
+
+        /* public void EditItem(Project item)
+        {
+            ProjectsListView.BeginRefresh();
+            TemplateSelector.SetEditedItem(item);
+            ProjectsListView.EndRefresh();
+        } */
+
+        public async void DeleteItem(Project item)
+        {
+            var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить проект?", "Да", "Нет");
+            if (answer)
+            {
+            }
+        }
 
         public ProjectsListPage()
         {
             Instance = this;
-            BindingContext = Model = new ListPageModel<Project>(ProjectsList.Instance.Items);
+            // this.EditItemCommand = new Command<Project>(EditItem);
+            this.DeleteItemCommand = new Command<Project>(DeleteItem);
             this.InitializeComponent();
+            BindingContext = Model = new ListViewModel<Project>(ProjectsList.Instance.Items/* , TemplateSelector */);
         }
 
         private void AddButton_Clicked(object sender, EventArgs e)
@@ -32,7 +60,7 @@ namespace SmartHouse.Views
         {
             if (Model.SelectedItem != e.Item)
             {
-                EditorRow.Height = 48;
+                // EditorRow.Height = 48;
                 Model.SelectedItem = e.Item as Project;
             }
             else
@@ -43,11 +71,27 @@ namespace SmartHouse.Views
 
         }
 
-        private async void IconButton_Clicked(object sender, EventArgs e)
+        private void DeleteButton_Clicked(object sender, EventArgs e)
         {
-            var f = await ProjectMedia.GetPhoto(this);
-            if (f != null)
-                Model.SelectedItem.Icon = f.Path;
+            if (sender is ImageButton)
+            {
+                var b = sender as ImageButton;
+                var d = b.Data as Project;
+                if (d != null)
+                    DeleteItem(d);
+            }
         }
+
+        /* private void EditItem_Clicked(object sender, EventArgs e)
+        {
+            if (sender is ImageButton)
+            {
+                var b = sender as ImageButton;
+                var d = b.Data as Project;
+                if (d != null)
+                    EditItem(d);
+            }
+
+        } */
     }
 }

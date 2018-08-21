@@ -16,8 +16,8 @@ namespace SmartHouse.Views
 	public partial class ProjectPage : ContentPage
 	{
         public static ProjectPage Instance = null;
-        
-        public ListPageModel<Group> Model { get; set; }
+
+        public ListViewModel<Group> Model { get; set; }
         public Project Target { get; set; }
 
         public Project SetTarget(Project target)
@@ -25,7 +25,8 @@ namespace SmartHouse.Views
             if (target == null)
                 return null;
             Target = target;
-            NameLabel.Text = target.Name;
+            // NameLabel.Text = target.Name;
+            Model.Target = target;
             Model.Items = Target.Items;
             Model.SelectedItem = null;
             return target;
@@ -34,8 +35,8 @@ namespace SmartHouse.Views
         public ProjectPage()
         {
             Instance = this;
-            BindingContext = Model = new ListPageModel<Group>(null);
             this.InitializeComponent();
+            BindingContext = Model = new ListViewModel<Group>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
         }
 
         private void AddButton_Clicked(object sender, EventArgs e)
@@ -47,7 +48,6 @@ namespace SmartHouse.Views
         {
             if (Model.SelectedItem != e.Item)
             {
-                EditorRow.Height = 48;
                 Model.SelectedItem = e.Item as Group;
             }
             else
@@ -58,12 +58,33 @@ namespace SmartHouse.Views
 
         }
 
+        public async void DeleteItem(Group item)
+        {
+            var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить группу?", "Да", "Нет");
+            if (answer)
+            {
+            }
+        }
+
         private async void IconButton_Clicked(object sender, EventArgs e)
         {
-            var f = await ProjectMedia.GetPhoto(this);
-            if (f != null)
-                Model.SelectedItem.Icon = f.Path;
-
+            await ProjectMedia.GetPhoto(this, "project_", (r) => {
+                if (r != null)
+                    Model.SelectedItem.Icon = r;
+            });
         }
+
+        private void DeleteButton_Clicked(object sender, EventArgs e)
+        {
+            if (sender is ImageButton)
+            {
+                var b = sender as ImageButton;
+                var d = b.Data as Group;
+                if (d != null)
+                    DeleteItem(d);
+            }
+        }
+
+
     }
 }

@@ -36,6 +36,9 @@ namespace SmartHouse.Models
             return String.Format("(ID={0}, Sec={1})", e.ID, e.SecurityLevel);
         }
 
+        public Boolean IsAdmin { get { return Settings.IsAdmin; } }
+        public Boolean NotIsAdmin { get { return !IsAdmin; } }
+
         // [XmlAttribute("ID")]
         public IDType ID { get; set; }
         // [XmlAttribute("SecurityLevel")]
@@ -98,7 +101,7 @@ namespace SmartHouse.Models
         public static T Load<T>(string fileName) where T : class
         {
             T r = null;
-            // return r;
+            return r;
             try
             {
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);

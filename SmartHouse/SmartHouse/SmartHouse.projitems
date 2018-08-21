@@ -29,6 +29,7 @@
       <DependentUpon>SuperButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PhotoPickerModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IDGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Fan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Socket.cs" />
@@ -36,7 +37,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedEntity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\ChannelCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\GroupEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IUnique.cs" />
@@ -49,13 +49,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\OutputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\InputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Port.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\UID.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\_Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconListEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Project.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Scene.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewEditTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -75,6 +76,10 @@
       <DependentUpon>DebugPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\IPhotoPicker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PhotoPickerPage.xaml.cs">
+      <DependentUpon>PhotoPickerPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectMedia.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectPage.xaml.cs">
       <DependentUpon>ProjectPage.xaml</DependentUpon>
@@ -132,5 +137,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)Resources\drawable\sleep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\PhotoPickerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

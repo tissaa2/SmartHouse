@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Windows.Input;
+using Xamarin.Forms;
 using System.Collections.ObjectModel;
-using System.Text;
-using SmartHouse.Models.Logic;
-using System.Xml.Serialization;
+using SmartHouse.Views;
 
 namespace SmartHouse.Models.Logic
 {
@@ -24,18 +22,18 @@ namespace SmartHouse.Models.Logic
                             Group.Create("Спальня", "bedroom.png", 4 + bid),
                             Group.Create("Туалет", "toilet.png", 5 + bid) */
                 Items = new ObservableCollection<Group>() {
-                            Group.Create("Прихожая", "groups/hall.png", IntID.NewID()),
-                            Group.Create("Зал", "groups/livingroom.png", IntID.NewID()),
-                            Group.Create("Кухня", "groups/kitchen.png", IntID.NewID()),
-                            Group.Create("Спальня", "groups/bedroom.png", IntID.NewID()),
-                            Group.Create("Туалет", "groups/toilet.png", IntID.NewID())
+                            Group.Create("Прихожая", "group_hall.png", IntID.NewID()),
+                            Group.Create("Зал", "group_livingroom.png", IntID.NewID()),
+                            Group.Create("Кухня", "group_kitchen.png", IntID.NewID()),
+                            Group.Create("Спальня", "group_bedroom.png", IntID.NewID()),
+                            Group.Create("Туалет", "group_toilet.png", IntID.NewID())
                 }
             };
         }
 
         public Project()
         {
-
         }
+
     }
 }

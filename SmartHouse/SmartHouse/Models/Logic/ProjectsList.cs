@@ -24,8 +24,8 @@ namespace SmartHouse.Models.Logic
                     {
                         instance = new ProjectsList();
                         instance.Items = new ObservableCollection<Project>() { 
-                            Project.Create("Квартира", "flat.jpg", IntID.NewID()),
-                            Project.Create("Дом", "house.jpg", IntID.NewID())
+                            Project.Create("Квартира", "project_flat.jpg", IntID.NewID()),
+                            Project.Create("Дом", "project_house.jpg", IntID.NewID())
                         };
                         instance.Save();
                     }

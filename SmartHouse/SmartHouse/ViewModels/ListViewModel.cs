@@ -1,14 +1,32 @@
 ﻿using System;
+using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Text;
 using SmartHouse.Models.Logic;
 using System.ComponentModel;
+using SmartHouse.Models;
 
 namespace SmartHouse.ViewModels
 {
-    public class ListPageModel<T>: INotifyPropertyChanged, INotifyPropertyChanging 
+
+    public class ListViewModel<T>: INotifyPropertyChanged, INotifyPropertyChanging 
     {
-        // public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create("SelectedItemProperty", typeof(Project), typeof(ProjectsListPage));
+        private object target;
+        public object Target
+        {
+            get
+            {
+                return target;
+            }
+            set
+            {
+                OnPropertyChanging("Target");
+                target = value;
+                OnPropertyChanged("Target");
+            }
+        }
+
+        // public ViewEditTemplateSelector TemplateSelector { get; set; }
         private T selectedItem;
         public T SelectedItem
         {
@@ -22,6 +40,7 @@ namespace SmartHouse.ViewModels
             {
                 OnPropertyChanging("SelectedItem");
                 selectedItem = value;
+                // TemplateSelector?.SetEditedItem(value);
                 OnPropertyChanged("SelectedItem");
                 // SetValue(SelectedItemProperty, value); 
             }
@@ -44,7 +63,6 @@ namespace SmartHouse.ViewModels
             }
         }
 
-
         public event PropertyChangingEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -58,9 +76,10 @@ namespace SmartHouse.ViewModels
             PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(name));
         }
 
-        public ListPageModel(ObservableCollection<T> items)
+        public ListViewModel(ObservableCollection<T> items/* , ViewEditTemplateSelector templateSelector */)
         {
             Items = items;
+            // TemplateSelector = templateSelector;
         }
     }
 }

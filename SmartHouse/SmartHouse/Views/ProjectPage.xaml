@@ -3,16 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
              x:Class="SmartHouse.Views.ProjectPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- 
+            <DataTemplate x:Key="viewItemTemplate">
+            </DataTemplate>
+            <DataTemplate x:Key="editItemTemplate">
+                <ViewCell Height="64">
+                    <Grid Padding="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <local:ImageButton x:Name="IconImage" Grid.Column="0" Source="{Binding Icon, Mode=TwoWay}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                        <Button x:Name="IconButton" Grid.Column="0"  Clicked="IconButton_Clicked" BackgroundColor="Transparent" />
+                        <Entry x:Name="NameEditor" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <local:ViewEditTemplateSelector x:Key="viewEditTemplateSelector"
+                ViewTemplate="{StaticResource viewItemTemplate}"
+                EditTemplate="{StaticResource editItemTemplate}" />
+            -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
+            <RowDefinition Height="64" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="0" x:Name="EditorRow"/>
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
+        <Grid x:Name="EditorGrid" BindingContext="{Binding Target}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="#eeeeee" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
+            <local:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="#eeeeee" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding }" OnPressed="IconButton_Clicked"/>
+            <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+        </Grid>
 
-        <Label x:Name="NameLabel" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Проект" Grid.Row="0" FontSize="Large"/>
-
+        <!-- ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
+                  Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}" 
+                  ItemTemplate="{StaticResource viewEditTemplateSelector}"/ -->
         <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
                   Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
@@ -21,27 +57,19 @@
                         <Grid Padding="8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
                             <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="64" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <local:ImageButton x:Name="IconImage" Grid.Column="0" Source="{Binding Path=SelectedItem.Icon, Mode=TwoWay}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-            <Button x:Name="IconButton" Grid.Column="0"  Clicked="IconButton_Clicked" BackgroundColor="Transparent" />
-            <Entry x:Name="NameEditor" Grid.Column="1" Text="{Binding Path=SelectedItem.Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
-        </Grid>
-        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="3"/>
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="2"/>
     </Grid>
-    
-    
+
+
 </ContentPage>

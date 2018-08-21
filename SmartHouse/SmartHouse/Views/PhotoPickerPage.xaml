@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             x:Class="SmartHouse.Views.PhotoPickerPage">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Text="Выбор изображения" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Fill" />
+        <ListView BackgroundColor="#eeeeee" x:Name="ResourceListView" IsVisible="True" Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" ItemsSource="{Binding Images}" ItemSelected="ResourceListView_ItemSelected" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid HeightRequest="48">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Icon}" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            <Label FontSize="Medium" TextColor="Black" Text="{Binding Name}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Center" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="OkButton" Grid.Column="0" HorizontalOptions="Fill" Text="Принять" Clicked="OkButton_Clicked"/>
+            <Button x:Name="CancelButton"  Grid.Column="2" HorizontalOptions="Fill" Text="Отменить" Clicked="CancelButton_Clicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>

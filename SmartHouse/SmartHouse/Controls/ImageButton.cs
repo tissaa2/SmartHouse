@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -15,6 +16,13 @@ namespace SmartHouse
             set { SetValue(CommandProperty, value); }
         }
 
+        public static readonly BindableProperty DataProperty = BindableProperty.Create("DataProperty", typeof(object), typeof(ImageButton));
+        public object Data
+        {
+            get { return GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
 
         // public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create<ImageButton, object>(p => p.CommandParameter, null);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create("CommandParameterProperty", typeof(BindableProperty), typeof(ImageButton));
@@ -23,6 +31,8 @@ namespace SmartHouse
             get { return (object)GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
+
+        public event EventHandler OnPressed;
 
         private ICommand TransitionCommand
         {
@@ -39,6 +49,7 @@ namespace SmartHouse
                     {
                         Command.Execute(CommandParameter);
                     }
+                    OnPressed?.Invoke(this, new EventArgs() { });
                 });
             }
         }
