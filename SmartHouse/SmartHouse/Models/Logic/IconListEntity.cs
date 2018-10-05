@@ -9,6 +9,16 @@ namespace SmartHouse.Models.Logic
 {
     public class IconListEntity<IDType, IndexType, ItemType>: IconEntity<IDType>/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<IDType> where ItemType: IUnique<IndexType>
     {
+        public IconListEntity()
+        {
+
+        }
+
+        public IconListEntity(IDType id, string nameTemplate, string icon) :base (id, nameTemplate, icon)
+        {
+        }
+
+
         public ObservableCollection<ItemType> Items { get; set; } = new ObservableCollection<ItemType>();
 
         public int Count => Items.Count;

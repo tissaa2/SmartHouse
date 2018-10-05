@@ -51,5 +51,9 @@ namespace SmartHouse.Models.Logic
 
         }
 
+        public Group(int id, string nameTemplate, string icon) : base (id, nameTemplate, icon)
+        {
+        }
+
     }
 }

@@ -15,6 +15,15 @@ namespace SmartHouse.Models.Logic
             set { icon = value; OnPropertyChanged("Icon"); }
         }
 
+        public IconEntity()
+        {
+
+        }
+
+        public IconEntity(T id, string nameTemplate, string icon): base(id, nameTemplate)
+        {
+            Icon = icon;
+        }
 
     }
 }

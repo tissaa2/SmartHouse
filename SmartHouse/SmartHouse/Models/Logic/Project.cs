@@ -35,5 +35,10 @@ namespace SmartHouse.Models.Logic
         {
         }
 
+        public Project(int id, string nameTemplate, string icon): base(id, nameTemplate, icon)
+        {
+
+        }
+
     }
 }

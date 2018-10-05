@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="8a6f718c-a6d8-4b69-b867-a7791b040957"
-    Publisher="CN=etiainen"
+    Name="8d4aafec-5f52-4e00-9fab-c9742d3edfdd"
+    Publisher="CN=febddd9d-ff5a-41f5-8682-45a23e83b2c1"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="8a6f718c-a6d8-4b69-b867-a7791b040957" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>SmartHouse.UWP</DisplayName>
-    <PublisherDisplayName>etiainen</PublisherDisplayName>
+    <PublisherDisplayName>febddd9d-ff5a-41f5-8682-45a23e83b2c1</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -26,7 +26,7 @@
   <Resources>
     <Resource Language="x-generate"/>
   </Resources>
-  
+
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
@@ -37,7 +37,13 @@
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="SmartHouse.UWP"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>

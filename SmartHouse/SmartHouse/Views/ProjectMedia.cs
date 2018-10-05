@@ -17,8 +17,8 @@ namespace SmartHouse.Views
         // public static IPhotoPicker PhotoPicker { get; set; }
         public static async Task<string> GetPhoto(Page pg, string resourcesFilter, GetPhotoCallbackDelegate onDone)
         {
-            if (!CrossMedia.IsSupported)
-                return null;
+            /* if (!CrossMedia.IsSupported)
+                return null; */
             // var at = await pg.DisplayActionSheet("Выберите источник изображения", "Отмена", null, "Галерея", "Камера");
             await PhotoPickerPage.ShowModal(pg, resourcesFilter, async (s, e) => {
                 var at = (s as PhotoPickerPage).Result; 

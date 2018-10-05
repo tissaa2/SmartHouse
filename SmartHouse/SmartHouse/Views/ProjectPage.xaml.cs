@@ -16,7 +16,6 @@ namespace SmartHouse.Views
 	public partial class ProjectPage : ContentPage
 	{
         public static ProjectPage Instance = null;
-
         public ListViewModel<Group> Model { get; set; }
         public Project Target { get; set; }
 
@@ -25,7 +24,6 @@ namespace SmartHouse.Views
             if (target == null)
                 return null;
             Target = target;
-            // NameLabel.Text = target.Name;
             Model.Target = target;
             Model.Items = Target.Items;
             Model.SelectedItem = null;
@@ -41,7 +39,7 @@ namespace SmartHouse.Views
 
         private void AddButton_Clicked(object sender, EventArgs e)
         {
-            Target.Items.Add(new Group() { Name = "Новая группа", ID = Group.IntID.NewID(), Icon = "room.png" });
+            Target.Items.Add(new Group(Project.IntID.NewID(), "Новая группа {0}", "room.png"));
         }
 
         private void GroupsListView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -70,7 +68,12 @@ namespace SmartHouse.Views
         {
             await ProjectMedia.GetPhoto(this, "project_", (r) => {
                 if (r != null)
-                    Model.SelectedItem.Icon = r;
+                {
+                    if (Model.Target is Project)
+                    {
+                        (Model.Target as Project).Icon = r;
+                    }
+                }
             });
         }
 

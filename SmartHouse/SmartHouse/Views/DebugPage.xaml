@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:SmartHouse"
-             x:Class="SmartHouse.Views.DebugPage">
+             x:Class="SmartHouse.Views.DebugPage" >
     <StackLayout Orientation="Vertical">
         <Label Text="Порт" HorizontalOptions="Fill"/>
         <Entry x:Name="PortEntry" HorizontalOptions="Fill" Text="61576"/>
@@ -16,7 +15,7 @@
             <Button x:Name="TestButton2" Text="2" Clicked="TestButton2_Clicked"/>
             <Button x:Name="TestButton3" Text="3" Clicked="TestButton3_Clicked"/>
         </StackLayout>
-        <ListView x:Name="LogListView" HasUnevenRows="True" BackgroundColor="#eeeeee" VerticalOptions="EndAndExpand" HorizontalOptions="Fill">
+        <ListView x:Name="LogListView" HasUnevenRows="True" BackgroundColor="LightGray" VerticalOptions="EndAndExpand" HorizontalOptions="Fill">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -30,9 +29,9 @@
                             <Label Grid.Column="1" Text="Text"
                                 FontSize="Small" BackgroundColor="Green"/ -->
                             <Label Grid.Column="0" Text="{Binding Time}"
-                                FontSize="Small" BackgroundColor="#eeeeee"/>
+                                FontSize="Small" BackgroundColor="LightGray"/>
                             <Label Grid.Column="1" Text="{Binding Text}"
-                                FontSize="Small" BackgroundColor="#eeeeee"/>
+                                FontSize="Small" BackgroundColor="LightGray"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

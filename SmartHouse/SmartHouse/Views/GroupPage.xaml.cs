@@ -23,7 +23,7 @@ namespace SmartHouse.Views
             if (target == null)
                 return null;
             Target = target;
-            // NameLabel.Text = target.Name;
+            Model.Target = target;
             Model.Items = Target.Items;
             Model.SelectedItem = null;
             return target;
@@ -36,19 +36,18 @@ namespace SmartHouse.Views
             this.InitializeComponent();
         }
 
-        private void AddButton_Clicked(object sender, EventArgs e)
-        {
-
-            Target.Items.Add(new Scene() { Name = "Новая сцена", ID = Scene.IntID.NewID(), Icon = "light.png" });
-        }
-
         private void ScenesListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (Model.SelectedItem != e.Item)
             {
-                SceneEditorGrid.HeightRequest = 128;
                 Model.SelectedItem = e.Item as Scene;
                 Model.SelectedItem.Activate();
+            }
+            else
+            {
+                // 2DO:
+                // MainPage.Instance.CurrentPage = ScenePage.Instance;
+                // ScenePage.Instance.SetTarget((e.Item as Scene));
             }
         }
 
@@ -68,7 +67,7 @@ namespace SmartHouse.Views
 
         private void AddSceneButton_Clicked(object sender, EventArgs e)
         {
-
+            Target.Items.Add(new Scene(Scene.IntID.NewID(), "Новая сцена", "light.png"));
         }
 
         private void SceneIconButton_Clicked(object sender, EventArgs e)

@@ -40,8 +40,8 @@
                 <ColumnDefinition Width="64" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="#eeeeee" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
-            <local:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="#eeeeee" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding }" OnPressed="IconButton_Clicked"/>
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
+            <local:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding }" OnPressed="IconButton_Clicked"/>
             <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
             <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
         </Grid>
@@ -49,7 +49,7 @@
         <!-- ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
                   Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}" 
                   ItemTemplate="{StaticResource viewEditTemplateSelector}"/ -->
-        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
+        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="LightGray" 
                   Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate>

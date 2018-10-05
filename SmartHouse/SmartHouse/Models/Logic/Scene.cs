@@ -42,5 +42,10 @@ namespace SmartHouse.Models.Logic
         {
 
         }
+
+        public Scene(int id, string nameTemplate, string icon): base (id, nameTemplate, icon)
+        {
+            
+        }
     }
 }

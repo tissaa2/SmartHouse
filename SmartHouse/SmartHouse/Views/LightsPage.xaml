@@ -12,7 +12,7 @@
 
         <Image x:Name="PhotoImage" HorizontalOptions="Fill" VerticalOptions="Fill" Source="flat.jpg" Aspect="AspectFill"  Grid.Row="0"/>
 
-        <ScrollView x:Name="ToolsScrollView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#eeeeee" Grid.Row="1" HeightRequest="96">
+        <ScrollView x:Name="ToolsScrollView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="LightGray" Grid.Row="1" HeightRequest="96">
             <StackLayout Orientation="Horizontal" BackgroundColor="Beige">
                 <local:SuperButton Grid.Row="0" ImageSource="home.png" Caption="Я дома" />
                 <local:SuperButton Grid.Row="0" ImageSource="away.png" Caption="Я ушел" />
@@ -21,7 +21,7 @@
             </StackLayout>
         </ScrollView>
 
-        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" Grid.Row="2" HasUnevenRows="True">
+        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" Grid.Row="2" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">

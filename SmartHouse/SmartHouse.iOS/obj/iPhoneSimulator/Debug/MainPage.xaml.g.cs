@@ -8,13 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("SmartHouse.iOS.MainPage.xaml", "MainPage.xaml", typeof(global::SmartHouse.Views.MainPage))]
+[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("SmartHouse.iOS.MainPage.xaml", "MainPage.xaml", typeof(global::SmartHouse.MainPage))]
 
-namespace SmartHouse.Views {
+namespace SmartHouse {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse\\Views\\MainPage.xaml")]
-    public partial class MainPage : global::Xamarin.Forms.TabbedPage {
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse\\MainPage.xaml")]
+    public partial class MainPage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {

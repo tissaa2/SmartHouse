@@ -53,7 +53,7 @@ namespace SmartHouse.Views
 
         private void AddButton_Clicked(object sender, EventArgs e)
         {
-            ProjectsList.Instance.Items.Add(new Project() { Name= "Новый проект", ID = ProjectsList.IntID.NewID(), Icon = "home.png" });
+            ProjectsList.Instance.Items.Add(new Project(ProjectsList.IntID.NewID(), "Новый проект", "home.png"));
         }
 
         private void ProjectsListView_ItemTapped(object sender, ItemTappedEventArgs e)

@@ -24,5 +24,18 @@ namespace SmartHouse.Models.Logic
         {
             return Name;
         }
+
+        public NamedEntity()
+        {
+
+        }
+
+        public NamedEntity(T id, string nameTemplate): base(id)
+        {
+            if (nameTemplate.Contains("{"))
+                Name = String.Format(nameTemplate, ID);
+            else
+                Name = nameTemplate;
+        }
     }
 }

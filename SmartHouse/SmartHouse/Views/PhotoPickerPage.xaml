@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
              x:Class="SmartHouse.Views.PhotoPickerPage">
-    <Grid >
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Text="Выбор изображения" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="Fill" />
-        <ListView BackgroundColor="#eeeeee" x:Name="ResourceListView" IsVisible="True" Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" ItemsSource="{Binding Images}" ItemSelected="ResourceListView_ItemSelected" >
+        <ListView BackgroundColor="LightGray" x:Name="ResourceListView" IsVisible="True" Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" ItemsSource="{Binding Images}" ItemSelected="ResourceListView_ItemSelected" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

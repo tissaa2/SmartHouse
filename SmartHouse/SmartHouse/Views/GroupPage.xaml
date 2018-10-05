@@ -7,7 +7,7 @@
 
         <Label x:Name="NameLabel" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Проект" Grid.Row="0" FontSize="Large"/>
 
-        <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
+        <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Scenes}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -58,7 +58,7 @@
         
         <Button x:Name="AddSceneButton" Text="Добавить" Clicked="AddSceneButton_Clicked" />
 
-        <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
+        <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   HasUnevenRows="True" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Devices}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
