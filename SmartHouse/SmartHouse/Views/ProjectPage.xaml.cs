@@ -16,7 +16,7 @@ namespace SmartHouse.Views
 	public partial class ProjectPage : ContentPage
 	{
         public static ProjectPage Instance = null;
-        public ListViewModel<Group> Model { get; set; }
+        public ListPageModel<Group> Model { get; set; }
         public Project Target { get; set; }
 
         public Project SetTarget(Project target)
@@ -34,7 +34,7 @@ namespace SmartHouse.Views
         {
             Instance = this;
             this.InitializeComponent();
-            BindingContext = Model = new ListViewModel<Group>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
+            BindingContext = Model = new ListPageModel<Group>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
         }
 
         private void AddButton_Clicked(object sender, EventArgs e)

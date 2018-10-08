@@ -5,27 +5,38 @@
              x:Class="SmartHouse.Views.GroupPage">
     <StackLayout>
 
-        <Label x:Name="NameLabel" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Проект" Grid.Row="0" FontSize="Large"/>
+        <Grid x:Name="EditorGrid" BindingContext="{Binding Target}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
+            <local:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding .}" OnPressed="IconButton_Clicked"/>
+            <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+        </Grid>
 
         <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Scenes}" >
+                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
                         <Grid Padding="8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
-                            <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         
-        <Grid x:Name="SceneEditorGrid" IsVisible="True" HeightRequest="0">
+        <!-- <Grid x:Name="SceneEditorGrid" IsVisible="True" HeightRequest="0">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
@@ -54,29 +65,31 @@
 
             </Grid>
 
-        </Grid>
+        </Grid> -->
         
         <Button x:Name="AddSceneButton" Text="Добавить" Clicked="AddSceneButton_Clicked" />
 
-        <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Devices}" >
+        <!-- <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+                  HasUnevenRows="True" BindingContext="{Binding Devices}" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
                         <Grid Padding="8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
-                            <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView> -->
         
-        <Grid>
+        <!-- <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
                 <RowDefinition Height="32" />
@@ -103,7 +116,7 @@
 
             </Grid>
 
-        </Grid>
+        </Grid> -->
         
     </StackLayout>
 </ContentPage>

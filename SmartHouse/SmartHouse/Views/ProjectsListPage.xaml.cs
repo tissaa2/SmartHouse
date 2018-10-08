@@ -23,7 +23,7 @@ namespace SmartHouse.Views
             }
         } */
         public static ProjectsListPage Instance = null;
-        public ListViewModel<Project> Model { get; set;}
+        public ListPageModel<Project> Model { get; set;}
         // public ICommand EditItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
 
@@ -48,7 +48,7 @@ namespace SmartHouse.Views
             // this.EditItemCommand = new Command<Project>(EditItem);
             this.DeleteItemCommand = new Command<Project>(DeleteItem);
             this.InitializeComponent();
-            BindingContext = Model = new ListViewModel<Project>(ProjectsList.Instance.Items/* , TemplateSelector */);
+            BindingContext = Model = new ListPageModel<Project>(ProjectsList.Instance.Items/* , TemplateSelector */);
         }
 
         private void AddButton_Clicked(object sender, EventArgs e)

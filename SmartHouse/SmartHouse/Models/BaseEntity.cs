@@ -30,6 +30,7 @@ namespace SmartHouse.Models
         } */
 
         public static IDGenerator<int> IntID = new IDGenerator<int>((v) => { return (int)v + 1; });
+        public static IDGenerator<UID> UIDID = new IDGenerator<UID>((v) => { return new UID((int)v + 1); });
 
         public static explicit operator string (BaseEntity<IDType> e)
         {

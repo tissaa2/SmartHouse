@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using SmartHouse.Models.Logic;
 using SmartHouse.ViewModels;
 
@@ -15,7 +9,7 @@ namespace SmartHouse.Views
 	public partial class GroupPage : ContentPage
 	{
         public static GroupPage Instance = null;
-        public ListViewModel<Scene> Model { get; set; }
+        public ListPageModel<Scene> Model { get; set; }
         public Group Target { get; set; }
 
         public Group SetTarget(Group target)
@@ -32,7 +26,7 @@ namespace SmartHouse.Views
         public GroupPage()
         {
             Instance = this;
-            BindingContext = Model = new ListViewModel<Scene>(new System.Collections.ObjectModel.ObservableCollection<Scene>()/* , new ViewEditTemplateSelector() */);
+            BindingContext = Model = new ListPageModel<Scene>(new System.Collections.ObjectModel.ObservableCollection<Scene>()/* , new ViewEditTemplateSelector() */);
             this.InitializeComponent();
         }
 
@@ -45,9 +39,8 @@ namespace SmartHouse.Views
             }
             else
             {
-                // 2DO:
-                // MainPage.Instance.CurrentPage = ScenePage.Instance;
-                // ScenePage.Instance.SetTarget((e.Item as Scene));
+                MainPage.Instance.CurrentPage = ScenePage.Instance;
+                ScenePage.Instance.SetTarget((e.Item as Scene));
             }
         }
 
@@ -71,6 +64,11 @@ namespace SmartHouse.Views
         }
 
         private void SceneIconButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Clicked(object sender, EventArgs e)
         {
 
         }

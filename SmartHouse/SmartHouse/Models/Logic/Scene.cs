@@ -3,12 +3,9 @@ using Newtonsoft.Json;
 
 namespace SmartHouse.Models.Logic
 {
-    // public class Scene : IconListEntity<UID, UID, Device>
-    public class Scene : IconEntity<UID>
+    public class Scene : IconListEntity<UID, UID, Device>
+    // public class Scene : IconEntity<UID>
     {
-        /*                            
-                                    new Scene() { ID = new UID(1), 
-        */
         public static Scene LightsOff(int uid)
         {
             return new Scene() { ID = new UID(uid), Name = "Выключить все", Event = new GroupEvent(0, 1, 0, 0), Icon = "scene_switchoff.png" };

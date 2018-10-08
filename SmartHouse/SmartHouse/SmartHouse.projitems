@@ -16,12 +16,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)TabbedPage1.xaml.cs">
-      <DependentUpon>TabbedPage1.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GroupViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicePageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DevicePage.xaml.cs">
+      <DependentUpon>DevicePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
@@ -35,6 +37,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProjectsListPage.xaml.cs">
       <DependentUpon>ProjectsListPage.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ScenePage.xaml.cs">
+      <DependentUpon>ScenePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -71,7 +76,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Scene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewEditTemplateSelector.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListPageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -102,15 +107,10 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\SuperButton.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)TabbedPage1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\GroupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LightsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +132,18 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProjectsListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ScenePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

@@ -54,5 +54,10 @@ namespace SmartHouse.Models
             return new UID(v);
         }
 
+        public static explicit operator int(UID v)
+        {
+            return v.hash;
+        }
+
     }
 }

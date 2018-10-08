@@ -22,6 +22,8 @@ namespace SmartHouse.Views
             
             Children.Add(pp);
             Children.Add(new GroupPage() { Title = "Группа" });
+            Children.Add(new ScenePage() { Title = "Сцена" });
+            Children.Add(new DevicePage() { Title = "Устройство" });
             // Children.Add(new ScenesPage() { Title = "Группа" });
             Children.Add(new DebugPage() { Title = "Отладка" });
             // Children.Add(new EditorPage() { Title = "Редактор" });

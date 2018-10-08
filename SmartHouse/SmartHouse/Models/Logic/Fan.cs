@@ -13,5 +13,12 @@ namespace SmartHouse.Models.Logic
         }
 
         public override string Icon { get => "devices/fan.png"; set => base.Icon = value; }
+
+        public Fan(string name, double value)
+        {
+            Name = name;
+            Value = value;
+        }
+
     }
 }
