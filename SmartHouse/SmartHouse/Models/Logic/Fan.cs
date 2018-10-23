@@ -12,13 +12,24 @@ namespace SmartHouse.Models.Logic
             set { this.value = value; OnPropertyChanged("Value"); }
         }
 
-        public override string Icon { get => "devices/fan.png"; set => base.Icon = value; }
+        public override string Icon { get => "device_fan.png"; set => base.Icon = value; }
+
+        public Fan()
+        {
+
+        }
 
         public Fan(string name, double value)
         {
             Name = name;
             Value = value;
         }
+
+        public override BaseEntity<UID> Clone()
+        {
+            return new Fan() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, Value = Value };
+        }
+
 
     }
 }

@@ -2,14 +2,14 @@
 using Xamarin.Forms;
 using SmartHouse.Models.Logic;
 using SmartHouse.ViewModels;
-
+using System.Collections.ObjectModel;
 namespace SmartHouse.Views
 {
 	// [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GroupPage : ContentPage
 	{
         public static GroupPage Instance = null;
-        public ListPageModel<Scene> Model { get; set; }
+        public GroupPageModel Model { get; set; }
         public Group Target { get; set; }
 
         public Group SetTarget(Group target)
@@ -18,29 +18,34 @@ namespace SmartHouse.Views
                 return null;
             Target = target;
             Model.Target = target;
-            Model.Items = Target.Items;
-            Model.SelectedItem = null;
+            Model.Scenes.Items = Target.Items;
+            Model.Scenes.SelectedItem = null;
+
+            Model.Devices.Items = new ObservableCollection<DeviceModel>();
+            foreach (var e in target.Devices)
+                Model.Devices.Items.Add(ViewModel.CreateModel(e) as DeviceModel);
+            Model.Devices.SelectedItem = null;
             return target;
         }
 
         public GroupPage()
         {
             Instance = this;
-            BindingContext = Model = new ListPageModel<Scene>(new System.Collections.ObjectModel.ObservableCollection<Scene>()/* , new ViewEditTemplateSelector() */);
+            BindingContext = Model = new GroupPageModel();
             this.InitializeComponent();
         }
 
         private void ScenesListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (Model.SelectedItem != e.Item)
+            if (Model.Scenes.SelectedItem != e.Item)
             {
-                Model.SelectedItem = e.Item as Scene;
-                Model.SelectedItem.Activate();
+                Model.Scenes.SelectedItem = e.Item as Scene;
+                Model.Scenes.SelectedItem.Activate();
             }
             else
             {
                 MainPage.Instance.CurrentPage = ScenePage.Instance;
-                ScenePage.Instance.SetTarget((e.Item as Scene));
+                ScenePage.Instance.SetTarget(this.Model, (e.Item as Scene));
             }
         }
 
@@ -48,7 +53,7 @@ namespace SmartHouse.Views
         {
             await ProjectMedia.GetPhoto(this, "group_", (r)=> {
                 if (r != null)
-                    Model.SelectedItem.Icon = r;
+                    (Model.Target as Group).Icon = r;
             });
             
         }
@@ -60,7 +65,7 @@ namespace SmartHouse.Views
 
         private void AddSceneButton_Clicked(object sender, EventArgs e)
         {
-            Target.Items.Add(new Scene(Scene.IntID.NewID(), "Новая сцена", "light.png"));
+            Target.Items.Add(new Scene(Scene.IntID.NewID(), "Новая сцена", "scenes_brightlight.png"));
         }
 
         private void SceneIconButton_Clicked(object sender, EventArgs e)
@@ -69,6 +74,21 @@ namespace SmartHouse.Views
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImageButton_OnPressed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteDeviceButton_OnPressed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ESlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
 
         }

@@ -12,7 +12,7 @@ namespace SmartHouse.Models.Logic
             set { this.enabled = value; OnPropertyChanged("Enabled"); }
         }
 
-        public override string Icon { get => "devices/socket.png"; set => base.Icon = value; }
+        public override string Icon { get => "device_socket.png"; set => base.Icon = value; }
 
         public Socket()
         {
@@ -24,5 +24,12 @@ namespace SmartHouse.Models.Logic
             Name = name;
             Enabled = enabled;
         }
+
+
+        public override BaseEntity<UID> Clone()
+        {
+            return new Socket() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, Enabled = Enabled };
+        }
+
     }
 }

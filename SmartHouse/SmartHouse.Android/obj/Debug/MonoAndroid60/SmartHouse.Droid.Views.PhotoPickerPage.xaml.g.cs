@@ -11,7 +11,7 @@
 namespace SmartHouse.Views {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse\\Views\\PhotoPickerPage.xaml")]
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse\\Views\\PhotoPickerPage.xaml")]
     public partial class PhotoPickerPage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]

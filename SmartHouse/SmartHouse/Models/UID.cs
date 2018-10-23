@@ -59,5 +59,15 @@ namespace SmartHouse.Models
             return v.hash;
         }
 
+        public static bool operator ==(UID a, UID b)
+        {
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(UID a, UID b)
+        {
+            return !a.Equals(b);
+        }
+
     }
 }

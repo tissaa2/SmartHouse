@@ -18,17 +18,13 @@ namespace SmartHouse.Views {
         private global::Xamarin.Forms.Grid EditorGrid;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.ListView DevicesListView;
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.Button AddSceneButton;
+        private global::SmartHouse.ImageButton IconButton;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(DevicePage));
             EditorGrid = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "EditorGrid");
-            DevicesListView = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.ListView>(this, "DevicesListView");
-            AddSceneButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "AddSceneButton");
+            IconButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::SmartHouse.ImageButton>(this, "IconButton");
         }
     }
 }

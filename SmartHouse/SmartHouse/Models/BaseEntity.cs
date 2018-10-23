@@ -40,10 +40,23 @@ namespace SmartHouse.Models
         public Boolean IsAdmin { get { return Settings.IsAdmin; } }
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
 
-        // [XmlAttribute("ID")]
-        public IDType ID { get; set; }
-        // [XmlAttribute("SecurityLevel")]
-        public byte SecurityLevel { get; set; }
+        private IDType id;
+
+        [JsonProperty(PropertyName = "ID")]
+        public virtual IDType ID
+        {
+            get { return id; }
+            set { id = value; OnPropertyChanged("ID"); }
+        }
+
+        private byte securityLevel;
+
+        [JsonProperty(PropertyName = "SecurityLevel")]
+        public virtual byte SecurityLevel
+        {
+            get { return securityLevel; }
+            set { securityLevel = value; OnPropertyChanged("SecurityLevel"); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -90,6 +103,17 @@ namespace SmartHouse.Models
             string fn = Path.Combine(path, fileName);
             string data = JsonConvert.SerializeObject(this, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.None });
             File.WriteAllText(fn, data);
+        }
+
+        public virtual void Assign(BaseEntity<IDType> source)
+        {
+            this.ID = source.ID;
+            this.SecurityLevel = source.SecurityLevel;
+        }
+
+        public virtual BaseEntity<IDType> Clone()
+        {
+            throw new Exception("Not implemented");
         }
 
     }

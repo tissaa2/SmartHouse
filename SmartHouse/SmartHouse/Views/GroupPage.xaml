@@ -2,10 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
              x:Class="SmartHouse.Views.GroupPage">
-    <StackLayout>
-
-        <Grid x:Name="EditorGrid" BindingContext="{Binding Target}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="EditorGrid" BindingContext="{Binding Target}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="64" />
                 <ColumnDefinition Width="*" />
@@ -16,8 +22,8 @@
             <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
         </Grid>
 
-        <ListView x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Items}" >
+        <ListView Grid.Row="1"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" BindingContext="{Binding Scenes}" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
@@ -35,41 +41,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-        <!-- <Grid x:Name="SceneEditorGrid" IsVisible="True" HeightRequest="0">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="32" />
-                <RowDefinition Height="32" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+     
+        <Button Grid.Row="2" x:Name="AddSceneButton" Text="Добавить" Clicked="AddSceneButton_Clicked" />
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="64" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <local:ImageButton x:Name="SceneIconImage" Grid.Column="0" Source="{Binding Path=SelectedScene.Icon, Mode=TwoWay}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-                <Button x:Name="SceneIconButton" Grid.Column="0"  Clicked="SceneIconButton_Clicked" BackgroundColor="Transparent" />
-                <Entry x:Name="SceneNameEditor" Grid.Column="1" Text="{Binding Path=SelectedScene.Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
-            </Grid>
-
-            <Picker x:Name="EventTypePicker" Grid.Row="1" SelectedIndex="0">
-                <Picker.Items>
-                    <x:String>Событие группы</x:String>
-                    <x:String>Событие UID</x:String>
-                </Picker.Items>
-            </Picker>
-
-            <Grid Grid.Row="2">
-
-            </Grid>
-
-        </Grid> -->
-        
-        <Button x:Name="AddSceneButton" Text="Добавить" Clicked="AddSceneButton_Clicked" />
-
-        <!-- <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+        <ListView Grid.Row="3" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   HasUnevenRows="True" BindingContext="{Binding Devices}" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -80,15 +55,22 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="24"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                            <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                            <Image Grid.Column="0" Source="{Binding Device.Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <!-- <StackLayout Margin="0, 0, 0, 0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Margin ="16, 0, 0, 0" Text="{Binding Device.Name}" HorizontalOptions="Fill" FontSize="Medium"/>
+                                <Slider HorizontalOptions="Fill" Value="{Binding State, Mode=TwoWay}" ValueChanged="ESlider_ValueChanged" Scale="2"/> 
+                                <controls:ESlider HeightRequest="40" Margin="0" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            </StackLayout> -->
+                            <controls:ESlider HeightRequest="40" Margin="0" Value="{Binding State, Mode=TwoWay}" Caption="{Binding Device.Name}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            <!-- <ProgressBar Grid.Column="1"  HorizontalOptions="Fill" VerticalOptions="Fill" Progress="50"/>-->
+                            <!-- <Label Grid.Column="1" Text="{Binding Device.Name}" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="White" HorizontalOptions="Fill" FontSize="Large"/> -->
+                            <local:ImageButton x:Name="DeleteDeviceButton" Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView> -->
-        
+        </ListView>
+
         <!-- <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
@@ -118,5 +100,5 @@
 
         </Grid> -->
         
-    </StackLayout>
+    </Grid>
 </ContentPage>

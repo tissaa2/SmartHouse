@@ -11,7 +11,7 @@
 namespace SmartHouse.Views {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse\\Views\\ProjectPage.xaml")]
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse\\Views\\ProjectPage.xaml")]
     public partial class ProjectPage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]

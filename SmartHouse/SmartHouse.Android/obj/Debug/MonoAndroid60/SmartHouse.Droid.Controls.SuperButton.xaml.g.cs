@@ -11,7 +11,7 @@
 namespace SmartHouse {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse\\Controls\\SuperButton.xaml")]
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse\\Controls\\SuperButton.xaml")]
     public partial class SuperButton : global::Xamarin.Forms.Grid {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]

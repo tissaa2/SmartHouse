@@ -16,8 +16,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GroupViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\EFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ESlider.xaml.cs">
+      <DependentUpon>ESlider.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\StateDeviceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\LampModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\FanModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GroupPageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicePageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -146,6 +159,15 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DevicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Devices\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\ESlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

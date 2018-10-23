@@ -7,7 +7,7 @@ using System.IO;
 
 namespace SmartHouse.Models.Logic
 {
-    public class IconListEntity<IDType, IndexType, ItemType>: IconEntity<IDType>/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<IDType> where ItemType: IUnique<IndexType>
+    public class IconListEntity<IDType, IndexType, ItemType>: IconEntity<IDType>/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<IDType> where ItemType: BaseEntity<IndexType>
     {
         public IconListEntity()
         {
@@ -83,6 +83,22 @@ namespace SmartHouse.Models.Logic
         {
             throw new NotImplementedException();
         }
+
+        public ObservableCollection<ItemType> CreateModels()
+        {
+            ObservableCollection<ItemType> r = new ObservableCollection<ItemType>();
+            foreach (var e in Items)
+                r.Add( e.Clone() as ItemType);
+            return r;
+        }
+
+        /* public ObservableCollection<ItemType> CreateModels()
+        {
+            ObservableCollection<ItemType> r = new ObservableCollection<ItemType>();
+            foreach (var e in Items)
+                r.Add(e.Clone() as ItemType);
+            return r;
+        } */
 
         /* public  void Save(string fileName)
         {

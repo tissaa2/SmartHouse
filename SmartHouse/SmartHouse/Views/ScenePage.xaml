@@ -35,8 +35,9 @@
                                     <ColumnDefinition Width="24"/>
                                 </Grid.ColumnDefinitions>
                                 <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-                                <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                                <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                                <Slider Grid.Column="1" Value="{Binding Value}" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                                <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large" />
+                                <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
