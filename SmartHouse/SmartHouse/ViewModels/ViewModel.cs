@@ -10,10 +10,10 @@ namespace SmartHouse.ViewModels
         {
             Type t = target.GetType();
             var tn = t.Name;
-            Type rt = Type.GetType("SmartHouse.ViewModels." + tn+"Model");
+            Type rt = Type.GetType("SmartHouse.ViewModels." + tn + "Model");
             var m = Activator.CreateInstance(rt) as ViewModel;
             m.target = target;
-            m.Setup(); 
+            m.Setup(t);
             return m;
         }
 
@@ -45,7 +45,7 @@ namespace SmartHouse.ViewModels
             PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(name));
         } */
 
-        public virtual void Setup()
+        public virtual void Setup(params object[] args)
         {
 
         }

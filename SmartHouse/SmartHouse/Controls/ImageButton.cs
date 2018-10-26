@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace SmartHouse
+namespace SmartHouse.Controls
 {
     public class ImageButton : Image
     {
 
         // public static readonly BindableProperty CommandProperty = BindableProperty.Create<ImageButton, ICommand>(p => p.Command, null);
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create("CommandProperty", typeof(BindableProperty), typeof(ImageButton));
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(ImageButton));
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
-        public static readonly BindableProperty DataProperty = BindableProperty.Create("DataProperty", typeof(object), typeof(ImageButton));
+        public static readonly BindableProperty DataProperty = BindableProperty.Create("Data", typeof(object), typeof(ImageButton));
         public object Data
         {
             get { return GetValue(DataProperty); }
@@ -25,7 +25,7 @@ namespace SmartHouse
 
 
         // public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create<ImageButton, object>(p => p.CommandParameter, null);
-        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create("CommandParameterProperty", typeof(BindableProperty), typeof(ImageButton));
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create("CommandParameter", typeof(object), typeof(ImageButton));
         public object CommandParameter
         {
             get { return (object)GetValue(CommandParameterProperty); }

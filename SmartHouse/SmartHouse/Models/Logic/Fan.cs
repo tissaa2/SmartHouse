@@ -2,16 +2,10 @@
 
 namespace SmartHouse.Models.Logic
 {
-    public class Fan : Device
+    [IconName("device_fan.png", "Вентилятор")]
+    public class Fan : StateDevice<double>
     {
-        private double value;
-        [JsonProperty(PropertyName = "Value")]
-        public double Value
-        {
-            get { return value; }
-            set { this.value = value; OnPropertyChanged("Value"); }
-        }
-
+        public override string TypeName { get => "Вентилятор"; set => base.TypeName = value; }
         public override string Icon { get => "device_fan.png"; set => base.Icon = value; }
 
         public Fan()
@@ -19,17 +13,14 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Fan(string name, double value)
+        public Fan(string name, double state): base(name, state)
         {
-            Name = name;
-            Value = value;
         }
 
         public override BaseEntity<UID> Clone()
         {
-            return new Fan() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, Value = Value };
+            return new Fan() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }
-
 
     }
 }

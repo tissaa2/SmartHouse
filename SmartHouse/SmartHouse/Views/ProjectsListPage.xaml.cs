@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows.Input;
-using System.Net;
-using Xamarin.Forms;
-using Plugin.Media;
-using SmartHouse.Services;
-using SmartHouse.Models;
+﻿using SmartHouse.Controls;
 using SmartHouse.Models.Logic;
+using SmartHouse.Services;
 using SmartHouse.ViewModels;
+using System;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartHouse.Views
 {
@@ -23,7 +21,7 @@ namespace SmartHouse.Views
             }
         } */
         public static ProjectsListPage Instance = null;
-        public ListPageModel<Project> Model { get; set;}
+        public ListPageModel<Project> Model { get; set; }
         // public ICommand EditItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
 
@@ -64,9 +62,14 @@ namespace SmartHouse.Views
                 Model.SelectedItem = e.Item as Project;
             }
             else
+            if (Utils.IsDoubleTap())
             {
+                ProjectPage.Instance.IsVisible = true;
                 MainPage.Instance.CurrentPage = ProjectPage.Instance;
                 ProjectPage.Instance.SetTarget((e.Item as Project));
+                GroupPage.Instance.IsVisible = false;
+                ScenePage.Instance.IsVisible = false;
+                DevicePage.Instance.IsVisible = false;
             }
 
         }

@@ -12,6 +12,12 @@ namespace SmartHouse.Models.Logic
         public ObservableCollection<Group> Children { get; set; } = new ObservableCollection<Group>();
         public ObservableCollection<Device> Devices { get; set; } = new ObservableCollection<Device>();
 
+        public void ReplaceDevice(Device oldDevice, Device newDevice)
+        {
+            Devices.Remove(oldDevice);
+            Devices.Add(newDevice);
+        }
+
         public static Group Create(string name, string icon, int id)
         {
             //int bid = id * 10;

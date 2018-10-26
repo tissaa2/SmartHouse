@@ -2,16 +2,10 @@
 
 namespace SmartHouse.Models.Logic
 {
-    public class Socket : Device
+    [IconName("device_socket.png", "Розетка")]
+    public class Socket : StateDevice<bool>
     {
-        private bool enabled;
-        [JsonProperty(PropertyName = "Enabled")]
-        public bool Enabled
-        {
-            get { return enabled; }
-            set { this.enabled = value; OnPropertyChanged("Enabled"); }
-        }
-
+        public override string TypeName { get => "Розетка"; set => base.TypeName = value; }
         public override string Icon { get => "device_socket.png"; set => base.Icon = value; }
 
         public Socket()
@@ -19,16 +13,14 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Socket(string name, bool enabled)
+        public Socket(string name, bool state): base(name, state)
         {
-            Name = name;
-            Enabled = enabled;
         }
 
 
         public override BaseEntity<UID> Clone()
         {
-            return new Socket() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, Enabled = Enabled };
+            return new Socket() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }
 
     }

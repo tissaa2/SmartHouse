@@ -4,7 +4,10 @@ namespace SmartHouse.Models.Logic
 {
     public class Device : IconEntity<UID>
     {
-        private bool _checked;
+        
+        public virtual string TypeName { get; set; }
+
+        /* private bool _checked;
         public bool Checked {
             get {
                 return _checked;
@@ -13,7 +16,7 @@ namespace SmartHouse.Models.Logic
                 _checked = value;
                 OnPropertyChanged("Checked");
             }
-        }
+        } */
 
         /* private bool enabled;
         public bool Enabled

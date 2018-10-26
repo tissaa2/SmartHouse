@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
              xmlns:controls="clr-namespace:SmartHouse.Controls"
-             x:Class="SmartHouse.Views.GroupPage">
+             x:Class="SmartHouse.Views.GroupPage"
+             IsVisible="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="64" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="48" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" x:Name="EditorGrid" BindingContext="{Binding Target}">
             <Grid.ColumnDefinitions>
@@ -17,13 +18,16 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
-            <local:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding .}" OnPressed="IconButton_Clicked"/>
+            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding .}" OnPressed="IconButton_Clicked"/>
             <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
             <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
         </Grid>
+        
+        <Button x:Name="DevicesButton" Grid.Row="1" IsVisible="{Binding ScenesMode}" Pressed="DevicesButton_Pressed" Text="Показать устройства" />
+        <Button x:Name="ScenesButton" Grid.Row="1" IsVisible="{Binding DevicesMode}" Pressed="ScenesButton_Pressed" Text="Показать сцены" />
 
-        <ListView Grid.Row="1"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" BindingContext="{Binding Scenes}" ItemsSource="{Binding Items}" >
+        <ListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Scenes.Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
@@ -35,16 +39,16 @@
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
                             <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                            <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                            <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-     
-        <Button Grid.Row="2" x:Name="AddSceneButton" Text="Добавить" Clicked="AddSceneButton_Clicked" />
 
-        <ListView Grid.Row="3" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+        <controls:DevicesListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" /> 
+        <!-- <ListView Grid.Row="2" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   HasUnevenRows="True" BindingContext="{Binding Devices}" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -56,20 +60,15 @@
                                 <ColumnDefinition Width="24"/>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{Binding Device.Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-                            <!-- <StackLayout Margin="0, 0, 0, 0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
-                                <Label Margin ="16, 0, 0, 0" Text="{Binding Device.Name}" HorizontalOptions="Fill" FontSize="Medium"/>
-                                <Slider HorizontalOptions="Fill" Value="{Binding State, Mode=TwoWay}" ValueChanged="ESlider_ValueChanged" Scale="2"/> 
-                                <controls:ESlider HeightRequest="40" Margin="0" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                            </StackLayout> -->
                             <controls:ESlider HeightRequest="40" Margin="0" Value="{Binding State, Mode=TwoWay}" Caption="{Binding Device.Name}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                            <!-- <ProgressBar Grid.Column="1"  HorizontalOptions="Fill" VerticalOptions="Fill" Progress="50"/>-->
-                            <!-- <Label Grid.Column="1" Text="{Binding Device.Name}" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="White" HorizontalOptions="Fill" FontSize="Large"/> -->
-                            <local:ImageButton x:Name="DeleteDeviceButton" Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                            <controls:ImageButton x:Name="DeleteDeviceButton" Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView> -->
+
+        <Button Grid.Row="3" x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" />
 
         <!-- <Grid>
             <Grid.RowDefinitions>

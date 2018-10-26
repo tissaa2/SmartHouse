@@ -8,6 +8,16 @@ namespace SmartHouse.Services
     public class Utils
     {
 
+        private static long lastTapTime = 0;
+
+        public static bool IsDoubleTap()
+        {
+            var t = DateTime.Now.Ticks;
+            bool r = t - lastTapTime < 10000 * 500;
+            lastTapTime = t;
+            return r;
+        }
+
         public static byte[] HexStringToBytes(string text)
         {
             string h = text.Replace(" ", "");

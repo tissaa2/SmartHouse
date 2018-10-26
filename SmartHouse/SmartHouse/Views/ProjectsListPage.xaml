@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls" 
              x:Class="SmartHouse.Views.ProjectsListPage"
              x:Name="ProjectsListPage"
 >
@@ -67,7 +68,7 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
                         <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                        <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                        <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
                     </Grid>
                 </ViewCell>
             </DataTemplate>

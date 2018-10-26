@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
-             x:Class="SmartHouse.Views.ProjectPage">
-
+             xmlns:controls="clr-namespace:SmartHouse.Controls" 
+            x:Class="SmartHouse.Views.ProjectPage"
+             IsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>
             <!-- 
@@ -39,17 +40,25 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="64" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="64" />
             </Grid.ColumnDefinitions>
-            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
-            <local:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding }" OnPressed="IconButton_Clicked"/>
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="64" Source="{Binding Icon}" Grid.Row="0"/>
+            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding }" OnPressed="IconButton_Clicked"/>
             <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
             <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+            <Button x:Name="MenuButton" Text="⋮" FontSize="Large" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Pressed="MenuButton_Pressed" />
+            <Picker x:Name="ProjectMenuPicker" Title="Выберите действие" IsVisible="False">
+                <Picker.Items>
+                    <x:String>Сохранить проект в CAN</x:String>
+                    <x:String>Загрузить проект из CAN</x:String>
+                </Picker.Items>
+            </Picker>
         </Grid>
 
         <!-- ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#ffffff" 
                   Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}" 
                   ItemTemplate="{StaticResource viewEditTemplateSelector}"/ -->
-        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="LightGray" 
+        <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -62,7 +71,7 @@
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
                             <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                            <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                            <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

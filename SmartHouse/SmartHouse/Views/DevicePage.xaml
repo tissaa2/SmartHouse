@@ -2,19 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
-             x:Class="SmartHouse.Views.DevicePage">
-    <StackLayout>
-
-        <Grid x:Name="EditorGrid" BindingContext="{Binding Target}">
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
+             x:Class="SmartHouse.Views.DevicePage"
+             IsVisible="False">
+    <StackLayout BindingContext="{Binding Target}">
+        <Button x:Name="CaptureDeviceButton" Text="Перехватить устройство" />
+        <Grid HeightRequest="64" IsEnabled="{Binding Device.IsAdmin}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Тип:" VerticalTextAlignment="Center" FontSize="Large"/>
+            <Image x:Name="DeviceTypeIconImage" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Source="{Binding DeviceType.Props.Icon}" />
+            <Label x:Name="DeviceTypeNameLabel" Grid.Column="2" Text="{Binding DeviceType.Props.Name}" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" FontSize="Large" />
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </Grid.GestureRecognizers>
+        </Grid>
+        <Picker x:Name="DeviceTypesPicker" ItemsSource="{Binding DeviceTypes}" SelectedItem="{Binding DeviceType}" IsVisible="False" Title="Тип" HorizontalOptions="Fill" />
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="64" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
-            <local:ImageButton x:Name="IconButton" IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding .}" OnPressed="IconButton_OnPressed"/>
-            <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
-            <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="UID:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding ID}" FontSize="Large"/>
         </Grid>
-
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="Имя:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+        </Grid>
+        <Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" />
     </StackLayout>
 </ContentPage>

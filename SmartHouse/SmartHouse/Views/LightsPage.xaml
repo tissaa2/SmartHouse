@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
              x:Class="SmartHouse.Views.LightsPage">
     <Grid>
         <Grid.RowDefinitions>
@@ -14,10 +15,10 @@
 
         <ScrollView x:Name="ToolsScrollView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="LightGray" Grid.Row="1" HeightRequest="96">
             <StackLayout Orientation="Horizontal" BackgroundColor="Beige">
-                <local:SuperButton Grid.Row="0" ImageSource="home.png" Caption="Я дома" />
-                <local:SuperButton Grid.Row="0" ImageSource="away.png" Caption="Я ушел" />
-                <local:SuperButton Grid.Row="0" ImageSource="sleep.png" Caption="Спать" />
-                <local:SuperButton Grid.Row="0" ImageSource="morning.png" Caption="Подъем" />
+                <controls:SuperButton Grid.Row="0" ImageSource="home.png" Caption="Я дома" />
+                <controls:SuperButton Grid.Row="0" ImageSource="away.png" Caption="Я ушел" />
+                <controls:SuperButton Grid.Row="0" ImageSource="sleep.png" Caption="Спать" />
+                <controls:SuperButton Grid.Row="0" ImageSource="morning.png" Caption="Подъем" />
             </StackLayout>
         </ScrollView>
 
@@ -31,7 +32,7 @@
                                 <ColumnDefinition Width="85*" />
                                 <!-- <ColumnDefinition Width="15*" /> -->
                             </Grid.ColumnDefinitions>
-                            <local:ImageButton Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                            <controls:ImageButton Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                             <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center"/>
                             <!-- <local:ImageButton Grid.Column="2" Source="proceed.png" VerticalOptions="Fill" HorizontalOptions="Fill"/> -->
                         </Grid>

@@ -2,6 +2,7 @@
 using SmartHouse.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using SmartHouse.Controls;
 using Xamarin.Forms;
 using Device = SmartHouse.Models.Logic.Device;
 
@@ -13,6 +14,17 @@ namespace SmartHouse.Views
         public static ScenePage Instance = null;
         public ListPageModel<DeviceModel> Model { get; set; }
         public Scene Target { get; set; }
+
+        public void Refresh(GroupPageModel group)
+        {
+            if (Target == null)
+                return;
+
+            Model.Items = new ObservableCollection<DeviceModel>();
+            foreach (var e in group.Devices.Items)
+                Model.Items.Add(e.Clone() as DeviceModel);
+            Model.SelectedItem = null;
+        }
 
         public Scene SetTarget(GroupPageModel group, Scene target)
         {
@@ -35,26 +47,6 @@ namespace SmartHouse.Views
             BindingContext = Model = new ListPageModel<DeviceModel>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
         }
 
-        private void AddButton_Clicked(object sender, EventArgs e)
-        {
-            Target.Items.Add(new Device(Scene.UIDID.NewID(), "Новое устройство {0}", ".png"));
-        }
-
-        private void GroupsListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (Model.SelectedItem != e.Item)
-            {
-                Model.SelectedItem = e.Item as DeviceModel;
-            }
-            else
-            {
-                var m = e.Item as DeviceModel;
-                MainPage.Instance.CurrentPage = DevicePage.Instance;
-                DevicePage.Instance.SetTarget(m.Device);
-            }
-
-        }
-
         public async void DeleteItem(Device item)
         {
             var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить устройство?", "Да", "Нет");
@@ -69,9 +61,9 @@ namespace SmartHouse.Views
             {
                 if (r != null)
                 {
-                    if (Model.Target is Project)
+                    if (Model.Target is Scene)
                     {
-                        (Model.Target as Project).Icon = r;
+                        (Model.Target as Scene).Icon = r;
                     }
                 }
             });

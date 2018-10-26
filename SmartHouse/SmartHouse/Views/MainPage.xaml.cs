@@ -28,6 +28,9 @@ namespace SmartHouse.Views
             Children.Add(new DebugPage() { Title = "Отладка" });
             // Children.Add(new EditorPage() { Title = "Редактор" });
             this.InitializeComponent();
+            Xamarin.Forms.PlatformConfiguration.AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(this, false);
+
+            // this.On<Xamarin.Forms.PlatformConfiguration.Android>().SetIsSwipePagingEnabled(false);
         }
     }
 }

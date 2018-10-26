@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartHouse.Controls.DevicesListView" 
+             xmlns:controls="clr-namespace:SmartHouse.Controls" 
+             x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+                  HasUnevenRows="True" ItemTapped="DevicesListView_ItemTapped" >
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <ViewCell Height="64">
+                <Grid Padding="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition Width="64" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="24"/>
+                    </Grid.ColumnDefinitions>
+                    <Switch IsToggled="{Binding Enabled}" Grid.Column="0" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                    <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                    <controls:ESlider IsEnabled="{Binding Enabled}" Grid.Column="2"  HeightRequest="40" Margin="0" Value="{Binding State, Mode=TwoWay}" Caption="{Binding Device.Name}" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                    <controls:ImageButton IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </ListView.ItemTemplate>
+</ListView>

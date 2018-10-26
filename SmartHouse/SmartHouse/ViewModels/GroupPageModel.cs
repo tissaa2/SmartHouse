@@ -26,6 +26,17 @@ namespace SmartHouse.ViewModels
             }
         }
 
+        private bool devicesMode = false;
+        public bool DevicesMode {
+            get { return devicesMode; }
+            set { devicesMode = value; OnPropertyChanged("DevicesMode"); OnPropertyChanged("ScenesMode"); }
+        }
+
+        public bool ScenesMode
+        {
+            get { return !devicesMode; }
+            set { devicesMode = !value; OnPropertyChanged("DevicesMode"); OnPropertyChanged("ScenesMode"); }
+        }
 
         private ListViewModel<DeviceModel> devices = new ListViewModel<DeviceModel>(null);
         public ListViewModel<DeviceModel> Devices

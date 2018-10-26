@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using SmartHouse.Controls;
 using SmartHouse.Models.Logic;
+using SmartHouse.Services;
 using SmartHouse.ViewModels;
-using Plugin.Media;
+using System;
+using Xamarin.Forms;
 
 namespace SmartHouse.Views
 {
-	// [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ProjectPage : ContentPage
-	{
+    // [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ProjectPage : ContentPage
+    {
         public static ProjectPage Instance = null;
         public ListPageModel<Group> Model { get; set; }
         public Project Target { get; set; }
@@ -49,11 +44,14 @@ namespace SmartHouse.Views
                 Model.SelectedItem = e.Item as Group;
             }
             else
+            if (Utils.IsDoubleTap())
             {
+                GroupPage.Instance.IsVisible = true;
                 MainPage.Instance.CurrentPage = GroupPage.Instance;
                 GroupPage.Instance.SetTarget((e.Item as Group));
+                ScenePage.Instance.IsVisible = false;
+                DevicePage.Instance.IsVisible = false;
             }
-
         }
 
         public async void DeleteItem(Group item)
@@ -66,7 +64,8 @@ namespace SmartHouse.Views
 
         private async void IconButton_Clicked(object sender, EventArgs e)
         {
-            await ProjectMedia.GetPhoto(this, "project_", (r) => {
+            await ProjectMedia.GetPhoto(this, "project_", (r) =>
+            {
                 if (r != null)
                 {
                     if (Model.Target is Project)
@@ -88,6 +87,9 @@ namespace SmartHouse.Views
             }
         }
 
-
+        private void MenuButton_Pressed(object sender, EventArgs e)
+        {
+            ProjectMenuPicker.Focus();
+        }
     }
 }

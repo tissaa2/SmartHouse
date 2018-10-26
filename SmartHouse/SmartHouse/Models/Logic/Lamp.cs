@@ -2,16 +2,10 @@
 
 namespace SmartHouse.Models.Logic
 {
-    public class Lamp : Device
+    [IconName("device_lamp.png", "Светильник")]
+    public class Lamp : StateDevice<double>
     {
-        private double value;
-        [JsonProperty(PropertyName = "Value")]
-        public double Value
-        {
-            get { return value; }
-            set { this.value = value; OnPropertyChanged("Value"); }
-        }
-
+        public override string TypeName { get => "Светильник"; set => base.TypeName = value; }
         public override string Icon { get => "device_lamp.png"; set => base.Icon = value; }
 
         public Lamp()
@@ -19,15 +13,13 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Lamp(string name, double value)
+        public Lamp(string name, double state): base(name, state)
         {
-            Name = name;
-            Value = value;
         }
 
         public override BaseEntity<UID> Clone()
         {
-            return new Lamp() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, Value = Value };
+            return new Lamp() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }
 
     }

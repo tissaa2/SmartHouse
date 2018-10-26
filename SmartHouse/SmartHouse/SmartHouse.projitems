@@ -16,12 +16,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DevicesListView.xaml.cs">
+      <DependentUpon>DevicesListView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ESlider.xaml.cs">
       <DependentUpon>ESlider.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\StateDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\EntityInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\StateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\LampModel.cs" />
@@ -162,12 +170,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Devices\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\ESlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\DevicesListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

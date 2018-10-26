@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
 using SmartHouse.Services;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Xml;
 using System.IO;
-using SmartHouse.Models.Logic;
-using SmartHouse.Models.Physics;
+using System.Reflection;
 
 namespace SmartHouse.Models
 {
     [Serializable]
 
-    public class BaseEntity<IDType>: IUnique<IDType>, INotifyPropertyChanged
+    public class BaseEntity<IDType> : IUnique<IDType>, INotifyPropertyChanged
     {
         /* private static Dictionary<Type, object> ids = new Dictionary<Type, object>();
         public static IDType NewID<IDType>()
@@ -29,10 +26,28 @@ namespace SmartHouse.Models
             }
         } */
 
-        public static IDGenerator<int> IntID = new IDGenerator<int>((v) => { return (int)v + 1; });
-        public static IDGenerator<UID> UIDID = new IDGenerator<UID>((v) => { return new UID((int)v + 1); });
+        public static List<EntityInfo> GetInheritors(Type parent)
+        {
+            List<EntityInfo> r = new List<EntityInfo>();
+            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                if (t.IsSubclassOf(parent))
+                {
+                    var a = t.GetCustomAttribute<IconNameAttribute>();
+                    if (a != null)
+                    {
+                        var hash = a.Name.GetHashCode();
+                        r.Add(new EntityInfo() { Props = a, Type = t, ID = hash });
+                    }
+                }
+            }
+            return r;
+        }
 
-        public static explicit operator string (BaseEntity<IDType> e)
+        public static IDGenerator<int> IntID = new IDGenerator<int>((v) => { return (int)v + 1; });
+        public static IDGenerator<UID> UIDID = new IDGenerator<UID>((v) => { int i = (int)(UID)v; i++;  return new UID(i); });
+
+        public static explicit operator string(BaseEntity<IDType> e)
         {
             return String.Format("(ID={0}, Sec={1})", e.ID, e.SecurityLevel);
         }
