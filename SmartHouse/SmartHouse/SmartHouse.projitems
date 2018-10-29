@@ -25,8 +25,13 @@
       <DependentUpon>ESlider.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ESocketSwitch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DeviceTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DeviceState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\BoolStateDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DoubleStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\StateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EntityInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />

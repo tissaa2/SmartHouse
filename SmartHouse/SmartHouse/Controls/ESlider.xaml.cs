@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace SmartHouse.Controls
 {
-    public class ESliderValueChangeEvents: EventArgs
+    public class ESliderValueChangeEvents : EventArgs
     {
         public double Value { get; set; }
     }
 
     public delegate void ESliderValueChangeDelegate(object sender, ESliderValueChangeEvents args);
 
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ESlider : Grid
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ESlider : Grid
+    {
         public event ESliderValueChangeDelegate ValueChanged;
 
         public double Min { get; set; } = 0;
@@ -29,14 +26,15 @@ namespace SmartHouse.Controls
             return value < Min ? Min : value > Max ? Max : value;
         }
 
-        public static readonly BindableProperty CaptionProperty = BindableProperty.Create("Caption", 
-            returnType: typeof(string), 
-            declaringType: typeof(ESlider), 
-            defaultValue: default(string), 
+        public static readonly BindableProperty CaptionProperty = BindableProperty.Create("Caption",
+            returnType: typeof(string),
+            declaringType: typeof(ESlider),
+            defaultValue: default(string),
             propertyChanged: CaptionChanged, defaultBindingMode: BindingMode.OneWay);
 
-        public string Caption {
-            get {return (string)GetValue(CaptionProperty); }
+        public string Caption
+        {
+            get { return (string)GetValue(CaptionProperty); }
             set { SetValue(CaptionProperty, value); }
         }
 
@@ -46,9 +44,20 @@ namespace SmartHouse.Controls
         }
 
 
-        public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(double), typeof(ESlider), default(double));
+        // public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(double), typeof(ESlider), default(double), BindingMode.TwoWay);
+        public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(double), typeof(ESlider), 0d, BindingMode.TwoWay,
+            coerceValue: (bindable, value) =>
+            {
+                var slider = (ESlider)bindable;
+                return ((double)value).Clamp(slider.Min, slider.Max);
+            },
+            propertyChanged: (bindable, oldValue, newValue) =>
+            {
+                var slider = (ESlider)bindable;
+                slider.Value = (double)newValue;
+                // slider.ValueChanged?.Invoke(slider, new ESliderValueChangeDelegate() (double)oldValue, (double)newValue));
+            });
 
-        private double val = 0;
         public double Value
         {
             get { return (double)GetValue(ValueProperty); }
@@ -58,15 +67,25 @@ namespace SmartHouse.Controls
             }
         }
 
+        // public static readonly BindableProperty ProgressBarWidthProperty = BindableProperty.Create("ProgressBarWidth", typeof(double), typeof(ESlider), 0d);
+        public double ProgressBarWidth
+        {
+            get { return (Value / Delta) * Width;  } 
+            set
+            {
+                OnPropertyChanged("ProgressBarWidth");
+            }
+        }
+
         public double Delta
         {
-            get { return Max - Min;  }
+            get { return Max - Min; }
         }
 
 
         protected void UpdateValue(double value)
         {
-            val = ClipValue(value);
+            double val = ClipValue(value);
             SetValue(ValueProperty, val);
             UpdateVisuals();
             ValueChanged?.Invoke(this, new ESliderValueChangeEvents() { Value = val });
@@ -75,15 +94,28 @@ namespace SmartHouse.Controls
         protected void UpdateVisuals()
         {
             if (ProgressBox != null)
-                ProgressBox.WidthRequest = (Value / (Max - Min)) * Width;
+                ProgressBox.WidthRequest = (Value / (Delta)) * Width; 
+            //    ProgressBarWidth = (Value / (Delta)) * Width;
         }
 
         // public Command TapCommand => new Command<Foo>((fooObject) => Tapped(fooObject));
-        public ESlider ()
-		{
+        public ESlider()
+        {
             // BindingContext = this;
-            InitializeComponent ();
-		}
+            InitializeComponent();
+            SizeChanged += DoSizeChanged;
+        }
+
+        public void DoSizeChanged(object sender, EventArgs e)
+        {
+            UpdateVisuals();
+        }
+
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+        }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
@@ -92,9 +124,10 @@ namespace SmartHouse.Controls
 
         private void EFrame_Touched(object sender, TouchEventArgs args)
         {
+
             CaptionLabel.Text = Caption;
-            Value = args.X * Delta / (2 * Width);
-            // ProgressBox.WidthRequest = args.X / 2;
+            Value = args.X * Delta / (Width);
+            // ProgressBox.WidthRequest = args.X;
             // ProgressGrid.ColumnDefinitions[1].Width = Width - args.X;
         }
     }

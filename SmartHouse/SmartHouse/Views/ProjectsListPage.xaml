@@ -49,14 +49,33 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="64" />
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="TitleGrid" BindingContext="{Binding Target}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="64" />
+            </Grid.ColumnDefinitions>
+            <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="Список проектов" FontAttributes="Bold" FontSize="Large" />
+            <Button x:Name="MenuButton" Text="⋮" FontSize="Large" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Pressed="MenuButton_Pressed" />
+            <Picker x:Name="ProjectMenuPicker" Title="Выберите действие" IsVisible="False" SelectedIndexChanged="ProjectMenuPicker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Загрузить данные с устройства</x:String>
+                    <x:String>Сохранить данные на устройство</x:String>
+                    <x:String>Загрузить тестовые данные</x:String>
+                </Picker.Items>
+            </Picker>
+        </Grid>
+
+
         <!-- ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
                   Grid.Row="0" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" 
                   ItemTemplate="{StaticResource viewEditTemplateSelector}" / -->
         <ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
-                  Grid.Row="0" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" >
+                  Grid.Row="1" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell Height="64">
@@ -76,6 +95,6 @@
         </ListView>
         
         
-        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="1"/>
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="2"/>
     </Grid>
 </ContentPage>

@@ -63,8 +63,9 @@ namespace SmartHouse.Views
         {
             if (Model.Scenes.SelectedItem != e.Item)
             {
-                Model.Scenes.SelectedItem = e.Item as Scene;
-                Model.Scenes.SelectedItem.Activate();
+                var s = e.Item as Scene;
+                Model.Scenes.SelectedItem = s;
+                s.Activate(Target);
             }
             else
             if (Utils.IsDoubleTap())

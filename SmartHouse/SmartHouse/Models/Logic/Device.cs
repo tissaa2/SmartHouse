@@ -42,9 +42,15 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public override BaseEntity<UID> Clone()
+        public virtual void ApplyState(string state)
         {
-            return new Device() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel };
+
         }
+
+        public virtual void SetState(DeviceState state)
+        {
+
+        }
+
     }
 }

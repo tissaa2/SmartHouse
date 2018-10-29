@@ -1988,28 +1988,31 @@ namespace SmartHouse.Droid
 			public const int edit = 2130771976;
 			
 			// aapt resource value: 0x7F010009
-			public const int ESlider = 2130771977;
+			public const int esocketswitch_thumb = 2130771977;
 			
 			// aapt resource value: 0x7F010010
-			public const int group_bedroom = 2130771984;
+			public const int esocketswitch_track = 2130771984;
 			
 			// aapt resource value: 0x7F010011
-			public const int group_hall = 2130771985;
+			public const int group_bedroom = 2130771985;
 			
 			// aapt resource value: 0x7F010012
-			public const int group_kitchen = 2130771986;
+			public const int group_hall = 2130771986;
 			
 			// aapt resource value: 0x7F010013
-			public const int group_livingroom = 2130771987;
+			public const int group_kitchen = 2130771987;
 			
 			// aapt resource value: 0x7F010014
-			public const int group_room = 2130771988;
+			public const int group_livingroom = 2130771988;
 			
 			// aapt resource value: 0x7F010015
-			public const int group_toilet = 2130771989;
+			public const int group_room = 2130771989;
 			
 			// aapt resource value: 0x7F010016
-			public const int home = 2130771990;
+			public const int group_toilet = 2130771990;
+			
+			// aapt resource value: 0x7F010017
+			public const int home = 2130771991;
 			
 			// aapt resource value: 0x7F02004B
 			public const int ic_audiotrack = 2130837579;
@@ -2215,8 +2218,8 @@ namespace SmartHouse.Droid
 			// aapt resource value: 0x7F02008E
 			public const int ic_tv_light = 2130837646;
 			
-			// aapt resource value: 0x7F010017
-			public const int light = 2130771991;
+			// aapt resource value: 0x7F010018
+			public const int light = 2130771992;
 			
 			// aapt resource value: 0x7F02008F
 			public const int mr_dialog_material_background_dark = 2130837647;
@@ -2266,47 +2269,53 @@ namespace SmartHouse.Droid
 			// aapt resource value: 0x7F02004D
 			public const int notification_template_icon_bg = 2130837581;
 			
-			// aapt resource value: 0x7F010018
-			public const int proceed = 2130771992;
-			
-			// aapt resource value: 0x7F010031
-			public const int profile_generic = 2130772017;
-			
 			// aapt resource value: 0x7F010019
-			public const int project_flat = 2130771993;
+			public const int proceed = 2130771993;
+			
+			// aapt resource value: 0x7F010034
+			public const int profile_generic = 2130772020;
 			
 			// aapt resource value: 0x7F010020
-			public const int project_house = 2130772000;
+			public const int project_flat = 2130772000;
 			
 			// aapt resource value: 0x7F010021
-			public const int scene_brightlight = 2130772001;
+			public const int project_house = 2130772001;
 			
 			// aapt resource value: 0x7F010022
-			public const int scene_morning = 2130772002;
+			public const int project_houseCAN = 2130772002;
 			
 			// aapt resource value: 0x7F010023
-			public const int scene_nightlight = 2130772003;
+			public const int project_housePhoto = 2130772003;
 			
 			// aapt resource value: 0x7F010024
-			public const int scene_sleep = 2130772004;
+			public const int scene_brightlight = 2130772004;
 			
 			// aapt resource value: 0x7F010025
-			public const int scene_slideout = 2130772005;
+			public const int scene_morning = 2130772005;
 			
 			// aapt resource value: 0x7F010026
-			public const int scene_softlight = 2130772006;
+			public const int scene_nightlight = 2130772006;
 			
 			// aapt resource value: 0x7F010027
-			public const int scene_switchoff = 2130772007;
+			public const int scene_sleep = 2130772007;
 			
 			// aapt resource value: 0x7F010028
-			public const int scene_worklight = 2130772008;
+			public const int scene_slideout = 2130772008;
 			
 			// aapt resource value: 0x7F010029
-			public const int @switch = 2130772009;
+			public const int scene_softlight = 2130772009;
 			
 			// aapt resource value: 0x7F010030
-			public const int switch0 = 2130772016;
+			public const int scene_switchoff = 2130772016;
+			
+			// aapt resource value: 0x7F010031
+			public const int scene_worklight = 2130772017;
+			
+			// aapt resource value: 0x7F010032
+			public const int @switch = 2130772018;
+			
+			// aapt resource value: 0x7F010033
+			public const int switch0 = 2130772019;
 			
 			static Drawable()
 			{

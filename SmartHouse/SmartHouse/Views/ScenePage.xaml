@@ -11,7 +11,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="48" />
             </Grid.RowDefinitions>
-            <Grid x:Name="EditorGrid" BindingContext="{Binding Target}">
+            <Grid x:Name="EditorGrid" Grid.Row="0" BindingContext="{Binding Target}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="64" />
                     <ColumnDefinition Width="*" />
@@ -22,8 +22,7 @@
                 <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
             </Grid>
 
-        <controls:DevicesListView BindingContext="{Binding .}" Grid.Row="1" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+        <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" Grid.Row="1" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
                                    ItemsSource="{Binding Items}" BackgroundColor="White" />
-            <!-- <Button x:Name="SaveButton" Text="Сохранить" Clicked="SaveButton_Clicked" Grid.Row="2"/> -->
     </Grid>
 </ContentPage>

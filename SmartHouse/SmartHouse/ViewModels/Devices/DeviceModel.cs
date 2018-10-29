@@ -56,8 +56,9 @@ namespace SmartHouse.ViewModels
 
         public Group Group { get; set; }
 
+
+
         private string id;
-        [JsonProperty(PropertyName = "ID")]
         public string ID
         {
             get { return id; }
@@ -65,11 +66,17 @@ namespace SmartHouse.ViewModels
         }
 
         private bool enabled;
-        [JsonProperty(PropertyName = "Enabled")]
         public bool Enabled
         {
             get { return enabled; }
             set { enabled = value; OnPropertyChanged("Enabled"); }
+        }
+
+        private bool showDeleteButton = true;
+        public bool ShowDeleteButton
+        {
+            get { return showDeleteButton && Device.IsAdmin; }
+            set { showDeleteButton = value; OnPropertyChanged("ShowDeleteButton"); }
         }
 
         private string name;

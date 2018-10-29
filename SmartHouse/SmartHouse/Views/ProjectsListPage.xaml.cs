@@ -71,7 +71,6 @@ namespace SmartHouse.Views
                 ScenePage.Instance.IsVisible = false;
                 DevicePage.Instance.IsVisible = false;
             }
-
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)
@@ -83,6 +82,57 @@ namespace SmartHouse.Views
                 if (d != null)
                     DeleteItem(d);
             }
+        }
+
+        // 0: Сохранить данные на устройство
+        public void SaveDataToDevice()
+        {
+            ProjectsList.Instance.Save();
+        }
+        // 1: Загрузить данные с устройства
+        public void LoadDataFromDevice()
+        {
+            ProjectsList.Instance = ProjectsList.Load<ProjectsList>(ProjectsList.FileName);
+            Model.Items = ProjectsList.Instance.Items;
+            UpdateTabs();
+        }
+        // 2: Загрузить тестовые данные
+        public void LoadTestData()
+        {
+            ProjectsList.LoadTestData();
+            ProjectsListPage.Instance.Model.Items = ProjectsList.Instance.Items;
+            UpdateTabs();
+        }
+
+        public void UpdateTabs()
+        {
+            MainPage.Instance.CurrentPage = ProjectsListPage.Instance;
+            ProjectPage.Instance.IsVisible = false;
+            GroupPage.Instance.IsVisible = false;
+            ScenePage.Instance.IsVisible = false;
+            DevicePage.Instance.IsVisible = false;
+
+        }
+
+        private void ProjectMenuPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (ProjectMenuPicker.SelectedIndex)
+            {
+                case (0):
+                    SaveDataToDevice();
+                    break;
+                case (1):
+                    LoadDataFromDevice();
+                    break;
+                case (2):
+                    LoadTestData();
+                    break;
+            }
+        }
+
+        private void MenuButton_Pressed(object sender, EventArgs e)
+        {
+            ProjectMenuPicker.Focus();
         }
 
         /* private void EditItem_Clicked(object sender, EventArgs e)

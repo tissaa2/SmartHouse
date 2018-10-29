@@ -51,8 +51,8 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\re
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\home.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\light.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\proceed.png
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_flat.jpg
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_house.jpg
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_flatphoto.jpg
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_housephoto.jpg
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\scene_brightlight.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\scene_morning.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\scene_nightlight.png
@@ -63,7 +63,11 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\re
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\scene_worklight.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\switch0.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\xml\file_paths.xml
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\eslider.xml
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\esocketswitch_track.xml
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\esocketswitch_thumb.xml
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_flat.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_house.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\res\drawable\project_housecan.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\R.cs.flag
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\R.txt
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\uploadflags.txt
@@ -118,7 +122,6 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\li
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\linksrc\Xamarin.Forms.Core.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\linksrc\Xamarin.Forms.Xaml.dll.mdb
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\SmartHouse.Android.csprojAssemblyReference.cache
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\android\assets\FormsViewGroup.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\android\assets\Plugin.Media.Abstractions.dll.mdb
@@ -146,6 +149,7 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\an
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\android\assets\System.Web.Services.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\android\assets\System.Xml.Linq.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\android\assets\System.Xml.pdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\SmartHouse.Android.csprojAssemblyReference.cache
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\linksrc\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\MonoAndroid60\linksrc\FormsViewGroup.dll.mdb

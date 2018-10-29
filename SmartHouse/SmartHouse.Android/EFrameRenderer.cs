@@ -9,12 +9,15 @@ using static Android.Views.View;
 using Android.Views;
 using System.ComponentModel;
 using Android.OS;
+using Android.Graphics;
+using Android.Util;
 
 [assembly: ExportRenderer(typeof(EFrame), typeof(SmartHouse.Droid.EFrameRenderer))]
 namespace SmartHouse.Droid
 {
     public class EFrameRenderer : FrameRenderer
     {
+
         // public new Context Context { get; set; }
 
         public EFrameRenderer(Context context) : base()
@@ -30,7 +33,8 @@ namespace SmartHouse.Droid
 
         public override bool OnTouchEvent(MotionEvent e)
         {
-            (Element as EFrame).CallTouchEvent(new Controls.TouchEventArgs() { X = e.GetX(), Y = e.GetY() });
+            // var sw = Application.Current.MainPage.Width;
+            (Element as EFrame).CallTouchEvent(new Controls.TouchEventArgs() { X = e.GetX() / Resources.DisplayMetrics.Density, Y = e.GetY() / Resources.DisplayMetrics.Density });
             return base.OnTouchEvent(e);
         }
 

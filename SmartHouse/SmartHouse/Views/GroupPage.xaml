@@ -11,6 +11,7 @@
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" x:Name="EditorGrid" BindingContext="{Binding Target}">
             <Grid.ColumnDefinitions>
@@ -47,7 +48,9 @@
         </ListView>
 
         <controls:DevicesListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
-                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" /> 
+                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
+        <controls:DevicesListView Grid.Row="4" BindingContext="{Binding .}" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
         <!-- <ListView Grid.Row="2" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   HasUnevenRows="True" BindingContext="{Binding Devices}" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>

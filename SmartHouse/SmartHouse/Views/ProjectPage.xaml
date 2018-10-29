@@ -36,7 +36,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
-        <Grid x:Name="EditorGrid" BindingContext="{Binding Target}">
+        <Grid Grid.Row="0" x:Name="EditorGrid" BindingContext="{Binding Target}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="64" />
                 <ColumnDefinition Width="*" />
@@ -47,7 +47,7 @@
             <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
             <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
             <Button x:Name="MenuButton" Text="⋮" FontSize="Large" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Pressed="MenuButton_Pressed" />
-            <Picker x:Name="ProjectMenuPicker" Title="Выберите действие" IsVisible="False">
+            <Picker x:Name="ProjectMenuPicker" Title="Выберите действие" IsVisible="False" SelectedIndexChanged="ProjectMenuPicker_SelectedIndexChanged">
                 <Picker.Items>
                     <x:String>Сохранить проект в CAN</x:String>
                     <x:String>Загрузить проект из CAN</x:String>

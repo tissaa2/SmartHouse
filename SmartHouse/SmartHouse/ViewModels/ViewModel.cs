@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System;
 using Xamarin.Forms;
+using System.Runtime.CompilerServices;
 
 namespace SmartHouse.ViewModels
 {
@@ -44,6 +45,13 @@ namespace SmartHouse.ViewModels
         {
             PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(name));
         } */
+
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+        }
+
 
         public virtual void Setup(params object[] args)
         {

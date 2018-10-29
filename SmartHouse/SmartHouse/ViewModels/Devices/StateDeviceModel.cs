@@ -9,15 +9,6 @@ namespace SmartHouse.ViewModels
 
     public class StateDeviceModel<StateType>: DeviceModel 
     {
-        public static readonly BindableProperty StateProperty = BindableProperty.Create("State", typeof(double), typeof(StateDeviceModel<StateType>), default(double));
-
-        private StateType state;
-        [JsonProperty(PropertyName = "State")]
-        public StateType State
-        {
-            get { return state; }
-            set { this.state = value; OnPropertyChanged("State"); SetValue(StateProperty, value); }
-        }
 
         public override void Assign(ViewModel source)
         {
@@ -25,7 +16,7 @@ namespace SmartHouse.ViewModels
             if (source is StateDeviceModel<StateType>)
             {
                 var sm = source as StateDeviceModel<StateType>;
-                this.state = sm.state;
+                // this.state = sm.state;
             }
         }
     }

@@ -91,5 +91,37 @@ namespace SmartHouse.Views
         {
             ProjectMenuPicker.Focus();
         }
+
+        // 0: Сохранить проект в CAN
+        public void SaveProjectToCAN()
+        {
+
+        }
+
+        // 1: Загрузить проект из CAN
+        public void LoadProjectFromCAN()
+        {
+            var ot = Target;
+            var p = Project.Create("Проект из CAN", "project_houseCAN.png", Project.IntID.NewID());
+            var i = ProjectsListPage.Instance.Model.Items.IndexOf(ot);
+            if (i > -1)
+            {
+                ProjectsListPage.Instance.Model.Items[i] = p;
+                ProjectsListPage.Instance.UpdateTabs();
+            }
+        }
+
+        private void ProjectMenuPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (ProjectMenuPicker.SelectedIndex)
+            {
+                case (0):
+                    SaveProjectToCAN();
+                    break;
+                case (1):
+                    LoadProjectFromCAN();
+                    break;
+            }
+        }
     }
 }
