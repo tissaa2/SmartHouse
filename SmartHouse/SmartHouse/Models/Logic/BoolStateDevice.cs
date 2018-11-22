@@ -3,16 +3,28 @@ using System;
 
 namespace SmartHouse.Models.Logic
 {
-    public class BoolStateDevice : StateDevice<bool> 
+    public class BoolStateDevice : Device /* StateDevice<bool> */ 
     {
+        private bool state;
+        [JsonProperty(PropertyName = "State")]
+        public bool State
+        {
+            get { return state; }
+            set
+            {
+                state = value;
+                OnPropertyChanged("State");
+            }
+        }
+
         public BoolStateDevice()
         {
 
         }
 
-        public BoolStateDevice(string name, bool state): base (name, state)
+        public BoolStateDevice(string name, bool state): base (UIDID.NewID(), name, null)
         {
-
+            State = state;
         }
 
         public override void ApplyState(string state)

@@ -9,7 +9,7 @@ namespace SmartHouse.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DevicePage : ContentPage
 	{
-        public static DevicePage Instance = null;
+        // public static DevicePage Instance = null;
         public DeviceModel Target { get; set; }
         public DevicePageModel Model { get; set; }
         public DeviceModel SetTarget(DeviceModel target)
@@ -23,7 +23,7 @@ namespace SmartHouse.Views
 
         public DevicePage()
         {
-            Instance = this;
+            // Instance = this;
             this.InitializeComponent();
             BindingContext = Model = new DevicePageModel();
         }
@@ -41,6 +41,7 @@ namespace SmartHouse.Views
         private void ApplyButton_Pressed(object sender, EventArgs e)
         {
             Target.Apply();
+            Title = Target.Name;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SmartHouse.Views
     // [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScenePage : ContentPage
     {
-        public static ScenePage Instance = null;
+        // public static ScenePage Instance = null;
         public ListPageModel<DeviceModel> Model { get; set; }
         public Scene Target { get; set; }
 
@@ -46,7 +46,7 @@ namespace SmartHouse.Views
 
         public ScenePage()
         {
-            Instance = this;
+            // Instance = this;
             this.InitializeComponent();
             BindingContext = Model = new ListPageModel<DeviceModel>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
             DevicesListView.DeviceStateChanged += DevicesListView_DeviceStateChanged;
@@ -54,24 +54,24 @@ namespace SmartHouse.Views
 
         private void DevicesListView_DeviceStateChanged(DeviceModel sender)
         {
-            if (sender == null)
-                return;
-            if (sender.Enabled)
-            {
-                var st = Target.Items.FirstOrDefault(e => e.ID == sender.Device.ID);
-                if (st == null)
-                {
-                    st = new DeviceState();
-                    Target.Items.Add(st);
-                }
-                sender.Device.SetState(st);
-            }
-            else
-            {
-                var st = Target.Items.FirstOrDefault(e => e.ID == sender.Device.ID);
-                if (st != null)
-                    Target.Items.Remove(st);
-            }
+            //if (sender == null)
+            //    return;
+            //if (sender.Enabled)
+            //{
+            //    var st = Target.Items.FirstOrDefault(e => e.ID == sender.Device.ID);
+            //    if (st == null)
+            //    {
+            //        st = new DeviceState() { ID = sender.Device.ID };
+            //        Target.Items.Add(st);
+            //    }
+            //    sender.Device.SetState(st);
+            //}
+            //else
+            //{
+            //    var st = Target.Items.FirstOrDefault(e => e.ID == sender.Device.ID);
+            //    if (st != null)
+            //        Target.Items.Remove(st);
+            //}
         }
 
         public async void DeleteItem(Device item)
@@ -110,6 +110,18 @@ namespace SmartHouse.Views
         private void SaveButton_Clicked(object sender, EventArgs e)
         {
 
+        }
+
+        private void ApplyButton_Pressed(object sender, EventArgs e)
+        {
+            Target.Items.Clear();
+            foreach(var dm in Model.Items)
+                if (dm.Enabled)
+                {
+                    var st = new DeviceState() { ID = dm.Device.ID };
+                    dm.Device.SetState(st);
+                    Target.Items.Add(st);
+                }
         }
     }
 }

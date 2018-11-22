@@ -24,3 +24,13 @@ C:\HouseLink\SmartHouse1\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Vie
 C:\HouseLink\SmartHouse1\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\LightsPage.xaml.g.cs
 C:\HouseLink\SmartHouse1\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\ProjectPage.xaml.g.cs
 C:\HouseLink\SmartHouse1\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\SmartHouse.iOS.csproj.CoreCompileInputs.cache
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\SettingsPage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\DebugPage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\MainPage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\PhotoPickerPage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\ProjectsListPage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\ScenePage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\DevicePage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Controls\ESlider.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Controls\DevicesListView.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\DevicesBrowserPage.xaml.g.cs

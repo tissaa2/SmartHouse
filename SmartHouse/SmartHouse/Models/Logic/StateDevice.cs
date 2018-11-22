@@ -7,7 +7,7 @@ namespace SmartHouse.Models.Logic
     public class StateDevice<StateType> : Device 
     {
 
-        /* public static readonly BindableProperty StateProperty = BindableProperty.Create("State", typeof(StateType), typeof(StateDevice<StateType>), BindingMode.TwoWay,
+        /* public static readonly BindableProperty StateProperty = BindableProperty.Create("State", typeof(StateType), typeof(StateDevice<StateType>), default(StateType), BindingMode.TwoWay,
             propertyChanged: (bindable, oldValue, newValue) =>
             {
                 var d = (StateDevice<StateType>)bindable;
@@ -29,7 +29,10 @@ namespace SmartHouse.Models.Logic
         public StateType State
         {
             get { return state; }
-            set { state = value; OnPropertyChanged("State"); }
+            set {
+                state = value;
+                OnPropertyChanged("State");
+            }
         } 
 
 

@@ -4,8 +4,12 @@ using System.Text;
 
 namespace SmartHouse.Models.Physics
 {
-    public class Dimmer: Device
+    [DeviceType(1)]
+    public class Dimmer: PDevice
     {
+        public override string Icon { get => "pdevice_dimmer.png"; }
+        public override string TypeName { get => "Диммер"; }
+
         /* public override void Init(int inputsCount, int outputsCount)
         {
             base.Init(inputsCount, outputsCount);
@@ -16,17 +20,17 @@ namespace SmartHouse.Models.Physics
 
         }
 
-        public Dimmer(UID id, int outputs)
+        /* public Dimmer(UID id, int inputs, int outputs)
         {
-            Init(id, 0, outputs, true);
-        }
+            Init(id, inputs, outputs, true);
+        } */
 
-        public override Device Assign(Device source)
+        public override PDevice Assign(PDevice source)
         {
             return base.Assign(source);
         }
 
-        public override Device Clone()
+        public override PDevice Clone()
         {
             return (new Dimmer()).Assign(this);
         }

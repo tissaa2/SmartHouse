@@ -10,7 +10,7 @@ namespace SmartHouse.Views
 {
     public partial class DebugPage : ContentPage
     {
-        public static DebugPage Instance = null;
+        // public static DebugPage Instance = null;
 
         public void AddToLog(LogEntry entry)
         {
@@ -22,9 +22,9 @@ namespace SmartHouse.Views
 
         public DebugPage()
         {
-            Instance = this;
+            // Instance = this;
             this.InitializeComponent();
-            this.LogListView.ItemsSource = new ObservableCollection<LogEntry>();
+            this.LogListView.ItemsSource = Log.Instance.Entries;
         }
 
         private void BroadcastButton_Clicked(object sender, EventArgs e)

@@ -1,10 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace SmartHouse.Models
 {
+
+    public class IntToUIDConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return typeof(UID) == objectType;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (existingValue is UID)
+                return existingValue;
+            return new UID((int)existingValue);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var converted = (int?)(UID)value;
+            writer.WriteValue(converted);
+        }
+    }
+
     public struct UID
     {
         public byte B0 { get { return (byte)(Hash & 0xFF); } }
@@ -35,7 +57,7 @@ namespace SmartHouse.Models
         public override string ToString()
         {
             // return string.Format("{0:x} {0:x} {0:x} {0:x}", B0, B1, B2, B3);
-            return string.Format("{0:X2}{1:X2}{2:X2}", B0, B1, B2);
+            return string.Format("{0:X2}{1:X2}{2:X2}", B2, B1, B0);
         }
 
 

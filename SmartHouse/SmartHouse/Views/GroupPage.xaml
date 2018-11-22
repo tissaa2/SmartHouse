@@ -11,7 +11,7 @@
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
             <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
+            <!--<RowDefinition Height="*" /> -->
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" x:Name="EditorGrid" BindingContext="{Binding Target}">
             <Grid.ColumnDefinitions>
@@ -49,58 +49,9 @@
 
         <controls:DevicesListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
                                    ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
-        <controls:DevicesListView Grid.Row="4" BindingContext="{Binding .}" HorizontalOptions="Fill" VerticalOptions="Fill" 
-                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
-        <!-- <ListView Grid.Row="2" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" BindingContext="{Binding Devices}" ItemTapped="DevicesListView_ItemTapped" ItemsSource="{Binding Items}" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell Height="64">
-                        <Grid Padding="8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="24"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding Device.Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-                            <controls:ESlider HeightRequest="40" Margin="0" Value="{Binding State, Mode=TwoWay}" Caption="{Binding Device.Name}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                            <controls:ImageButton x:Name="DeleteDeviceButton" Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView> -->
-
+        <!--<controls:DevicesListView Grid.Row="4" BindingContext="{Binding .}" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />-->
         <Button Grid.Row="3" x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" />
-
-        <!-- <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="32" />
-                <RowDefinition Height="32" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="64" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Picker x:Name="DeviceTypePicker" Grid.Row="1" SelectedIndex="0">
-                    <Picker.Items>
-                        <x:String>Розетка</x:String>
-                        <x:String>Светильник</x:String>
-                        <x:String>Вентилятор</x:String>
-                    </Picker.Items>
-                </Picker>
-
-                <Entry x:Name="NameEditor" Grid.Column="1" Text="{Binding Path=SelectedItem.Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
-            </Grid>
-
-           <Grid Grid.Row="2">
-
-            </Grid>
-
-        </Grid> -->
         
     </Grid>
 </ContentPage>

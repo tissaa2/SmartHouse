@@ -24,5 +24,6 @@
 
         <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" Grid.Row="1" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
                                    ItemsSource="{Binding Items}" BackgroundColor="White" />
+        <Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" Grid.Row="2"/>
     </Grid>
 </ContentPage>

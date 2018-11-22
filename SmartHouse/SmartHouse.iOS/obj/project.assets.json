@@ -624,10 +624,12 @@
   },
   "libraries": {
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -652,10 +654,12 @@
       ]
     },
     "Plugin.Permissions/3.0.0.12": {
-      "sha512": "VrYqI/ufk3bH6gTP1JJlLByjhS0CHu3riKmdozhX9/qXA9hlvLolmcqKJdyAqpzmrVC74m3ZtirUBIrBxvT1Lw==",
+      "sha512": "R8Rlzfci1byoPBGOiJfCMzu0HhhN6Q4Vq4YizlF41W946NEmoL/Mb8U5caP5t5KfSbdPQpzdQ9JfM8fxPG8pfw==",
       "type": "package",
       "path": "plugin.permissions/3.0.0.12",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid71/Plugin.Permissions.dll",
         "lib/monoandroid71/Plugin.Permissions.xml",
         "lib/netstandard1.0/Plugin.Permissions.dll",
@@ -673,10 +677,12 @@
       ]
     },
     "Xam.Plugin.Media/4.0.1.5": {
-      "sha512": "a5l/M2Tl06BqBX/uhM/pr+q1jDkh2tRQr5Ne9rjAuD9VYn5STE+7kVFTzIUNPMnMr9PZLJkWP5WAr/tBN5oepw==",
+      "sha512": "PxL0vcTXpS79l2KgtaJBShcPVMRK2HC5J08vG6hKTC7hk5+3RjgFrdX0N6Gd4oF8pxVxV2ia7rhYnjxRCMWZtw==",
       "type": "package",
       "path": "xam.plugin.media/4.0.1.5",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid71/Plugin.Media.dll",
         "lib/monoandroid71/Plugin.Media.xml",
         "lib/netstandard1.0/Plugin.Media.dll",
@@ -853,20 +859,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\etiainen\\.nuget\\packages\\": {}
+    "C:\\Users\\Etiainen\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse.iOS\\SmartHouse.iOS.csproj",
+      "projectUniqueName": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.iOS\\SmartHouse.iOS.csproj",
       "projectName": "SmartHouse.iOS",
-      "projectPath": "C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse.iOS\\SmartHouse.iOS.csproj",
-      "packagesPath": "C:\\Users\\etiainen\\.nuget\\packages\\",
-      "outputPath": "C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse.iOS\\obj\\",
+      "projectPath": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.iOS\\SmartHouse.iOS.csproj",
+      "packagesPath": "C:\\Users\\Etiainen\\.nuget\\packages\\",
+      "outputPath": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\etiainen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Etiainen\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

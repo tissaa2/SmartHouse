@@ -3,7 +3,7 @@
 namespace SmartHouse.Models.Logic
 {
     [IconName("device_lamp.png", "Светильник")]
-    public class Lamp : StateDevice<double>
+    public class Lamp : DoubleStateDevice
     {
         public override string TypeName { get => "Светильник"; set => base.TypeName = value; }
         public override string Icon { get => "device_lamp.png"; set => base.Icon = value; }

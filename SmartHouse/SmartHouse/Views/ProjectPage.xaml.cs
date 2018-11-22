@@ -10,7 +10,7 @@ namespace SmartHouse.Views
     // [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectPage : ContentPage
     {
-        public static ProjectPage Instance = null;
+        // public static ProjectPage Instance = null;
         public ListPageModel<Group> Model { get; set; }
         public Project Target { get; set; }
 
@@ -27,7 +27,7 @@ namespace SmartHouse.Views
 
         public ProjectPage()
         {
-            Instance = this;
+            // Instance = this;
             this.InitializeComponent();
             BindingContext = Model = new ListPageModel<Group>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
         }
@@ -39,21 +39,22 @@ namespace SmartHouse.Views
 
         private void GroupsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (Model.SelectedItem != e.Item)
+            if (e.Item is Group)
             {
-                Model.SelectedItem = e.Item as Group;
-            }
-            else
-            if (Utils.IsDoubleTap())
-            {
-                GroupPage.Instance.IsVisible = true;
-                MainPage.Instance.CurrentPage = GroupPage.Instance;
-                GroupPage.Instance.SetTarget((e.Item as Group));
-                ScenePage.Instance.IsVisible = false;
-                DevicePage.Instance.IsVisible = false;
+                var g = e.Item as Group;
+                var gp = new GroupPage() {Title = g.Name};
+                gp.IsVisible = true;
+                gp.SetTarget(g);
+                // ScenePage.Instance.IsVisible = false;
+                // DevicePage.Instance.IsVisible = false;
+                if (Model.SelectedItem != e.Item)
+                    Model.SelectedItem = g;
+                else
+                if (Utils.IsDoubleTap())
+                    Navigation.PushAsync(gp);
+                    // MainPage.Instance.CurrentPage = GroupPage.Instance;
             }
         }
-
         public async void DeleteItem(Group item)
         {
             var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить группу?", "Да", "Нет");
@@ -103,11 +104,11 @@ namespace SmartHouse.Views
         {
             var ot = Target;
             var p = Project.Create("Проект из CAN", "project_houseCAN.png", Project.IntID.NewID());
-            var i = ProjectsListPage.Instance.Model.Items.IndexOf(ot);
+            var i = ProjectsList.Instance.Items.IndexOf(ot);
             if (i > -1)
             {
-                ProjectsListPage.Instance.Model.Items[i] = p;
-                ProjectsListPage.Instance.UpdateTabs();
+                ProjectsList.Instance.Items[i] = p;
+                Navigation.PopAsync();
             }
         }
 
@@ -122,6 +123,11 @@ namespace SmartHouse.Views
                     LoadProjectFromCAN();
                     break;
             }
+        }
+
+        private void ToolbarItem_Activated(object sender, EventArgs e)
+        {
+            ProjectMenuPicker.Focus();
         }
     }
 }

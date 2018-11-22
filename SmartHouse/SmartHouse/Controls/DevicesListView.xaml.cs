@@ -24,7 +24,7 @@ namespace SmartHouse.Controls
         public DeviceModel CurrentItem { get; set; }
 
         public event DeviceModelChangedDelegate DeviceStateChanged;
-        public event DeviceModelChangedDelegate DeviceDeveted;
+        public event DeviceModelChangedDelegate DeviceDeleted;
 
         public DevicesListView ()
 		{
@@ -34,35 +34,39 @@ namespace SmartHouse.Controls
 
         private void DevicesListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (CurrentItem != e.Item)
+            if (e.Item is DeviceModel)
             {
+                var dm = e.Item as DeviceModel;
+                var dp = new DevicePage() { Title = dm.Name };
+                dp.IsVisible = true;
+                dp.SetTarget((e.Item as DeviceModel));
                 CurrentItem = e.Item as DeviceModel;
-            }
-            else
-            if (Utils.IsDoubleTap())
-            {
-                DevicePage.Instance.IsVisible = true;
-                MainPage.Instance.CurrentPage = DevicePage.Instance;
-                DevicePage.Instance.SetTarget((e.Item as DeviceModel));
+                /* if (CurrentItem != e.Item)
+                    CurrentItem = e.Item as DeviceModel;
+                else */
+                if (Utils.IsDoubleTap())
+                    Navigation.PushAsync(dp);
+                    // MainPage.Instance.CurrentPage = DevicePage.Instance;
             }
         }
 
         private void DeleteDeviceButton_OnPressed(object sender, EventArgs e)
         {
-            DeviceDeveted?.Invoke((sender as BindableObject).BindingContext as DeviceModel);
+            DeviceDeleted?.Invoke((sender as BindableObject).BindingContext as DeviceModel);
         }
 
         private void ESlider_ValueChanged(object sender, ESliderValueChangeEvents args)
         {
+            // var dm = (sender as Slider).BindingContext as DeviceModel;
             var dm = (sender as ESlider).BindingContext as DeviceModel;
-            // dm.Device.ApplyState(args.Value.ToString());
+            dm.Device.ApplyState(args.Value.ToString());
             DeviceStateChanged?.Invoke(dm); 
         }
 
         private void ESocketSwitch_Toggled(object sender, ToggledEventArgs e)
         {
             var dm = (sender as ESocketSwitch).BindingContext as DeviceModel;
-            // dm.Device.ApplyState(e.Value.ToString());
+            dm.Device.ApplyState(e.Value.ToString());
             DeviceStateChanged?.Invoke(dm);
         }
 

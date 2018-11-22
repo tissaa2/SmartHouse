@@ -35,8 +35,11 @@ namespace SmartHouse.Models.Logic
             foreach (var i in Items)
             {
                 var d = group.Devices.FirstOrDefault(e => e.ID == i.ID);
-                if (d != null)
-                    d.ApplyState(i.Value);
+                if (d is DoubleStateDevice)
+                    (d as DoubleStateDevice).ApplyState(i.Value);
+                else
+                if (d is BoolStateDevice)
+                    (d as BoolStateDevice).ApplyState(i.Value);
             }
         }
 
@@ -54,16 +57,29 @@ namespace SmartHouse.Models.Logic
 
         }
 
+        private static Random vr = new Random();
+
         public Scene(UID id, string nameTemplate, string icon, Event _event, IEnumerable<Device> devices): base (id, nameTemplate, icon)
         {
             var r = new Random();
             Event = _event;
-            var vr = new Random();
-            foreach(var i in devices)
+            var f = nameTemplate == "Выключить все";
+            foreach (var i in devices)
             {
-                if (r.Next(2) == 1)
+                if (f || r.Next(2) == 1)
                 {
-                    var e = new DeviceState() { ID = i.ID, SecurityLevel = i.SecurityLevel, Value = i is Socket ? "true" : vr.Next(100).ToString() };
+                    if (i is Socket)
+                    {
+
+                    }
+
+                    string v = i is Socket ? "true" : vr.Next(100).ToString();
+                    if (f)
+                        v = i is Socket ? "false" : "0";
+                    else
+                        v = i is Socket ? "true" : vr.Next(100).ToString();
+
+                    var e = new DeviceState() { ID = i.ID, SecurityLevel = i.SecurityLevel, Value = v };
                     Items.Add(e);
                 }
             }

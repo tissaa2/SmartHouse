@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -10,6 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DevicesBrowserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -20,6 +28,7 @@
       <DependentUpon>DevicesListView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PDeviceTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ESlider.xaml.cs">
       <DependentUpon>ESlider.xaml</DependentUpon>
@@ -28,12 +37,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ESocketSwitch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DeviceTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DeviceState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\BoolStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DoubleStateDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\StateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EntityInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\AutodetectResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\DeviceTypeAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\MSTPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\IRTranciever.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\MotionSensor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Relay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicesBrowserPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsPageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\StateDeviceModel.cs" />
@@ -47,6 +65,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DevicesBrowserPage.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>DevicesBrowserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SettingsPage.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
@@ -89,8 +115,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\ProjectsList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\UIDEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Event.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Device.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Panel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\PDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\IRPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Dimmer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\OutputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\InputPort.cs" />
@@ -111,8 +137,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\DuplexStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Log.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LogEntry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\CommandResponsePacket.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\DiscoverResponsePacket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\CommandConfirmation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\ControllerDiscoverResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Packet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketTypeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Server.cs" />

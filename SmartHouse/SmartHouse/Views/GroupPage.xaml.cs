@@ -1,24 +1,24 @@
-﻿using System;
-using Xamarin.Forms;
-using SmartHouse.Models.Logic;
+﻿using SmartHouse.Models.Logic;
+using SmartHouse.Services;
 using SmartHouse.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using SmartHouse.Services;
+using Xamarin.Forms;
 
 namespace SmartHouse.Views
 {
-	// [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class GroupPage : ContentPage
-	{
-        public static GroupPage Instance = null;
+    // [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class GroupPage : ContentPage
+    {
+        // public static GroupPage Instance = null;
         public GroupPageModel Model { get; set; }
         public Group Target { get; set; }
 
         public void DevicesListChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             LoadDevices();
-            ScenePage.Instance.Refresh(this.Model);
+            // ScenePage.Instance.Refresh(this.Model);
         }
 
         public void LoadDevices()
@@ -54,37 +54,38 @@ namespace SmartHouse.Views
 
         public GroupPage()
         {
-            Instance = this;
+            // Instance = this;
             BindingContext = Model = new GroupPageModel();
             this.InitializeComponent();
         }
 
         private void ScenesListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (Model.Scenes.SelectedItem != e.Item)
+            if (e.Item is Scene)
             {
                 var s = e.Item as Scene;
-                Model.Scenes.SelectedItem = s;
                 s.Activate(Target);
-            }
-            else
-            if (Utils.IsDoubleTap())
-            {
-                ScenePage.Instance.IsVisible = true;
-                MainPage.Instance.CurrentPage = ScenePage.Instance;
-                ScenePage.Instance.SetTarget(this.Model, (e.Item as Scene));
-                DevicePage.Instance.IsVisible = false;
-
+                var sp = new ScenePage() { Title = s.Name };
+                sp.IsVisible = true;
+                sp.SetTarget(this.Model, s);
+                // DevicePage.Instance.IsVisible = false;
+                if (Model.Scenes.SelectedItem != s)
+                    Model.Scenes.SelectedItem = s;
+                else
+                if (Utils.IsDoubleTap())
+                    Navigation.PushAsync(sp);
+                    // MainPage.Instance.CurrentPage = ScenePage.Instance;
             }
         }
 
         private async void IconButton_Clicked(object sender, EventArgs e)
         {
-            await ProjectMedia.GetPhoto(this, "group_", (r)=> {
+            await ProjectMedia.GetPhoto(this, "group_", (r) =>
+            {
                 if (r != null)
                     (Model.Target as Group).Icon = r;
             });
-            
+
         }
 
         private void DevicesListView_ItemTapped(object sender, ItemTappedEventArgs e)

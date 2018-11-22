@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("SmartHouse.iOS.Controls.SuperButton.xaml", "Controls/SuperButton.xaml", typeof(global::SmartHouse.SuperButton))]
+[assembly: global::Xamarin.Forms.Xaml.XamlResourceIdAttribute("SmartHouse.iOS.Controls.SuperButton.xaml", "Controls/SuperButton.xaml", typeof(global::SmartHouse.Controls.SuperButton))]
 
-namespace SmartHouse {
+namespace SmartHouse.Controls {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse1\\SmartHouse\\SmartHouse\\Controls\\SuperButton.xaml")]
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse\\Controls\\SuperButton.xaml")]
     public partial class SuperButton : global::Xamarin.Forms.Grid {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::SmartHouse.ImageButton Icon;
+        private global::SmartHouse.Controls.ImageButton Icon;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::Xamarin.Forms.Label Text;
@@ -25,7 +25,7 @@ namespace SmartHouse {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(SuperButton));
-            Icon = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::SmartHouse.ImageButton>(this, "Icon");
+            Icon = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::SmartHouse.Controls.ImageButton>(this, "Icon");
             Text = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "Text");
         }
     }

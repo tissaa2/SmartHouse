@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace SmartHouse.Models.Logic
 {
     public class Device : IconEntity<UID>
     {
-        
         public virtual string TypeName { get; set; }
 
         /* private bool _checked;

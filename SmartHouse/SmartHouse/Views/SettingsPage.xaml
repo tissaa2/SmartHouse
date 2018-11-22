@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
+             x:Class="SmartHouse.Views.SettingsPage">
+    <StackLayout IsEnabled="{Binding IsAdmin}" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="IP адрес:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding IP}" FontSize="Large"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="Порт:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Port}" FontSize="Large"/>
+        </Grid>
+        <Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" />
+        <Button x:Name="RevertButton" Text="Отменить" Pressed="RevertButton_Pressed" />
+    </StackLayout>
+</ContentPage>

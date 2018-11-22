@@ -180,10 +180,12 @@
   },
   "libraries": {
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -208,10 +210,12 @@
       ]
     },
     "Plugin.CurrentActivity/1.0.1": {
-      "sha512": "lzspruFRwQRo5T1K4JNOJVvSNBLE9+jOvX9CGWB6sJ7q2GeXxY76LLTdirkhiq1/yYgBXkXsXIBzlRoCGJDuJA==",
+      "sha512": "uGJ4GBC/cmGwIoYWjCcPDzBHmHptKmhKZNZ9z6QY5TIb2W1I2uQ0qSIXk1LnWnMg2V7bkY0dVcChBhrdEUg75Q==",
       "type": "package",
       "path": "plugin.currentactivity/1.0.1",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "content/MonoAndroid10/MainApplication.cs.pp",
         "lib/MonoAndroid10/Plugin.CurrentActivity.dll",
         "lib/MonoAndroid10/Plugin.CurrentActivity.xml",
@@ -221,10 +225,12 @@
       ]
     },
     "Plugin.Permissions/1.2.1": {
-      "sha512": "r+4wE4ef530pqUgm6SXji/SV/XktT/xN7TYv4k5NoBQe+eR1TzV+bPn4WRnYaXMgS4u3BlZN62h2CMCZGPzvQw==",
+      "sha512": "c5RPpfVB0f808QOiDqaoEFgdVo44ryrvAe5X5lgMtp9hQzKj+kDlNwT05tROZJzbQFza+rYF3lAq/yaMDXZg/Q==",
       "type": "package",
       "path": "plugin.permissions/1.2.1",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.Permissions.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.Permissions.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.Permissions.Abstractions.pdb",
@@ -279,10 +285,12 @@
       ]
     },
     "Xam.Plugin.Media/2.6.2": {
-      "sha512": "WN5n0205WfjS1zUsLoyfKT4nkTlUtFSvpJ0GvuQ4v3A7AJeXLASAQOB7iND8aVLFI/fg7qHZ6qxzLroAhJaa7g==",
+      "sha512": "1L0qMp5RX9jUvvRpXDT+93NUq0S6mv+XuugFqgwSTkJf+DE4E873uZeKEQ0YCIz8OwuFxnSAeGt8CI65QULK7A==",
       "type": "package",
       "path": "xam.plugin.media/2.6.2",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.Media.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.Media.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.Media.Abstractions.pdb",
@@ -341,80 +349,96 @@
       ]
     },
     "Xamarin.Android.Support.Animated.Vector.Drawable/23.3.0": {
-      "sha512": "qCN7bgA3BpzVybYV5jJa0wQDDYqdomZ7va4gdeyXNAtjEVFPDdKdS8wrD1HuGsQfxShLPcsDFIKd1Z4birTq8g==",
+      "sha512": "h0Kdx6eE+lh7gBPhWe/DDtu6v1lTJcFhpGSFh+RdONidgKXtKtV4YvNOVhIUPGOJlGHx1CrjisgDH7kcr1Jgdw==",
       "type": "package",
       "path": "xamarin.android.support.animated.vector.drawable/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid403/Xamarin.Android.Support.Animated.Vector.Drawable.dll",
         "xamarin.android.support.animated.vector.drawable.23.3.0.nupkg.sha512",
         "xamarin.android.support.animated.vector.drawable.nuspec"
       ]
     },
     "Xamarin.Android.Support.Design/23.3.0": {
-      "sha512": "aTf8CqR0Ktzgoa9DD6YOR/BvfBcvvmUsQ3O2TtJxas0QQ1wb2raneICKyeZd89oFa3VAQbQzzXUP5NtSurF15w==",
+      "sha512": "5FjtHTySc7462J1I2i3aVkFomn4ceC+ylb01LTEBXCl6SOy/WLMj/NPH90GsslIFy/SaQqxE/fFZ4wFeiPqeeg==",
       "type": "package",
       "path": "xamarin.android.support.design/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid43/Xamarin.Android.Support.Design.dll",
         "xamarin.android.support.design.23.3.0.nupkg.sha512",
         "xamarin.android.support.design.nuspec"
       ]
     },
     "Xamarin.Android.Support.v4/23.3.0": {
-      "sha512": "14gFJCJF0ZDBVEHIuXefBaGKaVxWMw11yb41dcupnDPtIyQCUEz2BQGmMna2aIWquwAHrhJ8sxdmhmTdGyno+Q==",
+      "sha512": "s1H5f7IZGpD801ZWwPpYwbsj3q3/x9D85dWUiL5JctV+qyRlxKFq3KFj8cP1oqWXSE6Xw5NaWix/7dnLE5q/UQ==",
       "type": "package",
       "path": "xamarin.android.support.v4/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid403/Xamarin.Android.Support.v4.dll",
         "xamarin.android.support.v4.23.3.0.nupkg.sha512",
         "xamarin.android.support.v4.nuspec"
       ]
     },
     "Xamarin.Android.Support.v7.AppCompat/23.3.0": {
-      "sha512": "n5x/PwzhM9ShoESvckqI82cdWn2L3ccdfwdp0LrstcGBlIJMN9mXbntsjyKrfHXU0+RF04Iq5w0begvaAmTxcQ==",
+      "sha512": "X12rSgjfWRoF6Jqf821t1Awbtp8ZnKULYWYJIcna0tEtfSWA9BhTW+imrWebqt+RcJd3LfLJhVNZQUVyDtWj8g==",
       "type": "package",
       "path": "xamarin.android.support.v7.appcompat/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid403/Xamarin.Android.Support.v7.AppCompat.dll",
         "xamarin.android.support.v7.appcompat.23.3.0.nupkg.sha512",
         "xamarin.android.support.v7.appcompat.nuspec"
       ]
     },
     "Xamarin.Android.Support.v7.CardView/23.3.0": {
-      "sha512": "kyY2l1O1DTBzFmNy6gIoplcYC+lrSMJhyyw5s24hYWCLZSa31DYKFIiyPF1OMvb0xLDi43oBC2ZCIWrUvzTe+w==",
+      "sha512": "kdyOjG8T9wfw8oQm1K1h89ck67ggppOCQ0hZI1pAVWb0kNVXngWEwPTqlq8KEymvcwyXdQCbbDp43Jha8AYdeQ==",
       "type": "package",
       "path": "xamarin.android.support.v7.cardview/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid403/Xamarin.Android.Support.v7.CardView.dll",
         "xamarin.android.support.v7.cardview.23.3.0.nupkg.sha512",
         "xamarin.android.support.v7.cardview.nuspec"
       ]
     },
     "Xamarin.Android.Support.v7.MediaRouter/23.3.0": {
-      "sha512": "a+cZB6LRtV2fncYzQSdBxLYWcvNkUlNbq0PLUV+3JncC4pBTPVBY3t89fD5OmIy+vSL9DxgP2yJ6LwxjnDSJGw==",
+      "sha512": "2kOA96cch5CemnxAtV5onAOvXo//pSFIR0ALn963tQKSLzVk+pK60EFPN0W9qyfbbg2x8KmERgRGmdigFBKFiA==",
       "type": "package",
       "path": "xamarin.android.support.v7.mediarouter/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid403/Xamarin.Android.Support.v7.MediaRouter.dll",
         "xamarin.android.support.v7.mediarouter.23.3.0.nupkg.sha512",
         "xamarin.android.support.v7.mediarouter.nuspec"
       ]
     },
     "Xamarin.Android.Support.v7.RecyclerView/23.3.0": {
-      "sha512": "LRzIX3UHTAElbVGlXrNOL3SjsNcftfGDN9M1jhkGz5+uKxyhCFoXkvLMUvmNd5iZLdnFixAgXR+Ctm4tsRQxPQ==",
+      "sha512": "zjPeweYNiMsWa2GEL2vuItjYfdeNaWla20cJu+qXiRXeMzI8r3KmocWstzsaYndD/Buy/zPpfyM0uRbIYNdM2Q==",
       "type": "package",
       "path": "xamarin.android.support.v7.recyclerview/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid403/Xamarin.Android.Support.v7.RecyclerView.dll",
         "xamarin.android.support.v7.recyclerview.23.3.0.nupkg.sha512",
         "xamarin.android.support.v7.recyclerview.nuspec"
       ]
     },
     "Xamarin.Android.Support.Vector.Drawable/23.3.0": {
-      "sha512": "A2yyRZp7QsRdPKIjTCQ2Ic84nNToPY5lVa8vJPLV0gJ0XBeKijQQi8biFZZdnXy+tzrUmfX6fJnlbYFSdIMhiQ==",
+      "sha512": "0wIDrWCD3GqNJObZMsWey1L3EDVRmCmXNksvxCVaLpXqpCXtNpZtPF2GSGDWnryhbcQi1UesO4Hopja2FNFTOA==",
       "type": "package",
       "path": "xamarin.android.support.vector.drawable/23.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "build/Xamarin.Android.Support.Tasks.VectorDrawable.dll",
         "build/Xamarin.Android.Support.Vector.Drawable.targets",
         "lib/MonoAndroid403/Xamarin.Android.Support.Vector.Drawable.dll",
@@ -423,10 +447,12 @@
       ]
     },
     "Xamarin.Forms/2.4.0.91020": {
-      "sha512": "nVuz6UCs0VVOokM5a4HB5TMy4wgiJvR34qqevvdlH6NNAqc4Xj6FohflyBCAeRHxsVB74DE0JN+RmHxJss/pAg==",
+      "sha512": "RRGitXffwOeD8eBrTtumq5EZFHR7m6mif8UaDxiOtehI5sinGttf+stYNkJcCjnDVdt6czKNVRsmXXfRc1tdgA==",
       "type": "package",
       "path": "xamarin.forms/2.4.0.91020",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "build/netstandard1.0/Mono.Cecil.Mdb.dll",
         "build/netstandard1.0/Mono.Cecil.Pdb.dll",
         "build/netstandard1.0/Mono.Cecil.Rocks.dll",
@@ -619,7 +645,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\etiainen\\.nuget\\packages\\": {}
+    "C:\\Users\\Etiainen\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -627,12 +653,12 @@
       "projectUniqueName": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\SmartHouse.Android.csproj",
       "projectName": "SmartHouse.Android",
       "projectPath": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\SmartHouse.Android.csproj",
-      "packagesPath": "C:\\Users\\etiainen\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Etiainen\\.nuget\\packages\\",
       "outputPath": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\etiainen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Etiainen\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

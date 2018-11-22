@@ -35,11 +35,7 @@ namespace SmartHouse.Services
             byte[] array = udpClient.EndReceive(result, ref remoteAddress);
             this.ProcessData(result, remoteAddress, array);
             this.Stream.Write(array);
-            UDPConnection.OnReceiveDataDelegate expr_3D = this.OnReceiveData;
-            if (expr_3D != null)
-            {
-                expr_3D(this, array);
-            }
+            this.OnReceiveData?.Invoke(this, array);
             udpClient.BeginReceive(new AsyncCallback(this.OnUdpData), udpClient);
         }
 

@@ -3,6 +3,7 @@ using SmartHouse.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Net;
+using SmartHouse.Models.Physics;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SmartHouse
@@ -19,8 +20,9 @@ namespace SmartHouse
 
         public static void SetMainPage()
         {
-            Current.MainPage = new MainPage();
+            Current.MainPage = new MainPage(new ProjectsListPage());
             Client = Services.Client.Instance;
+            var ds = PDevice.All;
             // CrossCurrentActivity.Current.Init(this, bundle);
             /* Current.MainPage = new TabbedPage
             {

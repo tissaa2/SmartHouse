@@ -21,6 +21,21 @@ namespace SmartHouse.Models.Packets
             0
         };
 
+        public static byte[] AutodetectRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0x30,
+            6,
+            0x05,
+            0,
+            0,
+            0,
+            0x04,
+            01
+        };
+
         public static byte[] PortSelectRequest = new byte[]
         {
             36,
@@ -57,30 +72,31 @@ namespace SmartHouse.Models.Packets
         // public static byte[] ActivateSceneCANRequest = new byte[] { 36, 72, 76, 0, 48, 10, 13, 1, 0, 0, 80, 0, 5, 0, 4, 0 };
         public static byte[] ActivateSceneCANRequest = new byte[] { 0x24, 0x48, 0x4c, 0, 0x30, 0xa, 0xd, 0, 0x3, 0x84, 0x50, 0, 5, 0, 4, 0 };
 
-        public static byte HEADER_SIZE = 3;
+        public static byte START_SEQUENCE_SIZE = 3;
 
-        public byte[] Header = new byte[(int)Packet.HEADER_SIZE];
+        public byte[] StartSequence = new byte[(int)Packet.START_SEQUENCE_SIZE];
 
-        public short Type;
+        public short Command;
 
         public byte DataSize;
 
-        private int sizeOf = -1;
+        public PacketData Data;
 
         protected int headerSize = 6;
 
-        protected int SizeOf
-        {
-            get
-            {
-                bool flag = this.sizeOf < 0;
-                if (flag)
-                {
-                    this.sizeOf = this.CalculateSize();
-                }
-                return this.sizeOf;
-            }
-        }
+        private int sizeOf = -1;
+        // protected int SizeOf
+        // {
+        //    get
+        //    {
+        //        bool flag = this.sizeOf < 0;
+        //        if (flag)
+        //        {
+        //            this.sizeOf = this.CalculateSize();
+        //        }
+        //        return this.sizeOf;
+        //    }
+        // }
 
         protected static List<Type> FindAllDerivedTypes<T>()
         {
@@ -128,13 +144,13 @@ namespace SmartHouse.Models.Packets
             return result;
         }
 
-        public static Packet DeriveAndLoadData(Packet p, DuplexStream stream)
+        /* public static Packet DeriveAndLoadData(Packet p, DuplexStream stream)
         {
-            Packet packet = Packet.CreatePacketOfType((int)p.Type);
+            Packet packet = Packet.CreatePacketOfType((int)p.Command);
             packet.Assign(p);
             packet.ReadData(stream);
             return packet;
-        }
+        } */
 
         protected virtual int CalculateSize()
         {
@@ -187,8 +203,8 @@ namespace SmartHouse.Models.Packets
             int result;
             try
             {
-                this.Header = stream.ReadBytes((int)Packet.HEADER_SIZE);
-                this.Type = stream.ReadInt16();
+                this.StartSequence = stream.ReadBytes((int)Packet.START_SEQUENCE_SIZE);
+                this.Command = stream.ReadInt16();
                 this.DataSize = stream.ReadByte();
             }
             catch (Exception ex)
@@ -203,11 +219,11 @@ namespace SmartHouse.Models.Packets
 
         public virtual int ReadData(DuplexStream stream)
         {
-            stream.WaitForAvailable(this.SizeOf - this.headerSize, -1);
+            stream.WaitForAvailable(this.DataSize, -1);
             return 0;
         }
 
-        public virtual int Read(DuplexStream stream)
+        public virtual int ReadFrom(DuplexStream stream)
         {
             int num = this.ReadHeader(stream);
             bool flag = num < 0;
@@ -232,10 +248,26 @@ namespace SmartHouse.Models.Packets
             return result;
         }
 
+        public static Packet Read(DuplexStream stream)
+        {
+            Packet p = null;
+            try
+            {
+                p = new Packet();
+                p.ReadFrom(stream);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                p = null;
+            }
+            return p;
+        }
+
         public virtual void Assign(Packet p)
         {
-            this.Header = (p.Header.Clone() as byte[]);
-            this.Type = p.Type;
+            this.StartSequence = (p.StartSequence.Clone() as byte[]);
+            this.Command = p.Command;
             this.DataSize = p.DataSize;
         }
 
@@ -249,8 +281,8 @@ namespace SmartHouse.Models.Packets
             return string.Format("{0}: Header='{1}', Type={2} DataSize={3}", new object[]
             {
                 base.GetType(),
-                (this.Header == null) ? " " : Encoding.UTF8.GetString(this.Header),
-                this.Type,
+                (this.StartSequence == null) ? " " : Encoding.UTF8.GetString(this.StartSequence),
+                this.Command,
                 this.DataSize
             });
         }

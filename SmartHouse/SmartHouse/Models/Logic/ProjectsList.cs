@@ -9,7 +9,7 @@ namespace SmartHouse.Models.Logic
 {
     public class ProjectsList: IconListEntity<int, int, Project>
     {
-        public static string FileName { get; set; } = "projects.xml";
+        public static string FileName { get; set; } = "projects.json";
         public static ProjectsList TestData {
             get {
                 return new ProjectsList()

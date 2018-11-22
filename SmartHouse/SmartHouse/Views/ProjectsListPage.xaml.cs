@@ -20,7 +20,7 @@ namespace SmartHouse.Views
                 return templateSelector;
             }
         } */
-        public static ProjectsListPage Instance = null;
+        // public static ProjectsListPage Instance = null;
         public ListPageModel<Project> Model { get; set; }
         // public ICommand EditItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
@@ -42,7 +42,7 @@ namespace SmartHouse.Views
 
         public ProjectsListPage()
         {
-            Instance = this;
+            // Instance = this;
             // this.EditItemCommand = new Command<Project>(EditItem);
             this.DeleteItemCommand = new Command<Project>(DeleteItem);
             this.InitializeComponent();
@@ -56,20 +56,23 @@ namespace SmartHouse.Views
 
         private void ProjectsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (Model.SelectedItem != e.Item)
+            if (e.Item is Project)
             {
-                // EditorRow.Height = 48;
-                Model.SelectedItem = e.Item as Project;
-            }
-            else
-            if (Utils.IsDoubleTap())
-            {
-                ProjectPage.Instance.IsVisible = true;
-                MainPage.Instance.CurrentPage = ProjectPage.Instance;
-                ProjectPage.Instance.SetTarget((e.Item as Project));
-                GroupPage.Instance.IsVisible = false;
-                ScenePage.Instance.IsVisible = false;
-                DevicePage.Instance.IsVisible = false;
+                var p = e.Item as Project;
+                var pp = new ProjectPage() { Title = p.Name };
+                pp.IsVisible = true;
+                pp.SetTarget(p);
+                // GroupPage.Instance.IsVisible = false;
+                // ScenePage.Instance.IsVisible = false;
+                // DevicePage.Instance.IsVisible = false;
+                if (Model.SelectedItem != e.Item)
+                    Model.SelectedItem = p;
+                else
+                if (Utils.IsDoubleTap())
+                {
+                    Navigation.PushAsync(pp);
+                }
+                    // MainPage.Instance.CurrentPage = ProjectPage.Instance;
             }
         }
 
@@ -100,17 +103,18 @@ namespace SmartHouse.Views
         public void LoadTestData()
         {
             ProjectsList.LoadTestData();
-            ProjectsListPage.Instance.Model.Items = ProjectsList.Instance.Items;
+            Model.Items = ProjectsList.Instance.Items;
             UpdateTabs();
         }
 
         public void UpdateTabs()
         {
-            MainPage.Instance.CurrentPage = ProjectsListPage.Instance;
-            ProjectPage.Instance.IsVisible = false;
-            GroupPage.Instance.IsVisible = false;
-            ScenePage.Instance.IsVisible = false;
-            DevicePage.Instance.IsVisible = false;
+
+            // MainPage.Instance.CurrentPage = ProjectsListPage.Instance;
+            //ProjectPage.Instance.IsVisible = false;
+            //GroupPage.Instance.IsVisible = false;
+            //ScenePage.Instance.IsVisible = false;
+            //DevicePage.Instance.IsVisible = false;
 
         }
 
@@ -119,18 +123,38 @@ namespace SmartHouse.Views
             switch (ProjectMenuPicker.SelectedIndex)
             {
                 case (0):
-                    SaveDataToDevice();
+                    LoadDataFromDevice();
                     break;
                 case (1):
-                    LoadDataFromDevice();
+                    SaveDataToDevice();
                     break;
                 case (2):
                     LoadTestData();
                     break;
+                case (3):
+                    ShowSettings();
+                    break;
+                case (4):
+                    ShowDebug();
+                    break;
             }
         }
 
+        private void ShowSettings()
+        {
+            Navigation.PushAsync(new SettingsPage());
+        }
+
+        private void ShowDebug()
+        {
+            Navigation.PushAsync(new DebugPage());
+        }
+
         private void MenuButton_Pressed(object sender, EventArgs e)
+        {
+        }
+
+        private void ToolbarItem_Activated(object sender, EventArgs e)
         {
             ProjectMenuPicker.Focus();
         }
