@@ -18,7 +18,7 @@ namespace SmartHouse.Models.Packets
 
         public byte PortNumber = 0;
 
-        public static ControllerDiscoverResponse Read(DuplexStream stream)
+        /* public static ControllerDiscoverResponse Read(DuplexStream stream)
         {
             ControllerDiscoverResponse r = null;
             try
@@ -28,6 +28,24 @@ namespace SmartHouse.Models.Packets
                 r.PortMask = stream.ReadByte();
                 r.IpAddress = stream.ReadInt32();
                 r.PortNumber = stream.ReadByte();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return r;
+        } */
+
+        public static ControllerDiscoverResponse Read(byte[] buffer, ref int pos)
+        {
+            ControllerDiscoverResponse r = null;
+            try
+            {
+                r = new ControllerDiscoverResponse();
+                r.UID = buffer.ReadBytes(UID_SIZE, ref pos);
+                r.PortMask = buffer.ReadByte(ref pos);
+                r.IpAddress = buffer.ReadInt32(ref pos);
+                r.PortNumber = buffer.ReadByte(ref pos);
             }
             catch (Exception ex)
             {

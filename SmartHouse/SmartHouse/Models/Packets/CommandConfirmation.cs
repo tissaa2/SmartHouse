@@ -7,9 +7,9 @@ namespace SmartHouse.Models.Packets
 {
     public class CommandConfirmation: PacketData
     {
-        public static CommandConfirmation Read(DuplexStream stream)
+        public static CommandConfirmation Read(byte[] buffer, ref int pos)
         {
-            return new CommandConfirmation() { Result = stream.ReadByte() };
+            return new CommandConfirmation() { Result = buffer.ReadByte(ref pos) };
         }
 
         public Byte Result = 0;

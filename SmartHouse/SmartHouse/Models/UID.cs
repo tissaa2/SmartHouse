@@ -31,7 +31,7 @@ namespace SmartHouse.Models
     {
         public byte B0 { get { return (byte)(Hash & 0xFF); } }
         public byte B1 { get { return (byte)((Hash >> 8) & 0xFF); } }
-        public byte B2 { get { return (byte)((Hash >> 8) & 0xFF); } }
+        public byte B2 { get { return (byte)((Hash >> 16) & 0xFF); } }
         // public byte B3 { get; private set; }
 
         public int Hash { get; private set; }

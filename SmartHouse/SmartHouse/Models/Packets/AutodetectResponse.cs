@@ -5,16 +5,8 @@ using SmartHouse.Services;
 
 namespace SmartHouse.Models.Packets
 {
-    public class AutodetectResponse: PacketData
+    public class AutodetectResponse: CANResponse
     {
-        public static int UID_SIZE = 4;
-
-        public byte[] UID = new byte[UID_SIZE];
-
-        public byte StartByte;
-
-        public byte Command;
-
         public byte DeviceType;
 
         public byte OutputsCount;
@@ -25,7 +17,17 @@ namespace SmartHouse.Models.Packets
 
         public short OutputsGroupMask;
 
-        public static AutodetectResponse Read(DuplexStream stream)
+        public AutodetectResponse()
+        {
+
+        }
+
+        public AutodetectResponse(CANResponse source): base(source)
+        {
+
+        }
+
+        /* public static AutodetectResponse Read(DuplexStream stream)
         {
             AutodetectResponse r = null;
             try
@@ -40,6 +42,46 @@ namespace SmartHouse.Models.Packets
                 r.InputsCount = stream.ReadByte();
                 r.ScenesCount = stream.ReadByte();
                 r.OutputsGroupMask = stream.ReadInt16();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return r;
+        } */
+
+        public static AutodetectResponse CreateFrom(CANResponse source, DuplexStream stream)
+        {
+            AutodetectResponse r = null;
+            try
+            {
+                r = new AutodetectResponse(source);
+
+                r.DeviceType = stream.ReadByte();
+                r.OutputsCount = stream.ReadByte();
+                r.InputsCount = stream.ReadByte();
+                r.ScenesCount = stream.ReadByte();
+                r.OutputsGroupMask = stream.ReadInt16();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return r;
+        }
+
+        public static AutodetectResponse CreateFrom(CANResponse source, byte[] buffer, ref int pos)
+        {
+            AutodetectResponse r = null;
+            try
+            {
+                r = new AutodetectResponse(source);
+
+                r.DeviceType = buffer.ReadByte(ref pos);
+                r.OutputsCount = buffer.ReadByte(ref pos);
+                r.InputsCount = buffer.ReadByte(ref pos);
+                r.ScenesCount = buffer.ReadByte(ref pos);
+                r.OutputsGroupMask = buffer.ReadInt16(ref pos);
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SmartHouse.Models.Physics
 {
-    [DeviceType(0x20)]
+    [DeviceType(0x38)]
     public class MotionSensor: PDevice
     {
         public override string Icon { get => "pdevice_motionsensor.png"; }

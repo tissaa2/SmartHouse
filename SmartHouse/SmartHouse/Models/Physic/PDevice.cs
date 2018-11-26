@@ -66,13 +66,14 @@ namespace SmartHouse.Models.Physics
 
         }
 
-        public static void AddDevice(Packet packet, DuplexStream stream)
+        // 2DO: Сделать постоянное чтение и обработку пакетов в сервере
+        public static void AddDevice(CANResponse source, byte[] data, ref int pos)
         {
-            AutodetectResponse r = AutodetectResponse.Read(stream);
+            AutodetectResponse r = AutodetectResponse.CreateFrom(source, data, ref pos);
             if (PDevice.DeviceTypes.ContainsKey(r.DeviceType))
             {
-                var id = new UID(r.UID[3], r.UID[2], r.UID[1]);
-                var d = All.FirstOrDefault(e => e.ID == id);
+                var id = new UID(r.UID[2], r.UID[1], r.UID[0]);
+                var d = all.FirstOrDefault(e => e.ID == id);
                 if (d == null)
                 {
                     d = Activator.CreateInstance(PDevice.DeviceTypes[r.DeviceType]) as PDevice;
@@ -84,14 +85,81 @@ namespace SmartHouse.Models.Physics
             // Log.Write("Command {0} executed: result = {1}", message, (commandResponsePacket.Result == 0) ? "success" : "failure");
         }
 
-        public static async Task LoadAllAsync()
+        public static void ProcessAutodetectPacket(Packet packet)
         {
+            if (packet.StartSequence[0] == '$')
+                if (packet.Command == 0x031)
+                {
+                    int p = 0;
+                    var cr = CANResponse.Read(packet.Data, ref p);
+                    if (cr.StartByte == 0xFF && cr.Command == 0x04)
+                    {
+                        AddDevice(cr, packet.Data, ref p);
+                    }
+                }
+
+        }
+
+        private static void Fk(byte uid, byte type, byte inpts, byte outpts)
+        {
+            ProcessAutodetectPacket(new Packet()
+            {
+                StartSequence = new byte[] { (byte)'#', (byte)'H', (byte)'L' },
+                Command = 0x031,
+                DataSize = 11,
+                //                  conf     UID     strt  cmd   type   in     out    sc gm
+                Data = new byte[] { 0x05, 0, 0, uid, 0xFF, 0x04, type, inpts, outpts, 2, 0 }
+            });
+        }
+
+
+        public static async void LoadAllAsync()
+        {
+            /* Fk(1, 0x01, 8, 8);
+            Fk(2, 0x01, 0, 16);
+            Fk(3, 0x01, 4, 4);
+            Fk(4, 0x01, 0, 8);
+            Fk(5, 0x01, 8, 8);
+            Fk(6, 0x58, 1, 1);
+            Fk(7, 0x08, 1, 1);
+            Fk(8, 0x70, 1, 1);
+            Fk(9, 0x02, 8, 8);
+            Fk(10, 0x02, 8, 8);
+            Fk(11, 0x02, 8, 8); */
+            if (all != null)
+                all.Clear();
+
             await Task.Run(() =>
             {
-                while (!Client.Instance.Initialized)
-                    Thread.Sleep(100);
-                Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", AddDevice);
+                 while (!Client.Instance.Initialized)
+                     Thread.Sleep(100);
+                 Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
             });
+
+            //await Task.Run(() =>
+            //{
+            //    Fk(1, 0x01, 8, 8);
+            //    Thread.Sleep(500);
+            //    Fk(2, 0x01, 0, 16);
+            //    Thread.Sleep(500);
+            //    Fk(3, 0x01, 4, 4);
+            //    Thread.Sleep(500);
+            //    Fk(4, 0x01, 0, 8);
+            //    Thread.Sleep(500);
+            //    Fk(5, 0x01, 8, 8);
+            //    Thread.Sleep(500);
+            //    Fk(6, 0x58, 1, 1);
+            //    Thread.Sleep(500);
+            //    Fk(7, 0x08, 1, 1);
+            //    Thread.Sleep(500);
+            //    Fk(8, 0x70, 1, 1);
+            //    Thread.Sleep(500);
+            //    Fk(9, 0x02, 8, 8);
+            //    Thread.Sleep(500);
+            //    Fk(10, 0x02, 8, 8);
+            //    Thread.Sleep(500);
+            //    Fk(11, 0x02, 8, 8);
+            //});
         }
 
         /* public static Device GetDevice(UID id)
@@ -103,13 +171,36 @@ namespace SmartHouse.Models.Physics
         } */
 
         public static Server CAN = null;
+        public static int ROW_HEIGHT = 32;
 
         public override string Icon { get => "pdevice_device.png"; }
         public virtual string TypeName { get => "Устройство"; }
 
+        public string StringID { get => ID.ToString(); }
+
         public List<InputPort> Inputs { get; set; }
         public List<OutputPort> Outputs { get; set; }
         public byte ScenesCount { get; set; }
+
+        private bool fold = true;
+        public bool Fold
+        {
+            get => fold;
+            set
+            {
+                fold = value;
+                OnPropertyChanged("Fold");
+                OnPropertyChanged("Height");
+                OnPropertyChanged("Unfold");
+            }
+        }
+
+        public bool Unfold
+        {
+            get => !fold;
+        }
+
+        public int Height { get => ((Fold ? (Inputs.Count + Outputs.Count) : 0) + 1) * ROW_HEIGHT; }
 
         public virtual void Init(UID id, int inputsCount, int outputsCount, int scenesCount, bool randomValues = false)
         {
@@ -121,12 +212,12 @@ namespace SmartHouse.Models.Physics
             for (int i = 0; i < inputsCount; i++)
             {
                 v = randomValues ? rnd.NextDouble() : 0;
-                Inputs.Add(new InputPort() { ID = i, Value = v });
+                Inputs.Add(new InputPort() { ID = i, Value = v, Name = String.Format("Вход {0}", i), Parent = this });
             }
             for (int i = 0; i < outputsCount; i++)
             {
                 v = randomValues ? rnd.NextDouble() : 0;
-                Outputs.Add(new OutputPort() { ID = i, Value = v });
+                Outputs.Add(new OutputPort() { ID = i, Value = v, Name = String.Format("Выход {0}", i), Parent = this });
             }
         }
 

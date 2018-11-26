@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>  
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SmartHouse.Controls"
+    x:Class="SmartHouse.Controls.ToggleButton"
+    Padding="0" Margin="0" RowSpacing="0">
+    <Image x:Name="OnImage" HorizontalOptions="Fill" VerticalOptions="Fill" IsVisible="true" />
+    <Image x:Name="OffImage" HorizontalOptions="Fill" VerticalOptions="Fill" IsVisible="true" />
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnTapGestureRecognizerTapped" />
+    </Grid.GestureRecognizers>
+</Grid>

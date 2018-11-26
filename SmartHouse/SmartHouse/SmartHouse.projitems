@@ -10,6 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Controls\ToggleButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DevicesBrowserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -35,6 +38,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ESocketSwitch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\RepeaterView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ToggleButton.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ToggleButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DeviceTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseObject.cs" />
@@ -43,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\BoolStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DoubleStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EntityInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\CANResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\AutodetectResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\DeviceTypeAttribute.cs" />

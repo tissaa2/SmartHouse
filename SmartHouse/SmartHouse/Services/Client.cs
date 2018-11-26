@@ -9,7 +9,7 @@ using SmartHouse.Models;
 namespace SmartHouse.Services
 {
 
-    public delegate void ProcessPacketDelegate(Packet packet, DuplexStream stream);
+    public delegate void ProcessPacketDelegate(Packet packet);
     public class Client : UDPConnection
     {
         private static Client instance = null;
@@ -44,12 +44,13 @@ namespace SmartHouse.Services
             this.MainThread = new Thread(new ParameterizedThreadStart(this.MainThreadRun));
         }
 
-        protected CommandConfirmation SendRequestAndWaitForResponse(Server server, byte[] command, string message)
+        public CommandConfirmation SendRequestAndWaitForResponse(Server server, byte[] command, string message)
         {
             server.Send(command);
             Packet p = Packet.Read(server.Stream);
             bool flag = p.DataSize >= 0;
-            CommandConfirmation cc = CommandConfirmation.Read(server.Stream);
+            int i = 0;
+            CommandConfirmation cc = CommandConfirmation.Read(p.Data, ref i);
             CommandConfirmation result;
             if (flag)
             {
@@ -64,19 +65,37 @@ namespace SmartHouse.Services
             return result;
         }
 
+        public void SendRequestAndWaitForResponse(Server server, byte[] command, string message, ProcessPacketDelegate onResponse)
+        {
+            server.Send(command);
+            Packet p = Packet.Read(server.Stream);
+            bool flag = p.DataSize >= 0;
+            int i = 0;
+            if (flag)
+            {
+                Log.Write("Command {0} executed: result = success", message);
+            }
+            else
+            {
+                Log.Write("Command {0} sent: result did not arrived", message);
+            }
+            onResponse?.Invoke(p);
+        }
+
         public void SendAndProcessResponses(Server server, byte[] command, int timeout, string message, ProcessPacketDelegate onPacket)
         {
             server.Send(command);
             long t = timeout * 10000 + DateTime.Now.Ticks;
             while (t > DateTime.Now.Ticks)
-            {
-                // ControllerCommandResponsePacket commandResponsePacket = new ControllerCommandResponsePacket();
-                // int num = commandResponsePacket.Read(server.Stream);
-                Packet p = Packet.Read(server.Stream);
+            // while (true)
+                {
+                    // ControllerCommandResponsePacket commandResponsePacket = new ControllerCommandResponsePacket();
+                    // int num = commandResponsePacket.Read(server.Stream);
+                    Packet p = Packet.Read(server.Stream);
                 bool flag = p.DataSize >= 0;
                 if (flag)
                 {
-                    onPacket?.Invoke(p, server.Stream);
+                    onPacket?.Invoke(p);
                 }
             }
         }
@@ -104,19 +123,26 @@ namespace SmartHouse.Services
 
             Thread.Sleep(10);
             Packet packet = Packet.Read(Stream);
-            ControllerDiscoverResponse discoverResponse = ControllerDiscoverResponse.Read(Stream);
+            int p = 0;
+            ControllerDiscoverResponse discoverResponse = ControllerDiscoverResponse.Read(packet.Data, ref p);
             Log.Write("Got discover response: {0}", packet);
             Log.Write("Sending port select request..");
             byte controllerPort;
             if (discoverResponse.PortNumber != 0)
+            {
                 controllerPort = discoverResponse.PortNumber;
+                Log.Write("Port {0} is already open for you", discoverResponse.PortNumber);
+            }
             else
+            {
                 controllerPort = this.GetPortFromMask(discoverResponse.PortMask);
-            Packet.PortSelectRequest[6] = controllerPort;
-            this.Broadcast(Packet.PortSelectRequest, this.BroadcastPort);
-            packet = Packet.Read(this.Stream);
-            CommandConfirmation cc = CommandConfirmation.Read(Stream);
-            Log.Write("Got port select response: {0}", cc);
+                Packet.PortSelectRequest[6] = controllerPort;
+                this.Broadcast(Packet.PortSelectRequest, this.BroadcastPort);
+                packet = Packet.Read(this.Stream);
+                p = 0;
+                CommandConfirmation cc = CommandConfirmation.Read(packet.Data, ref p);
+                Log.Write("Got port select response: {0}", cc);
+            }
             Client.CurrentServer.RemoteAddress.Port = Settings.Instance.Port + (int)controllerPort;
             this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
             this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.InitCANTranslationRequest, "init CAN");
@@ -176,6 +202,8 @@ namespace SmartHouse.Services
         public virtual void Start(int broadcastPort)
         {
             base.Start();
+            if (broadcastPort > UInt16.MaxValue)
+                broadcastPort = 61576;
             this.BroadcastPort = broadcastPort;
             this.MainThread.Start();
         }

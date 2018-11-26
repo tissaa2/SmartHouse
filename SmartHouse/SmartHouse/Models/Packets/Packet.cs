@@ -26,6 +26,7 @@ namespace SmartHouse.Models.Packets
             36,
             72,
             76,
+            0,
             0x30,
             6,
             0x05,
@@ -34,6 +35,27 @@ namespace SmartHouse.Models.Packets
             0,
             0x04,
             01
+        };
+
+        public static byte[] SetOutputValueRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4
+            9,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x54,   // 10 command 
+            0,      // 11 channel
+            0,      // 12 level (value)
+            0,      // 13 delay (in sec/4)
+            0,      // 14 fade time (in sec/4)
+            0,      // 15 GN (group number)
+            0       // 16 BN (button number)
         };
 
         public static byte[] PortSelectRequest = new byte[]
@@ -80,7 +102,7 @@ namespace SmartHouse.Models.Packets
 
         public byte DataSize;
 
-        public PacketData Data;
+        public byte[] Data;
 
         protected int headerSize = 6;
 
@@ -152,7 +174,7 @@ namespace SmartHouse.Models.Packets
             return packet;
         } */
 
-        protected virtual int CalculateSize()
+        /* protected virtual int CalculateSize()
         {
             Type type = base.GetType();
             int num = 0;
@@ -196,7 +218,7 @@ namespace SmartHouse.Models.Packets
                 }
             }
             return num;
-        }
+        } */
 
         public virtual int ReadHeader(DuplexStream stream)
         {
@@ -220,6 +242,7 @@ namespace SmartHouse.Models.Packets
         public virtual int ReadData(DuplexStream stream)
         {
             stream.WaitForAvailable(this.DataSize, -1);
+            Data = stream.ReadBytes(DataSize);
             return 0;
         }
 

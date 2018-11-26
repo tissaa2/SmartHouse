@@ -14,7 +14,7 @@ namespace SmartHouse.Models.Logic
         private string name;
 
         // [XmlAttribute("Name")]
-        public string Name
+        public virtual string Name
         {
             get { return name; }
             set { name = value; OnPropertyChanged("Name"); }

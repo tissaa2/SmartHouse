@@ -10,7 +10,6 @@ namespace SmartHouse.Models.Physics
         public override string Icon { get => "pdevice_relay.png"; }
         public override string TypeName { get => "Реле"; }
 
-        Сделай темплейты для каждого устройства
         /* public override void Init(int inputsCount, int outputsCount)
         {
             base.Init(inputsCount, outputsCount);

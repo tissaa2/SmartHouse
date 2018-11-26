@@ -13,7 +13,7 @@ namespace SmartHouse.ViewModels
     {
         public ListPageModel(ObservableCollection<T> items/* , ViewEditTemplateSelector templateSelector */): base(items)
         {
-            Items = items;
+            // Items = items;
         }
     }
 }

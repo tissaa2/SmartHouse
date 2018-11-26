@@ -5,13 +5,14 @@ using System.Text;
 using SmartHouse.Models.Logic;
 using System.ComponentModel;
 using SmartHouse.Models;
+using SmartHouse.Models.Physics;
 
 namespace SmartHouse.ViewModels
 {
 
-    public class DevicesBrowserPageModel: ListViewModel<Device> 
+    public class DevicesBrowserPageModel: ListViewModel<PDevice> 
     {
-        public DevicesBrowserPageModel(ObservableCollection<Device> items): base(items)
+        public DevicesBrowserPageModel(ObservableCollection<PDevice> items): base(items)
         {
         }
     }

@@ -90,7 +90,7 @@ namespace SmartHouse.Views
 
         private void DevicesListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-
+            
         }
 
         private void DeleteButton_Clicked(object sender, EventArgs e)

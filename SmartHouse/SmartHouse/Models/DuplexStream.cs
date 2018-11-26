@@ -125,6 +125,8 @@ namespace SmartHouse.Models
             return this.WritePosition;
         }
 
+
+
         public byte[] ReadBytes(int count)
         {
             bool flag = this.WaitForAvailable(count, this.Timeout) > 0;
@@ -157,5 +159,31 @@ namespace SmartHouse.Models
             }
             return result;
         }
+
+        /* public void Skip(int count)
+        {
+            bool flag = this.WaitForAvailable(count, this.Timeout) > 0;
+            if (flag)
+            {
+                byte[] buffer = this.Buffer;
+                lock (buffer)
+                {
+                    bool flag3 = this.ReadPosition + count <= this.BufferSize;
+                    if (flag3)
+                    {
+                        this.ReadPosition += count;
+                    }
+                    else
+                    {
+                        int num = this.BufferSize - this.ReadPosition;
+                        this.ReadPosition = count - num;
+                    }
+                }
+            }
+            else
+            {
+            }
+        } */
+
     }
 }

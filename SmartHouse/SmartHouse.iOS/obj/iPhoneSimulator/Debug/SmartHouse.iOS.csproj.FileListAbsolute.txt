@@ -34,3 +34,4 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\View
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Controls\ESlider.xaml.g.cs
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Controls\DevicesListView.xaml.g.cs
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Views\DevicesBrowserPage.xaml.g.cs
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.iOS\obj\iPhoneSimulator\Debug\Controls\ToggleButton.xaml.g.cs

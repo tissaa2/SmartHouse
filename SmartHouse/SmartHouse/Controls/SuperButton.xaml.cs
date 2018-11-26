@@ -36,6 +36,7 @@ namespace SmartHouse.Controls
         {
             get
             {
+                
                 return this.Icon.Source;
             }
             set
