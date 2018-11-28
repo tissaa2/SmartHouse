@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
+using System.Reflection;
 
 namespace SmartHouse.Services
 {
@@ -52,70 +53,15 @@ namespace SmartHouse.Services
             return stringBuilder.ToString();
         }
 
-
-        public static byte[] Read(byte[] buf, int count, ref int pos)
+        public static List<Type> FindAllDerivedTypes<T>()
         {
-            byte[] result = null;
-            if (pos + count <= buf.Length)
-            {
-                result = new byte[count];
-                Array.Copy(buf, pos, result, 0, count);
-                pos += count;
-            }
-            else
-            {
-                result = null;
-            }
-            return result;
+            return FindAllDerivedTypes<T>(Assembly.GetAssembly(typeof(T)));
         }
 
-        public static byte[] ReadBytes(this byte[] buf, int count, ref int pos)
+        public static List<Type> FindAllDerivedTypes<T>(Assembly assembly)
         {
-            return Read(buf, count, ref pos);
-        }
-
-        public static byte ReadByte(this byte[] buf, ref int pos)
-        {
-            byte[] array = Read(buf, 1, ref pos);
-            bool flag = array != null;
-            if (flag)
-            {
-                return array[0];
-            }
-            throw new Exception("DuplexStream: error reading byte - timeout reached");
-        }
-
-        public static short ReadInt16(this byte[] buf, ref int pos)
-        {
-            byte[] array = Read(buf, 2, ref pos);
-            bool flag = array != null;
-            if (flag)
-            {
-                return IPAddress.NetworkToHostOrder(BitConverter.ToInt16(array, 0));
-            }
-            throw new Exception("DuplexStream: error reading Int16 - timeout reached");
-        }
-
-        public static int ReadInt32(this byte[] buf, ref int pos)
-        {
-            byte[] array = Read(buf, 4, ref pos);
-            bool flag = array != null;
-            if (flag)
-            {
-                return IPAddress.NetworkToHostOrder(BitConverter.ToInt32(array, 0));
-            }
-            throw new Exception("DuplexStream: error reading Int32 - timeout reached");
-        }
-
-        public static long ReadInt64(this byte[] buf, ref int pos)
-        {
-            byte[] array = Read(buf, 8, ref pos);
-            bool flag = array != null;
-            if (flag)
-            {
-                return IPAddress.NetworkToHostOrder(BitConverter.ToInt64(array, 0));
-            }
-            throw new Exception("DuplexStream: error reading Int64 - timeout reached");
+            Type derivedType = typeof(T);
+            return Enumerable.ToList<Type>(Enumerable.Where<Type>(assembly.GetTypes(), (Type t) => t != derivedType && derivedType.IsAssignableFrom(t)));
         }
 
     }

@@ -44,28 +44,7 @@ namespace SmartHouse.Services
             this.MainThread = new Thread(new ParameterizedThreadStart(this.MainThreadRun));
         }
 
-        public CommandConfirmation SendRequestAndWaitForResponse(Server server, byte[] command, string message)
-        {
-            server.Send(command);
-            Packet p = Packet.Read(server.Stream);
-            bool flag = p.DataSize >= 0;
-            int i = 0;
-            CommandConfirmation cc = CommandConfirmation.Read(p.Data, ref i);
-            CommandConfirmation result;
-            if (flag)
-            {
-                Log.Write("Command {0} executed: result = {1}", message, (cc.Result == 0) ? "success" : "failure");
-                result = cc;
-            }
-            else
-            {
-                Log.Write("Command {0} sent: result did not arrived", message);
-                result = null;
-            }
-            return result;
-        }
-
-        public void SendRequestAndWaitForResponse(Server server, byte[] command, string message, ProcessPacketDelegate onResponse)
+        /* public void SendRequestAndWaitForResponse(Server server, byte[] command, string message, ProcessPacketDelegate onResponse)
         {
             server.Send(command);
             Packet p = Packet.Read(server.Stream);
@@ -98,7 +77,7 @@ namespace SmartHouse.Services
                     onPacket?.Invoke(p);
                 }
             }
-        }
+        } */
 
         private byte GetPortFromMask(byte mask)
         {
@@ -109,6 +88,7 @@ namespace SmartHouse.Services
                 if (flag)
                 {
                     result = b;
+                    result++;
                     return result;
                 }
             }
@@ -123,8 +103,7 @@ namespace SmartHouse.Services
 
             Thread.Sleep(10);
             Packet packet = Packet.Read(Stream);
-            int p = 0;
-            ControllerDiscoverResponse discoverResponse = ControllerDiscoverResponse.Read(packet.Data, ref p);
+            ControllerDiscoverPacketData discoverResponse = ControllerDiscoverPacketData.Read(packet.Data);
             Log.Write("Got discover response: {0}", packet);
             Log.Write("Sending port select request..");
             byte controllerPort;
@@ -139,30 +118,18 @@ namespace SmartHouse.Services
                 Packet.PortSelectRequest[6] = controllerPort;
                 this.Broadcast(Packet.PortSelectRequest, this.BroadcastPort);
                 packet = Packet.Read(this.Stream);
-                p = 0;
-                CommandConfirmation cc = CommandConfirmation.Read(packet.Data, ref p);
+                CommandConfirmation cc = CommandConfirmation.Read(packet.Data);
                 Log.Write("Got port select response: {0}", cc);
             }
             Client.CurrentServer.RemoteAddress.Port = Settings.Instance.Port + (int)controllerPort;
-            this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
-            this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.InitCANTranslationRequest, "init CAN");
-            Thread.Sleep(1000);
-            Initialized = true;
-        }
-
-        public void DoTestSequence()
-        {
-            Packet.ActivateSceneCANRequest[11] = 0;
-            Packet.ActivateSceneCANRequest[15] = 2;
-            this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.ActivateSceneCANRequest, "activate scene 0");
-            Thread.Sleep(7000);
-            Packet.ActivateSceneCANRequest[11] = 1;
-            Packet.ActivateSceneCANRequest[15] = 0;
-            this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.ActivateSceneCANRequest, "activate scene 1");
-            Thread.Sleep(7000);
-            Packet.ActivateSceneCANRequest[11] = 2;
-            Packet.ActivateSceneCANRequest[15] = 1;
-            this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.ActivateSceneCANRequest, "activate scene 2");
+            // this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
+            Client.CurrentServer.SendAndWaitForResponse(Packet.CheckConnectionRequest, 18, "check connection", (o0) => {
+                Client.CurrentServer.SendAndWaitForResponse(Packet.InitCANTranslationRequest, 32, "init CAN", (o1) =>
+                {
+                    Thread.Sleep(1000);
+                    Initialized = true;
+                });
+            });
         }
 
         public void ActivateScene(byte id)
@@ -170,8 +137,7 @@ namespace SmartHouse.Services
             Packet.ActivateSceneCANRequest[11] = id;
             Packet.ActivateSceneCANRequest[15] = this.previousSceneId;
             this.previousSceneId = id;
-            this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.ActivateSceneCANRequest, string.Format("activate scene {0}", id));
-            Thread.Sleep(1000);
+            Client.CurrentServer.SendAndWaitForResponse(Packet.ActivateSceneCANRequest, 0x30, string.Format("activate scene {0}", id), null);
         }
 
         public void Broadcast(byte[] data, int port)

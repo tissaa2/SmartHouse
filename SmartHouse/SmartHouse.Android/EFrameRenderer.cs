@@ -35,8 +35,8 @@ namespace SmartHouse.Droid
         {
             // var sw = Application.Current.MainPage.Width;
             (Element as EFrame).CallTouchEvent(new Controls.TouchEventArgs() { X = e.GetX() / Resources.DisplayMetrics.Density, Y = e.GetY() / Resources.DisplayMetrics.Density });
-            // return base.OnTouchEvent(e);
-            return true;
+            return base.OnTouchEvent(e);
+            // return true;
         }
 
         /* protected override Android.Views.Fr] CreateNativeControl()

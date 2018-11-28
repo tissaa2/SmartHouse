@@ -9,7 +9,6 @@ namespace SmartHouse.Models.Packets
 {
     public class Packet
     {
-        protected static Dictionary<int, Type> packetTypes = null;
 
         public static byte[] DiscoverRequest = new byte[]
         {
@@ -102,7 +101,7 @@ namespace SmartHouse.Models.Packets
 
         public byte DataSize;
 
-        public byte[] Data;
+        public PacketDataStream Data = null;
 
         protected int headerSize = 6;
 
@@ -119,52 +118,6 @@ namespace SmartHouse.Models.Packets
         //        return this.sizeOf;
         //    }
         // }
-
-        protected static List<Type> FindAllDerivedTypes<T>()
-        {
-            return Packet.FindAllDerivedTypes<T>(Assembly.GetAssembly(typeof(T)));
-        }
-
-        protected static List<Type> FindAllDerivedTypes<T>(Assembly assembly)
-        {
-            Type derivedType = typeof(T);
-            return Enumerable.ToList<Type>(Enumerable.Where<Type>(assembly.GetTypes(), (Type t) => t != derivedType && derivedType.IsAssignableFrom(t)));
-        }
-
-        public static Packet CreatePacketOfType(int packetType)
-        {
-            if (Packet.packetTypes == null)
-            {
-                Packet.packetTypes = new Dictionary<int, Type>();
-                List<Type> list = Packet.FindAllDerivedTypes<Packet>();
-
-                foreach(Type t in list)
-                    {
-                        PacketTypeAttribute packetTypeAttribute = Enumerable.FirstOrDefault<object>(t.GetCustomAttributes(typeof(PacketTypeAttribute), true)) as PacketTypeAttribute;
-                        if (packetTypeAttribute != null)
-                        {
-                            if (!Packet.packetTypes.ContainsKey(packetTypeAttribute.Type))
-                            {
-                                Packet.packetTypes.Add(packetTypeAttribute.Type, t);
-                            }
-                            else
-                            {
-                                Log.Write("Error adding type {0} to packetTypes: type key already exists. Check PaketTypeAttribte value");
-                            }
-                        }
-                    }
-                }
-            Packet result;
-            if (Packet.packetTypes.ContainsKey(packetType))
-            {
-                result = (Activator.CreateInstance(Packet.packetTypes[packetType])) as Packet;
-            }
-            else
-            {
-                result = null;
-            }
-            return result;
-        }
 
         /* public static Packet DeriveAndLoadData(Packet p, DuplexStream stream)
         {
@@ -242,7 +195,7 @@ namespace SmartHouse.Models.Packets
         public virtual int ReadData(DuplexStream stream)
         {
             stream.WaitForAvailable(this.DataSize, -1);
-            Data = stream.ReadBytes(DataSize);
+            Data = new PacketDataStream(stream.ReadBytes(DataSize));
             return 0;
         }
 

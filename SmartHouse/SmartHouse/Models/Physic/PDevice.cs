@@ -59,7 +59,44 @@ namespace SmartHouse.Models.Physics
             }
         }
 
+        private static ObservableCollection<OutputPort> allOutnputs = new ObservableCollection<OutputPort>();
+        public static ObservableCollection<OutputPort> AllOutputs
+        {
+            get
+            {
+                if (allOutnputs == null)
+                {
+                    allOutnputs = new ObservableCollection<OutputPort>();
+                    LoadAllAsync();
+                }
+                return allOutnputs;
+            }
+        }
 
+        /* public static void LoadInputsAsync()
+        {
+            foreach (var d in all)
+                foreach (var i in d.Inputs)
+                    allInputs.Add(i);
+        } */
+
+        public static PDevice Get(UID id)
+        {
+            return PDevice.all.FirstOrDefault(e => e.ID == id);
+        }
+
+        public static void Add(PDevice device)
+        {
+            if (all != null)
+            {
+                all.Add(device);
+                /// Временная заплатка, ибо поиск устройств отрубает реле, на котором висит роутер
+                if (!(device is Relay))
+                    if (allOutnputs != null)
+                        foreach (var i in device.Outputs)
+                            allOutnputs.Add(i);
+            }
+        }
 
         public static async void Init()
         {
@@ -67,50 +104,50 @@ namespace SmartHouse.Models.Physics
         }
 
         // 2DO: Сделать постоянное чтение и обработку пакетов в сервере
-        public static void AddDevice(CANResponse source, byte[] data, ref int pos)
-        {
-            AutodetectResponse r = AutodetectResponse.CreateFrom(source, data, ref pos);
-            if (PDevice.DeviceTypes.ContainsKey(r.DeviceType))
-            {
-                var id = new UID(r.UID[2], r.UID[1], r.UID[0]);
-                var d = all.FirstOrDefault(e => e.ID == id);
-                if (d == null)
-                {
-                    d = Activator.CreateInstance(PDevice.DeviceTypes[r.DeviceType]) as PDevice;
-                    d.Init(id, r.InputsCount, r.OutputsCount, r.ScenesCount);
-                    all.Add(d);
-                    Log.Write("Device {0} found ", d);
-                }
-            }
-            // Log.Write("Command {0} executed: result = {1}", message, (commandResponsePacket.Result == 0) ? "success" : "failure");
-        }
+        //public static void AddDevice(CANResponse source, byte[] data, ref int pos)
+        //{
+        //    AutodetectResponse r = AutodetectResponse.CreateFrom(source, data, ref pos);
+        //    if (PDevice.DeviceTypes.ContainsKey(r.DeviceType))
+        //    {
+        //        var id = new UID(r.UID[2], r.UID[1], r.UID[0]);
+        //        var d = all.FirstOrDefault(e => e.ID == id);
+        //        if (d == null)
+        //        {
+        //            d = Activator.CreateInstance(PDevice.DeviceTypes[r.DeviceType]) as PDevice;
+        //            d.Init(id, r.InputsCount, r.OutputsCount, r.ScenesCount);
+        //            all.Add(d);
+        //            Log.Write("Device {0} found ", d);
+        //        }
+        //    }
+        //    // Log.Write("Command {0} executed: result = {1}", message, (commandResponsePacket.Result == 0) ? "success" : "failure");
+        //}
 
-        public static void ProcessAutodetectPacket(Packet packet)
-        {
-            if (packet.StartSequence[0] == '$')
-                if (packet.Command == 0x031)
-                {
-                    int p = 0;
-                    var cr = CANResponse.Read(packet.Data, ref p);
-                    if (cr.StartByte == 0xFF && cr.Command == 0x04)
-                    {
-                        AddDevice(cr, packet.Data, ref p);
-                    }
-                }
+        //public static void ProcessAutodetectPacket(Packet packet)
+        //{
+        //    if (packet.StartSequence[0] == '$')
+        //        if (packet.Command == 0x031)
+        //        {
+        //            int p = 0;
+        //            var cr = CANResponse.Read(packet.Data, ref p);
+        //            if (cr.StartByte == 0xFF && cr.Command == 0x04)
+        //            {
+        //                AddDevice(cr, packet.Data, ref p);
+        //            }
+        //        }
 
-        }
+        //}
 
-        private static void Fk(byte uid, byte type, byte inpts, byte outpts)
-        {
-            ProcessAutodetectPacket(new Packet()
-            {
-                StartSequence = new byte[] { (byte)'#', (byte)'H', (byte)'L' },
-                Command = 0x031,
-                DataSize = 11,
-                //                  conf     UID     strt  cmd   type   in     out    sc gm
-                Data = new byte[] { 0x05, 0, 0, uid, 0xFF, 0x04, type, inpts, outpts, 2, 0 }
-            });
-        }
+        //private static void Fk(byte uid, byte type, byte inpts, byte outpts)
+        //{
+        //    ProcessAutodetectPacket(new Packet()
+        //    {
+        //        StartSequence = new byte[] { (byte)'#', (byte)'H', (byte)'L' },
+        //        Command = 0x031,
+        //        DataSize = 11,
+        //        //                  conf     UID     strt  cmd   type   in     out    sc gm
+        //        Data = new PacketDataStream(new byte[] { 0x05, 0, 0, uid, 0xFF, 0x04, type, inpts, outpts, 2, 0 })
+        //    });
+        //}
 
 
         public static async void LoadAllAsync()
@@ -131,9 +168,10 @@ namespace SmartHouse.Models.Physics
 
             await Task.Run(() =>
             {
-                 while (!Client.Instance.Initialized)
-                     Thread.Sleep(100);
-                 Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
+                while (!Client.Instance.Initialized)
+                    Thread.Sleep(100);
+                Client.CurrentServer.Send(Packet.AutodetectRequest);
+                // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
             });
 
             //await Task.Run(() =>
@@ -221,10 +259,10 @@ namespace SmartHouse.Models.Physics
             }
         }
 
-        private List<T> CloneList<T>(List<T> source) where T: Port
+        private List<T> CloneList<T>(List<T> source) where T : Port
         {
             List<T> rl = new List<T>();
-            foreach(T i in source)
+            foreach (T i in source)
             {
                 rl.Add(i.Clone() as T);
             }

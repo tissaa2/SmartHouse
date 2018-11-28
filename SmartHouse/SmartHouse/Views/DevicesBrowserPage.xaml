@@ -21,6 +21,7 @@
             <Picker.Items>
                 <x:String>Обновить</x:String>
                 <x:String>Окно отладки</x:String>
+                <x:String>Найти устройство</x:String>
             </Picker.Items>
         </Picker>
 
@@ -125,7 +126,7 @@
                                                 <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="32"/>
                                                 <controls:ESlider IsEnabled="{Binding Enabled}" VerticalOptions="Fill" Margin="0" Value="{Binding Value, Mode=TwoWay}" Caption="{Binding Name}" HorizontalOptions="FillAndExpand" ValueChanged="ESlider_ValueChanged"/>
                                             </StackLayout>
-                                        </ViewCell>
+                                        </ViewCell> 
                                     </DataTemplate>
                                 </controls:RepeaterView.ItemTemplate>
                             </controls:RepeaterView> -->
@@ -133,7 +134,10 @@
                                 <controls:RepeaterView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell Height="32" >
-                                            <StackLayout Orientation="Horizontal">
+                                            <StackLayout Orientation="Horizontal" BackgroundColor="{Binding BGColor}" Spacing = "4" Padding="4">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer x:Name="InputsTapGestureRecognizer" NumberOfTapsRequired="1" Tapped="InputsTapGestureRecognizer_Tapped" />
+                                                </StackLayout.GestureRecognizers>
                                                 <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="32"/>
                                                 <controls:ESlider IsEnabled="True" VerticalOptions="Fill" Margin="0" Value="{Binding Value, Mode=TwoWay}" Caption="{Binding Name}" HorizontalOptions="FillAndExpand" ValueChanged="ESlider_ValueChanged"/>
                                             </StackLayout>
