@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using SmartHouse.Models.Physics;
+using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
     public class Device : IconEntity<UID>
     {
         public virtual string TypeName { get; set; }
+        public byte PortID { get; set; } = 0;
 
         /* private bool _checked;
         public bool Checked {

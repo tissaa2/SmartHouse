@@ -11,12 +11,7 @@
         <ToolbarItem Icon="slideout.png" Text="Меню" Activated="ToolbarItem_Activated"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <Grid HorizontalOptions="Fill" VerticalOptions="Fill" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="48" />
-        </Grid.RowDefinitions>
-
+    <StackLayout Orientation="Vertical">
         <Picker x:Name="MenuPicker" Title="Выберите действие" IsVisible="False" SelectedIndexChanged="MenuPicker_SelectedIndexChanged">
             <Picker.Items>
                 <x:String>Обновить</x:String>
@@ -105,7 +100,7 @@
                 </ResourceDictionary>
             </ListView.Resources> -->
 
-        <ListView Grid.Row="0" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+        <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" 
                   HasUnevenRows="True" ItemsSource="{Binding Items}" >
 
             <ListView.ItemTemplate>
@@ -152,6 +147,6 @@
 
         </ListView>
 
-        <Button x:Name="SelectButton" Text="Выбрать" Pressed="SelectButton_Pressed" Grid.Row="1"/>
-    </Grid>
+        <Button x:Name="SelectButton" Text="Выбрать" Pressed="SelectButton_Pressed" HorizontalOptions="Fill" IsVisible="{Binding SelectButtonVisible}"/>
+    </StackLayout>
 </ContentPage>

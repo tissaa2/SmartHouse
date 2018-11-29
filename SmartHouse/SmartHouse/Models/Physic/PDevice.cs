@@ -59,17 +59,17 @@ namespace SmartHouse.Models.Physics
             }
         }
 
-        private static ObservableCollection<OutputPort> allOutnputs = new ObservableCollection<OutputPort>();
+        private static ObservableCollection<OutputPort> allOutputs = new ObservableCollection<OutputPort>();
         public static ObservableCollection<OutputPort> AllOutputs
         {
             get
             {
-                if (allOutnputs == null)
+                if (allOutputs == null)
                 {
-                    allOutnputs = new ObservableCollection<OutputPort>();
+                    allOutputs = new ObservableCollection<OutputPort>();
                     LoadAllAsync();
                 }
-                return allOutnputs;
+                return allOutputs;
             }
         }
 
@@ -82,7 +82,7 @@ namespace SmartHouse.Models.Physics
 
         public static PDevice Get(UID id)
         {
-            return PDevice.all.FirstOrDefault(e => e.ID == id);
+            return PDevice.All.FirstOrDefault(e => e.ID == id);
         }
 
         public static void Add(PDevice device)
@@ -92,9 +92,9 @@ namespace SmartHouse.Models.Physics
                 all.Add(device);
                 /// Временная заплатка, ибо поиск устройств отрубает реле, на котором висит роутер
                 if (!(device is Relay))
-                    if (allOutnputs != null)
+                    if (allOutputs != null)
                         foreach (var i in device.Outputs)
-                            allOutnputs.Add(i);
+                            allOutputs.Add(i);
             }
         }
 

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 namespace SmartHouse.Views
 {
     // public delegate void PortActionDelegate(Port port);
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DevicesBrowserPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class DevicesBrowserPage : ContentPage
+    {
         private void PushValue<T>(List<T> ports) where T : Port
         {
             foreach (var p in ports)
@@ -22,16 +22,16 @@ namespace SmartHouse.Views
             }
         }
 
-        private void SetValue<T>(List<T> ports, double value) where T: Port
+        private void SetValue<T>(List<T> ports, double value) where T : Port
         {
-            foreach(var p in ports)
+            foreach (var p in ports)
             {
                 p.Value = value;
                 System.Threading.Thread.Sleep(33);
             }
         }
 
-        private void PopValue<T>(List<T> ports) where T: Port
+        private void PopValue<T>(List<T> ports) where T : Port
         {
             foreach (var p in ports)
             {
@@ -40,7 +40,7 @@ namespace SmartHouse.Views
             }
         }
 
-        public async Task<Port> FindPort<T>(List<T> ports) where T: Port
+        public async Task<Port> FindPort<T>(List<T> ports) where T : Port
         {
             if (ports.Count < 1)
             {
@@ -68,10 +68,9 @@ namespace SmartHouse.Views
             return await FindPort<T>(r);
         }
 
-
-        
         // public static DevicePage Instance = null;
         public DevicesBrowserPageModel Model { get; set; }
+
         public DevicesBrowserPage()
         {
             // Instance = this;
@@ -88,7 +87,7 @@ namespace SmartHouse.Views
 
         private void ShowDebug()
         {
-            
+
             Navigation.PushAsync(new DebugPage());
         }
 
@@ -113,12 +112,12 @@ namespace SmartHouse.Views
         {
             List<OutputPort> ps = new List<OutputPort>(PDevice.AllOutputs);
             SetValue<OutputPort>(ps, 0);
-            SelectedPort = await FindPort<OutputPort>(ps);
+            SelectPort(await FindPort<OutputPort>(ps));
         }
 
         private void SelectButton_Pressed(object sender, EventArgs e)
         {
-
+            Navigation.PopAsync();
         }
 
         private void ESlider_ValueChanged(object sender, ESliderValueChangeEvents args)
@@ -130,7 +129,7 @@ namespace SmartHouse.Views
             //if (v > 90)
             //    v = 100;
             //(o as Port).SetValue(v);
-        } 
+        }
 
         private void ESocketSwitch_Toggled(object sender, ToggledEventArgs e)
         {
@@ -140,26 +139,21 @@ namespace SmartHouse.Views
         {
         }
 
-        private Port selectedPort = null;
-        public Port SelectedPort
+        private void SelectPort(Port port)
         {
-            get => selectedPort;
-            set
+            Model.SelectedPort = port;
+            if (port != null)
             {
-                if (selectedPort != null)
-                    selectedPort.BGColor = Color.Transparent;
-                selectedPort = value;
-                selectedPort.BGColor = Color.FromHex("DDDDEE");
-                DevicesListView.SelectedItem = selectedPort.Parent;
-                selectedPort.Parent.Fold = false;
+                DevicesListView.SelectedItem = port.Parent;
                 DevicesListView.ScrollTo(DevicesListView.SelectedItem, ScrollToPosition.Start, true);
             }
         }
+
         private void InputsTapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             if (sender is StackLayout)
             {
-                SelectedPort = (sender as StackLayout).BindingContext as Port;
+                SelectPort((sender as StackLayout).BindingContext as Port);
             }
         }
     }

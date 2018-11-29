@@ -43,5 +43,20 @@ namespace SmartHouse.Views
             Target.Apply();
             Title = Target.Name;
         }
+
+        private async void FindDeviceButton_Clicked(object sender, EventArgs e)
+        {
+            var dbp = new DevicesBrowserPage();
+            dbp.Disappearing += (s, e0) =>
+            {
+                var p = dbp.Model.SelectedPort;
+                if (p != null)
+                {
+                    Target.ID = p.Parent.ID.ToString();
+                    Target.PortID = p.ID.ToString();
+                }
+            };
+            await Navigation.PushAsync(dbp);
+        }
     }
 }

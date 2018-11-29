@@ -57,11 +57,14 @@
             </Picker.Items>
         </Picker>
         <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  Grid.Row="1" HasUnevenRows="True"  ItemTapped="GroupsListView_ItemTapped" ItemsSource="{Binding Items}">
+                  Grid.Row="1" HasUnevenRows="True" ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
                         <Grid Padding="8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
                                 <ColumnDefinition Width="*" />

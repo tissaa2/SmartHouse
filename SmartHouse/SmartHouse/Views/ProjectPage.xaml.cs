@@ -37,24 +37,22 @@ namespace SmartHouse.Views
             Target.Items.Add(new Group(Project.IntID.NewID(), "Новая группа {0}", "room.png"));
         }
 
-        private void GroupsListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item is Group)
-            {
-                var g = e.Item as Group;
-                var gp = new GroupPage() {Title = g.Name};
-                gp.IsVisible = true;
-                gp.SetTarget(g);
-                // ScenePage.Instance.IsVisible = false;
-                // DevicePage.Instance.IsVisible = false;
-                if (Model.SelectedItem != e.Item)
-                    Model.SelectedItem = g;
-                else
-                if (Utils.IsDoubleTap())
-                    Navigation.PushAsync(gp);
-                    // MainPage.Instance.CurrentPage = GroupPage.Instance;
-            }
-        }
+        //private void GroupsListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        //{
+        //    if (e.Item is Group)
+        //    {
+        //        var g = e.Item as Group;
+        //        var gp = new GroupPage() {Title = g.Name};
+        //        gp.IsVisible = true;
+        //        gp.SetTarget(g);
+        //        if (Model.SelectedItem != e.Item)
+        //            Model.SelectedItem = g;
+        //        else
+        //        if (Utils.IsDoubleTap())
+        //            Navigation.PushAsync(gp);
+        //    }
+        //}
+
         public async void DeleteItem(Group item)
         {
             var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить группу?", "Да", "Нет");
@@ -123,11 +121,29 @@ namespace SmartHouse.Views
                     LoadProjectFromCAN();
                     break;
             }
+            ProjectMenuPicker.SelectedIndex = -1;
         }
 
         private void ToolbarItem_Activated(object sender, EventArgs e)
         {
             ProjectMenuPicker.Focus();
+        }
+
+        private void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (sender is BindableObject)
+            {
+                var bo = sender as BindableObject;
+                if (bo.BindingContext is Group)
+                {
+                    var g = bo.BindingContext as Group;
+                    var gp = new GroupPage() { Title = g.Name };
+                    gp.IsVisible = true;
+                    gp.SetTarget(g);
+                    GroupsListView.SelectedItem = Model.SelectedItem = g;
+                    Navigation.PushAsync(gp);
+                }
+            }
         }
     }
 }

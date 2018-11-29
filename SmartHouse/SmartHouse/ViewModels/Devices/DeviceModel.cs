@@ -87,6 +87,14 @@ namespace SmartHouse.ViewModels
             set { name = value; OnPropertyChanged("Name"); }
         }
 
+        private string portID;
+        [JsonProperty(PropertyName = "PortID")]
+        public string PortID
+        {
+            get { return portID; }
+            set { portID = value; OnPropertyChanged("PortID"); }
+        }
+
         private byte securityLevel;
         [JsonProperty(PropertyName = "SecurityLevel")]
         public byte SecurityLevel
@@ -123,6 +131,7 @@ namespace SmartHouse.ViewModels
                 this.typeID = sm.typeID;
                 this.securityLevel = sm.securityLevel;
                 this.name = sm.name;
+                this.portID = sm.PortID;
             }
         }
 
@@ -135,6 +144,7 @@ namespace SmartHouse.ViewModels
                 this.device = d;
                 this.name = d.Name;
                 this.securityLevel = d.SecurityLevel;
+                this.portID = d.PortID.ToString();
                 if (args[0] is Type)
                 {
                     var t = args[0] as Type;
@@ -150,11 +160,14 @@ namespace SmartHouse.ViewModels
             if (deviceType.Type.Name != device.GetType().Name)
             {
                 device = deviceType.CreateEntity() as Device;
-                device.ID = new UID(id);
                 var i = Group.Devices.IndexOf(od);
                 if (i > -1)
                     Group.Devices[i] = device;
             }
+            device.ID = new UID(id);
+            int v;
+            if (int.TryParse(PortID, out v))
+                device.PortID = (byte)v;
             device.Name = Name;
             device.SecurityLevel = SecurityLevel;
         }

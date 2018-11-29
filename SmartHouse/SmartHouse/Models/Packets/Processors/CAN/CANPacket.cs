@@ -32,7 +32,10 @@ namespace SmartHouse.Models.Packets
                 ConfigByte = stream.ReadByte();
                 UID = stream.Read(UID_SIZE);
                 StartByte = stream.ReadByte();
-                Command = stream.ReadByte();
+                if (StartByte == 0xFF)
+                    Command = stream.ReadByte();
+                else
+                    Command = StartByte;
             }
             catch (Exception ex)
             {

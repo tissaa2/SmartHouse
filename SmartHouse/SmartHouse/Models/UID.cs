@@ -15,9 +15,10 @@ namespace SmartHouse.Models
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (existingValue is UID)
-                return existingValue;
-            return new UID((int)existingValue);
+            /* if (existingValue is UID)
+                return existingValue; */
+            int v = Convert.ToInt32(reader.Value);
+            return new UID(v);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

@@ -35,9 +35,12 @@ namespace SmartHouse.Models
             return String.Format("(ID={0}, Sec={1})", e.ID, e.SecurityLevel);
         }
 
+        [JsonIgnore]
         public Boolean IsAdmin { get { return Settings.Instance.IsAdmin; } }
+        [JsonIgnore]
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
-
+    
+        [JsonIgnore]
         private IDType id;
 
         [JsonProperty(PropertyName = "ID")]
@@ -47,6 +50,7 @@ namespace SmartHouse.Models
             set { id = value; OnPropertyChanged("ID"); }
         }
 
+        [JsonIgnore]
         private byte securityLevel;
 
         [JsonProperty(PropertyName = "SecurityLevel")]

@@ -137,7 +137,16 @@ namespace SmartHouse.Views
                 case (4):
                     ShowDebug();
                     break;
+                case (5):
+                    ShowDeviceBrowser();
+                    break;
             }
+            ProjectMenuPicker.SelectedIndex = -1;
+        }
+
+        private void ShowDeviceBrowser()
+        {
+            Navigation.PushAsync(new DevicesBrowserPage());
         }
 
         private void ShowSettings()
@@ -157,6 +166,28 @@ namespace SmartHouse.Views
         private void ToolbarItem_Activated(object sender, EventArgs e)
         {
             ProjectMenuPicker.Focus();
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (sender is BindableObject)
+            {
+                var bo = sender as BindableObject;
+                if (bo.BindingContext is Project)
+                {
+                    var p = bo.BindingContext as Project;
+                    var pp = new ProjectPage() { Title = p.Name };
+                    pp.IsVisible = true;
+                    pp.SetTarget(p);
+                    ProjectsListView.SelectedItem = p;
+                    Navigation.PushAsync(pp);
+                }
+            }
         }
 
         /* private void EditItem_Clicked(object sender, EventArgs e)

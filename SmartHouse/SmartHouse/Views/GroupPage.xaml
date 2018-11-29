@@ -28,11 +28,14 @@
         <Button x:Name="ScenesButton" Grid.Row="1" IsVisible="{Binding DevicesMode}" Pressed="ScenesButton_Pressed" Text="Показать сцены" />
 
         <ListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" ItemTapped="ScenesListView_ItemTapped" ItemsSource="{Binding Scenes.Items}" >
+                  HasUnevenRows="True" ItemsSource="{Binding Scenes.Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
                         <Grid Padding="8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="ScenesItemGestureRecognizer" NumberOfTapsRequired="2" Tapped="ScenesItemGestureRecognizer_Tapped"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
                                 <ColumnDefinition Width="*" />

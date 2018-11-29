@@ -59,24 +59,22 @@ namespace SmartHouse.Views
             this.InitializeComponent();
         }
 
-        private void ScenesListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item is Scene)
-            {
-                var s = e.Item as Scene;
-                s.Activate(Target);
-                var sp = new ScenePage() { Title = s.Name };
-                sp.IsVisible = true;
-                sp.SetTarget(this.Model, s);
-                // DevicePage.Instance.IsVisible = false;
-                if (Model.Scenes.SelectedItem != s)
-                    Model.Scenes.SelectedItem = s;
-                else
-                if (Utils.IsDoubleTap())
-                    Navigation.PushAsync(sp);
-                    // MainPage.Instance.CurrentPage = ScenePage.Instance;
-            }
-        }
+        //private void ScenesListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        //{
+        //    if (e.Item is Scene)
+        //    {
+        //        var s = e.Item as Scene;
+        //        s.Activate(Target);
+        //        var sp = new ScenePage() { Title = s.Name };
+        //        sp.IsVisible = true;
+        //        sp.SetTarget(this.Model, s);
+        //        if (Model.Scenes.SelectedItem != s)
+        //            Model.Scenes.SelectedItem = s;
+        //        else
+        //        if (Utils.IsDoubleTap())
+        //            Navigation.PushAsync(sp);
+        //    }
+        //}
 
         private async void IconButton_Clicked(object sender, EventArgs e)
         {
@@ -118,7 +116,18 @@ namespace SmartHouse.Views
             if (Model.ScenesMode)
                 Target.Items.Add(new Scene(Scene.IntID.NewID(), "Новая сцена", "scenes_brightlight.png"));
             if (Model.DevicesMode)
+            {
                 Target.Devices.Add(new Lamp("Новое устройство", 50));
+                /* Model.Devices.SelectedItem = 
+                    var dm = e.Item as DeviceModel;
+                    var dp = new DevicePage() { Title = dm.Name };
+                    dp.IsVisible = true;
+                    dp.SetTarget(e.Item as DeviceModel);
+                    CurrentItem = e.Item as DeviceModel;
+
+                    if (Utils.IsDoubleTap())
+                        Navigation.PushAsync(dp); */
+            }
         }
 
         private void DevicesButton_Pressed(object sender, EventArgs e)
@@ -129,6 +138,24 @@ namespace SmartHouse.Views
         private void ScenesButton_Pressed(object sender, EventArgs e)
         {
             Model.ScenesMode = true;
+        }
+
+        private void ScenesItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (sender is BindableObject)
+            {
+                var bo = sender as BindableObject;
+                if (bo.BindingContext is Scene)
+                {
+                    var s = bo.BindingContext as Scene;
+                    var sp = new ScenePage() { Title = s.Name };
+                    sp.IsVisible = true;
+                    sp.SetTarget(this.Model, s);
+                    ScenesListView.SelectedItem = Model.Scenes.SelectedItem = s;
+                    Navigation.PushAsync(sp);
+                }
+            }
+
         }
     }
 }

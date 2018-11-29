@@ -70,25 +70,28 @@
                   ItemTemplate="{StaticResource viewEditTemplateSelector}" / -->
         <ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
                   Grid.Row="0" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" >
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell Height="64">
-                    <Grid Padding="8" ColumnSpacing="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="24"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
-                        <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
-                        <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8" ColumnSpacing="8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped"/>
+                            </Grid.GestureRecognizers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        
-        
+
+
         <Button IsVisible="{Binding IsAdmin}" x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="1"/>
     </Grid>
 </ContentPage>

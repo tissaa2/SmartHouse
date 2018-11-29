@@ -21,8 +21,8 @@ namespace SmartHouse
         public static void SetMainPage()
         {
             Client = Services.Client.Instance;
-            // Current.MainPage = new MainPage(new ProjectsListPage());
-            Current.MainPage = new MainPage(new DevicesBrowserPage());
+            Current.MainPage = new MainPage(new ProjectsListPage());
+            // Current.MainPage = new MainPage(new DevicesBrowserPage());
             // var ds = PDevice.All;
             // CrossCurrentActivity.Current.Init(this, bundle);
             /* Current.MainPage = new TabbedPage

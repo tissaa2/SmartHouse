@@ -33,28 +33,31 @@ namespace SmartHouse.Models.Physics
             return null;
         }
 
+        public static void SetPortValue(UID deviceId, int portId, byte value)
+        {
+            if (Client.CurrentServer == null)
+                return;
+            Packet.SetOutputValueRequest[7] = deviceId.B2;
+            Packet.SetOutputValueRequest[8] = deviceId.B1;
+            Packet.SetOutputValueRequest[9] = deviceId.B0;
+            Packet.SetOutputValueRequest[11] = (byte)portId;
+            Packet.SetOutputValueRequest[12] = (byte)value;
+            Client.CurrentServer.SendAndWaitForResponse(Packet.SetOutputValueRequest, 0x30, "set value", p => { });
+        }
+
         public virtual void SetValue(double val)
         {
-            //byte[] SetOutputValueRequest = new byte[]
-            //{
-            //36,     // 0
-            //72,     // 1
-            //76,     // 2
-            //0,      // 3
-            //0x30,   // 4
-            //9,      // 5 data size
-            //0x0C,   // 6 config byte
-            //0,      // 7 UID3
-            //0,      // 8 UID2
-            //0,      // 9 UID1
-            //0x54,   // 10 command 
-            //0,      // 11 channel
-            //0,      // 12 level (value)
-            //0,      // 13 delay (in sec/4)
-            //0,      // 14 fade time (in sec/4)
-            //0,      // 15 GN (group number)
-            //0       // 16 BN (button number)
-            //};
+            SetLocalValue(val);
+
+            if (Parent != null)
+            {
+                SetPortValue(Parent.ID, ID, (byte)value);
+            }
+        }
+
+
+        public virtual void SetLocalValue(double val)
+        {
 
             if (val < 10)
                 val = 0;
@@ -62,17 +65,6 @@ namespace SmartHouse.Models.Physics
                 val = 100;
 
             value = val;
-
-            if (Parent != null)
-            {
-                Packet.SetOutputValueRequest[7] = Parent.ID.B2;
-                Packet.SetOutputValueRequest[8] = Parent.ID.B1;
-                Packet.SetOutputValueRequest[9] = Parent.ID.B0;
-                Packet.SetOutputValueRequest[11] = (byte)ID;
-                Packet.SetOutputValueRequest[12] = (byte)value;
-                Client.CurrentServer.SendAndWaitForResponse(Packet.SetOutputValueRequest, 0x30, "set value", p => { });
-            }
-
 
             OnPropertyChanged("Value");
         }

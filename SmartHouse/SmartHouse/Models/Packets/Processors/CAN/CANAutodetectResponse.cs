@@ -143,6 +143,10 @@ namespace SmartHouse.Models.Packets.Processors.CAN
                     d = Activator.CreateInstance(PDevice.DeviceTypes[rd.DeviceType]) as PDevice;
                     d.Init(id, rd.InputsCount, rd.OutputsCount, rd.ScenesCount);
                     PDevice.Add(d);
+                    Packet.GetOutputStatesRequest[7] = d.ID.B2;
+                    Packet.GetOutputStatesRequest[8] = d.ID.B1;
+                    Packet.GetOutputStatesRequest[9] = d.ID.B0;
+                    Client.CurrentServer.Send(Packet.GetOutputStatesRequest);
                     Log.Write("Device {0} found ", d);
                 }
             }
@@ -152,7 +156,7 @@ namespace SmartHouse.Models.Packets.Processors.CAN
         public override object ProcessData(PacketDataStream stream, CANPacket source)
         {
             var rd = ResponseData.CreateFrom(source, stream);
-            if (rd.StartByte == 0xFF)
+            // if (rd.StartByte == 0xFF)
             {
                 AddDevice(rd);
             }

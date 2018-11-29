@@ -52,8 +52,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DoubleStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EntityInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketDataStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANOutputStatesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANPacket.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\AutodetectResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANAutodetectResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANDataProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CANPacketProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\PacketProcessor.cs" />

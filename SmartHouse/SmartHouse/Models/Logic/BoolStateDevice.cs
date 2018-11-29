@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SmartHouse.Models.Physics;
 using System;
 
 namespace SmartHouse.Models.Logic
@@ -13,6 +14,7 @@ namespace SmartHouse.Models.Logic
             set
             {
                 state = value;
+                Port.SetPortValue(ID, PortID, (byte)(state ? 1 : 0));
                 OnPropertyChanged("State");
             }
         }

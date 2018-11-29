@@ -32,23 +32,19 @@ namespace SmartHouse.Controls
             ItemTemplate = Resources["deviceTemplateSelector"] as DataTemplate;
         }
 
-        private void DevicesListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item is DeviceModel)
-            {
-                var dm = e.Item as DeviceModel;
-                var dp = new DevicePage() { Title = dm.Name };
-                dp.IsVisible = true;
-                dp.SetTarget((e.Item as DeviceModel));
-                CurrentItem = e.Item as DeviceModel;
-                /* if (CurrentItem != e.Item)
-                    CurrentItem = e.Item as DeviceModel;
-                else */
-                if (Utils.IsDoubleTap())
-                    Navigation.PushAsync(dp);
-                    // MainPage.Instance.CurrentPage = DevicePage.Instance;
-            }
-        }
+        //private void DevicesListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        //{
+        //    if (e.Item is DeviceModel)
+        //    {
+        //        var dm = e.Item as DeviceModel;
+        //        var dp = new DevicePage() { Title = dm.Name };
+        //        dp.IsVisible = true;
+        //        dp.SetTarget((e.Item as DeviceModel));
+        //        CurrentItem = e.Item as DeviceModel;
+        //        if (Utils.IsDoubleTap())
+        //            Navigation.PushAsync(dp);
+        //    }
+        //}
 
         private void DeleteDeviceButton_OnPressed(object sender, EventArgs e)
         {
@@ -59,14 +55,14 @@ namespace SmartHouse.Controls
         {
             // var dm = (sender as Slider).BindingContext as DeviceModel;
             var dm = (sender as ESlider).BindingContext as DeviceModel;
-            dm.Device.ApplyState(args.Value.ToString());
+            // dm.Device.ApplyState(args.Value.ToString());
             DeviceStateChanged?.Invoke(dm); 
         }
 
         private void ESocketSwitch_Toggled(object sender, ToggledEventArgs e)
         {
             var dm = (sender as ESocketSwitch).BindingContext as DeviceModel;
-            dm.Device.ApplyState(e.Value.ToString());
+            // dm.Device.ApplyState(e.Value.ToString());
             DeviceStateChanged?.Invoke(dm);
         }
 
@@ -74,6 +70,24 @@ namespace SmartHouse.Controls
         {
             var sw = sender as Switch;
             DeviceStateChanged?.Invoke(sw.BindingContext as DeviceModel);
+        }
+
+        private void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (sender is BindableObject)
+            {
+                var bo = sender as BindableObject;
+                if (bo.BindingContext is DeviceModel)
+                {
+                    var dm = bo.BindingContext as DeviceModel;
+                    var dp = new DevicePage() { Title = dm.Name };
+                    dp.IsVisible = true;
+                    dp.SetTarget(dm);
+                    CurrentItem = dm;
+                    SelectedItem = dm;
+                    Navigation.PushAsync(dp);
+                }
+            }
         }
     }
 }

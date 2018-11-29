@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SmartHouse.Models.Physics;
 using System;
 
 namespace SmartHouse.Models.Logic
@@ -13,7 +14,8 @@ namespace SmartHouse.Models.Logic
             get { return state; }
             set
             {
-                state = value;
+                state = value > 90 ? 100 : value < 10 ? 0 : value;
+                Port.SetPortValue(ID, PortID, (byte)state);
                 OnPropertyChanged("State");
             }
         }
@@ -32,7 +34,9 @@ namespace SmartHouse.Models.Logic
         {
             double v;
             if (double.TryParse(state, out v))
+            {
                 State = v;
+            }
         }
 
         public override void SetState(DeviceState state)
