@@ -20,6 +20,70 @@ namespace SmartHouse.Models.Packets
             0
         };
 
+        public static byte[] StartReadAliasFileRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            0x51,
+            0
+        };
+
+        public static byte[] ReadAliasFileRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            0x58,
+            4,
+            0,
+            0,
+            0,
+            0
+        };
+
+        public static byte[] FinishReadAliasFileRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            0x59,
+            0
+        };
+
+        public static byte[] WriteAliasFileRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            0x40,
+            0
+        };
+
+        public static byte[] WriteFileChunkRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            0x48,
+            0
+        };
+
+        public static byte[] WriteFileEndRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            0x49,
+            0
+        };
+
         public static byte[] AutodetectRequest = new byte[]
         {
             36,

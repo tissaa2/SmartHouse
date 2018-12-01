@@ -37,6 +37,8 @@ namespace SmartHouse.Models.Physics
         {
             if (Client.CurrentServer == null)
                 return;
+            if (deviceId.Hash == 0)
+                return;
             Packet.SetOutputValueRequest[7] = deviceId.B2;
             Packet.SetOutputValueRequest[8] = deviceId.B1;
             Packet.SetOutputValueRequest[9] = deviceId.B0;

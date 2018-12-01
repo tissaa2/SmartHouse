@@ -31,6 +31,15 @@ namespace SmartHouse.Models.Packets
             return result;
         }
 
+        /// <summary>
+        /// Reads to end of stream
+        /// </summary>
+        /// <returns></returns>
+        public byte[] Read()
+        {
+            return Read(Data.Length - readPosition);
+        }
+
         public byte[] ReadBytes(int count, ref int pos)
         {
             return Read(count);

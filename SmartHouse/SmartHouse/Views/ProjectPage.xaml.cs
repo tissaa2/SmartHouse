@@ -1,8 +1,10 @@
 ﻿using SmartHouse.Controls;
 using SmartHouse.Models.Logic;
+using SmartHouse.Models.Packets;
 using SmartHouse.Services;
 using SmartHouse.ViewModels;
 using System;
+using System.Net;
 using Xamarin.Forms;
 
 namespace SmartHouse.Views
@@ -91,24 +93,54 @@ namespace SmartHouse.Views
             ProjectMenuPicker.Focus();
         }
 
+        private byte CalcCRC(byte[] data, int offset, int size)
+        {
+            int res = 0;
+            var bts = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(offset));
+            for (int i = 0; i < bts.Length; i++)
+                res = (byte)(res + bts[i]);
+                // res = (res + bts[i]) & 0xFF;
+            for (int i = offset; i < offset + size; i++)
+                res = (byte)(res + data[i]);
+                // res = (res + data[i]) & 0xFF;
+            return (byte)((0x100 - res) & 0xFF);
+        }
+
         // 0: Сохранить проект в CAN
         public void SaveProjectToCAN()
         {
-
+            Client.CurrentServer.SaveProjectFile(Target.Zip());
         }
 
         // 1: Загрузить проект из CAN
-        public void LoadProjectFromCAN()
+        public async void LoadProjectFromCAN()
         {
-            var ot = Target;
-            var p = Project.Create("Проект из CAN", "project_houseCAN.png", Project.IntID.NewID());
-            var i = ProjectsList.Instance.Items.IndexOf(ot);
-            if (i > -1)
+            var f = await Client.CurrentServer.LoadProjectFile();
+            if (f.Complete)
             {
-                ProjectsList.Instance.Items[i] = p;
-                Navigation.PopAsync();
+                var ot = Target;
+                var p = Project.UnZip<Project>(f.Data);
+                var i = ProjectsList.Instance.Items.IndexOf(ot);
+                if (i > -1)
+                {
+                    ProjectsList.Instance.Items[i] = p;
+                    await Navigation.PopAsync();
+                }
             }
         }
+
+        // 1: Загрузить проект из CAN
+        //public void LoadProjectFromCAN()
+        //{
+        //    var ot = Target;
+        //    var p = Project.Create("Проект из CAN", "project_houseCAN.png", Project.IntID.NewID());
+        //    var i = ProjectsList.Instance.Items.IndexOf(ot);
+        //    if (i > -1)
+        //    {
+        //        ProjectsList.Instance.Items[i] = p;
+        //        Navigation.PopAsync();
+        //    }
+        //}
 
         private void ProjectMenuPicker_SelectedIndexChanged(object sender, EventArgs e)
         {

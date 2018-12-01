@@ -85,6 +85,12 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\pdevice_relay.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\SmartHouse.Droid.Controls.ToggleButton.xaml.g.cs
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\SmartHouse.Android.csprojAssemblyReference.cache
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\fold.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\unfold.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\checked.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\unchecked.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\inputport.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\outputport.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\Mono.Android.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\mscorlib.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\System.Core.pdb
@@ -136,10 +142,6 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\Plugi
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\Xamarin.Forms.Core.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\Xamarin.Forms.Xaml.dll.mdb
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\fold.png
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\unfold.png
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\checked.png
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\unchecked.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\FormsViewGroup.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\Plugin.Media.Abstractions.dll.mdb
@@ -167,8 +169,6 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\asset
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\System.Web.Services.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\System.Xml.Linq.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\System.Xml.pdb
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\inputport.png
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\outputport.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\FormsViewGroup.dll.mdb

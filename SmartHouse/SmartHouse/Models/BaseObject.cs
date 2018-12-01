@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using Java.Util.Zip;
 using Xamarin.Forms;
 
 namespace SmartHouse.Models
@@ -84,11 +86,62 @@ namespace SmartHouse.Models
             // string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string fn = Path.Combine(path, fileName);
-            string data = JsonConvert.SerializeObject(this, new JsonSerializerSettings() {
+            string data = JsonConvert.SerializeObject(this, new JsonSerializerSettings()
+            {
                 TypeNameHandling = TypeNameHandling.Auto,
                 Converters = new JsonConverter[] { new IntToUIDConverter() }
             });
             File.WriteAllText(fn, data);
         }
+
+        public virtual byte[] Zip()
+        {
+            string data = JsonConvert.SerializeObject(this, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Converters = new JsonConverter[] { new IntToUIDConverter() }
+            });
+            var d = new Deflater();
+            var bts = Encoding.Unicode.GetBytes(data);
+            d.SetInput(bts);
+            d.Finish();
+            byte[] buf = new byte[UInt16.MaxValue];
+            int size = d.Deflate(buf);
+            d.End();
+            byte[] result = new byte[size];
+            Array.Copy(buf, result, size);
+
+            // var i = new Inflater();
+            // i.SetInput(result);
+            // int size0 = i.Inflate(buf);
+            // var s = Encoding.Unicode.GetString(buf, 0, size0);
+            return result;
+        }
+
+        public static T UnZip<T>(byte[] data)
+        {
+            T result = default(T);
+            try
+            {
+                byte[] buf = new byte[UInt16.MaxValue * 4];
+                var i = new Inflater();
+                i.SetInput(data);
+                int size = i.Inflate(buf);
+                var s = Encoding.Unicode.GetString(buf, 0, size);
+                result = JsonConvert.DeserializeObject<T>(s, new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    MissingMemberHandling = MissingMemberHandling.Error,
+                    Converters = new JsonConverter[] { new IntToUIDConverter() }
+                });
+
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return result;
+        }
+
     }
 }

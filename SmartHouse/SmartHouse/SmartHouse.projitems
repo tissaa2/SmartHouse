@@ -46,12 +46,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DeviceTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileHeaderData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileChunkData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ServerFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DeviceState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\BoolStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DoubleStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EntityInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\PacketDataStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\FileChunkProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANOutputStatesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANPacket.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANAutodetectResponse.cs" />
