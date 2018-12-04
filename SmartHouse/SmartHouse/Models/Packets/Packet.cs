@@ -20,15 +20,7 @@ namespace SmartHouse.Models.Packets
             0
         };
 
-        public static byte[] StartReadAliasFileRequest = new byte[]
-        {
-            36,
-            72,
-            76,
-            0,
-            0x51,
-            0
-        };
+        public static byte READ_ALIASFILE_COMMAND = 0x51;
 
         public static byte[] ReadAliasFileRequest = new byte[]
         {
@@ -36,7 +28,19 @@ namespace SmartHouse.Models.Packets
             72,
             76,
             0,
-            0x58,
+            READ_ALIASFILE_COMMAND,
+            0
+        };
+
+        public static byte READ_FILECHUNK_COMMAND = 0x58;
+
+        public static byte[] ReadFileChunkRequest = new byte[]
+        {
+            36,
+            72,
+            76,
+            0,
+            READ_FILECHUNK_COMMAND,
             4,
             0,
             0,
@@ -44,15 +48,19 @@ namespace SmartHouse.Models.Packets
             0
         };
 
-        public static byte[] FinishReadAliasFileRequest = new byte[]
+        public static byte FINISH_READ_ALIASFILE_COMMAND = 0x59;
+
+        public static byte[] FinishAliasFileReadRequest = new byte[]
         {
             36,
             72,
             76,
             0,
-            0x59,
+            FINISH_READ_ALIASFILE_COMMAND,
             0
         };
+
+        public static byte WRITE_ALIASFILE_COMMAND = 0x41;
 
         public static byte[] WriteAliasFileRequest = new byte[]
         {
@@ -60,9 +68,11 @@ namespace SmartHouse.Models.Packets
             72,
             76,
             0,
-            0x40,
+            WRITE_ALIASFILE_COMMAND,
             0
         };
+
+        public static byte WRITE_FILECHUNK_COMMAND = 0x48;
 
         public static byte[] WriteFileChunkRequest = new byte[]
         {
@@ -74,13 +84,15 @@ namespace SmartHouse.Models.Packets
             0
         };
 
+        public static byte FINISH_WRITE_ALIASFILE_COMMAND = 0x49;
+
         public static byte[] WriteFileEndRequest = new byte[]
         {
             36,
             72,
             76,
             0,
-            0x49,
+            FINISH_WRITE_ALIASFILE_COMMAND,
             0
         };
 
@@ -132,7 +144,7 @@ namespace SmartHouse.Models.Packets
             0,      // 11 channel
             0,      // 12 level (value)
             0,      // 13 delay (in sec/4)
-            0,      // 14 fade time (in sec/4)
+            2,      // 14 fade time (in sec/4)
             0,      // 15 GN (group number)
             0       // 16 BN (button number)
         };

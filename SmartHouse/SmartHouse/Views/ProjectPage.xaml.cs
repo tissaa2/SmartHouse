@@ -5,6 +5,7 @@ using SmartHouse.Services;
 using SmartHouse.ViewModels;
 using System;
 using System.Net;
+using System.Text;
 using Xamarin.Forms;
 
 namespace SmartHouse.Views
@@ -119,6 +120,7 @@ namespace SmartHouse.Views
             if (f.Complete)
             {
                 var ot = Target;
+                // string s = Encoding.ASCII.GetString(f.Data);
                 var p = Project.UnZip<Project>(f.Data);
                 var i = ProjectsList.Instance.Items.IndexOf(ot);
                 if (i > -1)
@@ -152,9 +154,24 @@ namespace SmartHouse.Views
                 case (1):
                     LoadProjectFromCAN();
                     break;
+                case (2):
+                    ShowDebug();
+                    break;
             }
             ProjectMenuPicker.SelectedIndex = -1;
         }
+
+        private void ClearProject()
+        {
+            Target.Clear();
+        }
+
+        private void ShowDebug()
+        {
+            Navigation.PushAsync(new DebugPage());
+        }
+
+
 
         private void ToolbarItem_Activated(object sender, EventArgs e)
         {

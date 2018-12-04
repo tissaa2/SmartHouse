@@ -53,7 +53,9 @@
         <Picker x:Name="ProjectMenuPicker" Title="Выберите действие" IsVisible="False" SelectedIndexChanged="ProjectMenuPicker_SelectedIndexChanged">
             <Picker.Items>
               <x:String>Сохранить проект в CAN</x:String>
-              <x:String>Загрузить проект из CAN</x:String>
+                <x:String>Загрузить проект из CAN</x:String>
+                <x:String>Отладка</x:String>
+                <x:String>Очистить проект</x:String>
             </Picker.Items>
         </Picker>
         <ListView x:Name="GroupsListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 

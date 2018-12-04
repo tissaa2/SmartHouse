@@ -15,7 +15,7 @@ namespace SmartHouse.Models.Logic
             set
             {
                 state = value > 90 ? 100 : value < 10 ? 0 : value;
-                Port.SetPortValue(ID, PortID, (byte)state);
+                Port.SetPortValue(ID, PortID, (byte)state, 2);
                 OnPropertyChanged("State");
             }
         }

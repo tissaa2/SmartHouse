@@ -91,7 +91,7 @@ namespace SmartHouse.Services
                     if (p.DataSize >= 0)
                     {
                         CommandConfirmation cc = CommandConfirmation.Read(p.Data);
-                        Log.Write("Command {0} executed: result = {1}", message, (cc.Result == 0) ? "success" : "failure");
+                        Log.Write("Command {0} executed: result = {1}", message, cc.Result);
                         onSuccess?.Invoke(p);
                     }
                     else
@@ -114,14 +114,14 @@ namespace SmartHouse.Services
                         if (p.DataSize >= 0)
                         {
                             cc = CommandConfirmation.Read(p.Data);
-                            Log.Write("Command {0} executed: result = {1}", message, (cc.Result == 0) ? "success" : "failure");
+                            Log.Write("Command {0} executed: result = {1}", message, cc.Result);
                         }
                         else
                             Log.Write("Command {0} sent: result did not arrived", message);
                     }
                 });
                 while (cc == null)
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                 return cc;
             });
             return res;
@@ -147,7 +147,7 @@ namespace SmartHouse.Services
                     }
                 });
                 while (p == null)
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                 return p;
             });
             return res;
@@ -159,14 +159,25 @@ namespace SmartHouse.Services
             MainThread.Start(this);
         }
 
-        private byte CalcCRC(byte[] data, int offset, int size)
+        //private byte CalcCRC(byte[] data, int offset, int size)
+        //{
+        //    byte res = 0;
+        //    var bts = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(offset));
+        //    for (int i = 0; i < bts.Length; i++)
+        //        res = (byte)(res + bts[i]);
+        //    for (int i = offset; i < offset + size; i++)
+        //        res = (byte)(res + data[i]);
+        //    return (byte)((0x100 - res) & 0xFF);
+        //}
+
+        private byte CalcCRC(byte[] data, int dataOffset, int offset, int size)
         {
-            int res = 0;
+            byte res = 0;
             var bts = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(offset));
             for (int i = 0; i < bts.Length; i++)
                 res = (byte)(res + bts[i]);
             // res = (res + bts[i]) & 0xFF;
-            for (int i = offset; i < offset + size; i++)
+            for (int i = dataOffset; i < dataOffset + size; i++)
                 res = (byte)(res + data[i]);
             // res = (res + data[i]) & 0xFF;
             return (byte)((0x100 - res) & 0xFF);
@@ -175,18 +186,20 @@ namespace SmartHouse.Services
         // 0: Сохранить проект в CAN
         public async void SaveProjectFile(byte[] data)
         {
-            CommandConfirmation res = await Client.CurrentServer.SendAndWaitForConfirm(Packet.WriteAliasFileRequest, 0x40, "open alias file for writing");
+            CommandConfirmation res = await Client.CurrentServer.SendAndWaitForConfirm(Packet.WriteAliasFileRequest, Packet.WRITE_ALIASFILE_COMMAND, "open alias file for writing");
             if (res.Result == 0)
             {
                 int i = 0;
+                byte crc = 0;
                 int packetDataSize = 64;
                 while (i < data.Length)
                 {
                     var size = (i + packetDataSize > data.Length) ? data.Length - i : packetDataSize;
-                    do
+                    byte[] packet;
+                    // do
                     {
                         byte pds = (byte)(4 /*offset*/ + size + 1/*crc*/);
-                        byte[] packet = new byte[Packet.WriteFileChunkRequest.Length + pds];
+                        packet = new byte[Packet.WriteFileChunkRequest.Length + pds];
                         Packet.WriteFileChunkRequest.CopyTo(packet, 0);
                         packet[5] = pds;
                         var bts = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(i));
@@ -194,19 +207,24 @@ namespace SmartHouse.Services
                         packet[7] = bts[1];
                         packet[8] = bts[2];
                         packet[9] = bts[3];
-                        var crc = CalcCRC(data, i, size);
+                        crc = CalcCRC(data, i, i, size);
                         Array.Copy(data, i, packet, 10, size);
                         packet[10 + size] = crc;
 
-                        res = await Client.CurrentServer.SendAndWaitForConfirm(packet, 0x48, "write file chunk");
+                        res = await Client.CurrentServer.SendAndWaitForConfirm(packet, Packet.WRITE_FILECHUNK_COMMAND, "write file chunk");
                     }
-                    while (res.Result != 0);
+                    // while (res.Result != 0);
+                    if (res.Result != 0)
+                    {
+                        Log.Write("Error writing file chunk, pos = {0}, size = {1}, crc = {2}, data = ({3})", i, size, crc, BitConverter.ToString(packet, 10, size).Replace("-", ","));
+                        break;
+                    }
                     i += size;
                 }
 
                 do
                 {
-                    res = await Client.CurrentServer.SendAndWaitForConfirm(Packet.WriteFileEndRequest, 0x49, "alias file writing complete");
+                    res = await Client.CurrentServer.SendAndWaitForConfirm(Packet.WriteFileEndRequest, Packet.FINISH_WRITE_ALIASFILE_COMMAND, "alias file writing complete");
                 }
                 while (res.Result != 0);
             }
@@ -214,8 +232,8 @@ namespace SmartHouse.Services
 
         public async Task<ServerFile> LoadProjectFile()
         {
-            Packet res = await Client.CurrentServer.SendAndWaitForResponse(Packet.WriteAliasFileRequest, 0x40, "open alias file for reading");
-            if (res.Command == 0x51 && res.DataSize > 1)
+            Packet res = await Client.CurrentServer.SendAndWaitForResponse(Packet.ReadAliasFileRequest, Packet.READ_ALIASFILE_COMMAND, "open alias file for reading");
+            if (res.Command == Packet.READ_ALIASFILE_COMMAND && res.DataSize > 1)
             {
                 int i = 0;
                 int packetDataSize = 64;
@@ -224,22 +242,31 @@ namespace SmartHouse.Services
                 while (i < fh.Size)
                 {
                     var size = (i + packetDataSize > fh.Size) ? fh.Size - i : packetDataSize;
-                    do
+                    // do
                     {
-                        byte[] packet = Packet.ReadAliasFileRequest;
+                        byte[] packet = Packet.ReadFileChunkRequest;
                         var bts = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(i));
                         packet[6] = bts[0];
                         packet[7] = bts[1];
                         packet[8] = bts[2];
                         packet[9] = bts[3];
-                        res = await Client.CurrentServer.SendAndWaitForResponse(packet, 0x58, "read file chunk");
+                        res = await Client.CurrentServer.SendAndWaitForResponse(packet, Packet.READ_FILECHUNK_COMMAND, "read file chunk");
                     }
-                    while (res.DataSize < 2);
+                    // while (res.DataSize < 2);
+                    if (res.DataSize < 2)
+                    {
+                        Log.Write("Error reading file chunk, pos = {0}", i);
+                        break;
+                    }
                     FileChunkData fc = FileChunkData.Read(res.Data);
-                    var crc = CalcCRC(fc.Data, fc.Offset, fc.Data.Length);
+                    var crc = CalcCRC(fc.Data, 0, fc.Offset, fc.Data.Length);
                     if (crc == fc.CRC)
                     {
                         f.Write(fc.Offset, fc.Data);
+                    }
+                    else
+                    {
+                        Log.Write("Error loading file. CRC doesn't match");
                     }
                     i += size;
                 }
@@ -247,7 +274,7 @@ namespace SmartHouse.Services
                 CommandConfirmation cc = null;
                 do
                 {
-                    cc = await Client.CurrentServer.SendAndWaitForConfirm(Packet.FinishReadAliasFileRequest, 0x59, "alias file read complete");
+                    cc = await Client.CurrentServer.SendAndWaitForConfirm(Packet.FinishAliasFileReadRequest, Packet.FINISH_READ_ALIASFILE_COMMAND, "alias file read complete");
                 }
                 while (cc.Result != 0);
 

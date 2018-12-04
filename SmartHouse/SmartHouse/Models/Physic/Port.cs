@@ -33,7 +33,7 @@ namespace SmartHouse.Models.Physics
             return null;
         }
 
-        public static void SetPortValue(UID deviceId, int portId, byte value)
+        public static void SetPortValue(UID deviceId, int portId, byte value, byte fadeTime)
         {
             if (Client.CurrentServer == null)
                 return;
@@ -44,6 +44,7 @@ namespace SmartHouse.Models.Physics
             Packet.SetOutputValueRequest[9] = deviceId.B0;
             Packet.SetOutputValueRequest[11] = (byte)portId;
             Packet.SetOutputValueRequest[12] = (byte)value;
+            Packet.SetOutputValueRequest[13] = fadeTime;
             Client.CurrentServer.SendAndWaitForResponse(Packet.SetOutputValueRequest, 0x30, "set value", p => { });
         }
 
@@ -53,7 +54,7 @@ namespace SmartHouse.Models.Physics
 
             if (Parent != null)
             {
-                SetPortValue(Parent.ID, ID, (byte)value);
+                SetPortValue(Parent.ID, ID, (byte)value, 0);
             }
         }
 

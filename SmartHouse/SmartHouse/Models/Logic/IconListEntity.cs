@@ -64,7 +64,7 @@ namespace SmartHouse.Models.Logic
             Items.Add(item);
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             throw new NotImplementedException();
         }

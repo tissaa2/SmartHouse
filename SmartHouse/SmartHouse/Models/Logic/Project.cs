@@ -40,5 +40,10 @@ namespace SmartHouse.Models.Logic
 
         }
 
+        public override void Clear()
+        {
+            Items.Clear();
+        }
+
     }
 }

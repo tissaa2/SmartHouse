@@ -126,6 +126,8 @@ namespace SmartHouse.Models.Packets.Processors.CAN
 
         public static void UpdateDevice(ResponseData rd)
         {
+            if (rd.OutputValues == null)
+                return;
             var id = new UID(rd.UID[2], rd.UID[1], rd.UID[0]);
             var d = PDevice.Get(id);
             if (d != null)
