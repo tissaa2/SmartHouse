@@ -15,7 +15,7 @@ namespace SmartHouse.Views {
     public partial class ScenePage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.Grid EditorGrid;
+        private global::Xamarin.Forms.Button GetActivatorUIDButton;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::SmartHouse.Controls.DevicesListView DevicesListView;
@@ -26,7 +26,7 @@ namespace SmartHouse.Views {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(ScenePage));
-            EditorGrid = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "EditorGrid");
+            GetActivatorUIDButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "GetActivatorUIDButton");
             DevicesListView = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::SmartHouse.Controls.DevicesListView>(this, "DevicesListView");
             ApplyButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "ApplyButton");
         }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Reflection;
 using System.Linq;
+using SmartHouse.Models.Packets.Processors.CAN;
 
 namespace SmartHouse.Models.Physics
 {
@@ -137,22 +138,27 @@ namespace SmartHouse.Models.Physics
 
         //}
 
-        //private static void Fk(byte uid, byte type, byte inpts, byte outpts)
-        //{
-        //    ProcessAutodetectPacket(new Packet()
-        //    {
-        //        StartSequence = new byte[] { (byte)'#', (byte)'H', (byte)'L' },
-        //        Command = 0x031,
-        //        DataSize = 11,
-        //        //                  conf     UID     strt  cmd   type   in     out    sc gm
-        //        Data = new PacketDataStream(new byte[] { 0x05, 0, 0, uid, 0xFF, 0x04, type, inpts, outpts, 2, 0 })
-        //    });
-        //}
+        private static void Fk(byte uid, byte type, byte inpts, byte outpts)
+        {
+            var proc = CANDataProcessor.Processors[0x04];
+            var p = (new Packet()
+            {
+                StartSequence = new byte[] { (byte)'#', (byte)'H', (byte)'L' },
+                Command = 0x031,
+                DataSize = 11,
+                //                  conf     UID     strt  cmd   type   in     out    sc gm
+                Data = new PacketDataStream(new byte[] { 0x05, 0, 0, uid, 0xFF, 0x04, type, inpts, outpts, 2, 0 })
+            });
+            CANPacket cp = CANPacket.Read(p.Data);
+            proc.ProcessData(p.Data, cp);
+        }
 
 
         public static async void LoadAllAsync()
         {
-            /* Fk(1, 0x01, 8, 8);
+            if (all != null)
+                all.Clear();
+            Fk(1, 0x01, 8, 8);
             Fk(2, 0x01, 0, 16);
             Fk(3, 0x01, 4, 4);
             Fk(4, 0x01, 0, 8);
@@ -162,17 +168,15 @@ namespace SmartHouse.Models.Physics
             Fk(8, 0x70, 1, 1);
             Fk(9, 0x02, 8, 8);
             Fk(10, 0x02, 8, 8);
-            Fk(11, 0x02, 8, 8); */
-            if (all != null)
-                all.Clear();
+            Fk(11, 0x02, 8, 8); 
 
-            await Task.Run(() =>
-            {
-                while (!Client.Instance.Initialized)
-                    Thread.Sleep(100);
-                Client.CurrentServer.Send(Packet.AutodetectRequest);
-                // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
-            });
+            //await Task.Run(() =>
+            //{
+            //    while (!Client.Instance.Initialized)
+            //        Thread.Sleep(100);
+            //    Client.CurrentServer.Send(Packet.AutodetectRequest);
+            //    // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
+            //});
 
             //await Task.Run(() =>
             //{

@@ -56,11 +56,11 @@ namespace SmartHouse.Views
             var r = ports.GetRange(0, hc);
             // PushValue<T>(r);
             SetValue<T>(r, 0);
-            await Task.Delay(500);
+            await Task.Delay(200);
             SetValue<T>(r, 100);
             var result = await this.DisplayAlert("Система", "Активно ли устройство?", "Да", "Нет");
             SetValue<T>(r, 0);
-            await Task.Delay(500);
+            await Task.Delay(200);
             // PopValue<T>(r);
             if (result)
                 return await FindPort<T>(r);
@@ -149,7 +149,7 @@ namespace SmartHouse.Views
             }
         }
 
-        private void InputsTapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private void PortsTapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             if (sender is StackLayout)
             {

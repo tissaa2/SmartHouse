@@ -48,13 +48,15 @@ namespace SmartHouse.Models.Physics
             Client.CurrentServer.SendAndWaitForResponse(Packet.SetOutputValueRequest, 0x30, "set value", p => { });
         }
 
+        // 2DO: предусмотреть booleanPort и analogPort
+
         public virtual void SetValue(double val)
         {
             SetLocalValue(val);
 
             if (Parent != null)
             {
-                SetPortValue(Parent.ID, ID, (byte)value, 0);
+                SetPortValue(Parent.ID, ID, (byte)value, 1);
             }
         }
 

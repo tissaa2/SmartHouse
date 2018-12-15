@@ -8,6 +8,7 @@ using System.Threading;
 using SmartHouse.Models.Packets.Processors;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartHouse.Models.Logic;
 
 namespace SmartHouse.Services
 {
@@ -228,6 +229,17 @@ namespace SmartHouse.Services
                 }
                 while (res.Result != 0);
             }
+        }
+
+        public async Task<bool> SaveProjectToCAN(Project project)
+        {
+            foreach(var g in project.Items)
+                foreach(var s in g.Items)
+                {
+                    // пишем сцену в CAN await 
+                    Packet res = await Client.CurrentServer.SendAndWaitForResponse(Packet.ReadAliasFileRequest, Packet.READ_ALIASFILE_COMMAND, "open alias file for reading");
+                }
+            return true;
         }
 
         public async Task<ServerFile> LoadProjectFile()

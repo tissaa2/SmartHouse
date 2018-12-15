@@ -5,30 +5,25 @@
              xmlns:controls="clr-namespace:SmartHouse.Controls"
              x:Class="SmartHouse.Views.GroupPage"
              IsVisible="False">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="64" />
-            <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="48" />
-            <!--<RowDefinition Height="*" /> -->
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" x:Name="EditorGrid" BindingContext="{Binding Target}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="64" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
-            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding .}" OnPressed="IconButton_Clicked"/>
-            <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
-            <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
-        </Grid>
+    <StackLayout Orientation="Vertical">
+        <StackLayout x:Name="EditorLayout" Orientation="Horizontal" BindingContext="{Binding Target}" HeightRequest="64">
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" WidthRequest="64" VerticalOptions="Fill" Source="{Binding Icon}" />
+            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" WidthRequest="64" VerticalOptions="Fill" Source="{Binding Icon}" Data="{Binding .}" OnPressed="IconButton_Clicked"/>
+            <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding Name}" VerticalTextAlignment="Center" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding Name}" FontSize="Large"/>
+        </StackLayout>
         
-        <Button x:Name="DevicesButton" Grid.Row="1" IsVisible="{Binding ScenesMode}" Pressed="DevicesButton_Pressed" Text="Показать устройства" />
-        <Button x:Name="ScenesButton" Grid.Row="1" IsVisible="{Binding DevicesMode}" Pressed="ScenesButton_Pressed" Text="Показать сцены" />
-
-        <ListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
-                  HasUnevenRows="True" ItemsSource="{Binding Scenes.Items}" >
+        <Button x:Name="DevicesButton" HorizontalOptions="Fill" IsVisible="{Binding ScenesMode}" Pressed="DevicesButton_Pressed" Text="Показать устройства" />
+        <Grid HorizontalOptions="Fill" IsVisible="{Binding DevicesMode}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ScenesButton" Grid.Column="0" HorizontalOptions="Fill"  Pressed="ScenesButton_Pressed" Text="Показать сцены" />
+            <Button x:Name="InputDevicesButton" IsVisible="{Binding OutputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="InputDevicesButton_Pressed" Text="Показать входы" />
+            <Button x:Name="OutputDevicesButton" IsVisible="{Binding InputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="OutputDevicesButton_Pressed" Text="Показать выходы" />
+        </Grid>
+        <ListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="White" HasUnevenRows="True" ItemsSource="{Binding Scenes.Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
@@ -54,7 +49,7 @@
                                    ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
         <!--<controls:DevicesListView Grid.Row="4" BindingContext="{Binding .}" HorizontalOptions="Fill" VerticalOptions="Fill" 
                                    ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />-->
-        <Button Grid.Row="3" x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" />
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked"  HorizontalOptions="Fill"/>
         
-    </Grid>
+    </StackLayout>
 </ContentPage>

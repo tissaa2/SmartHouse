@@ -5,6 +5,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Xamarin.Forms;
+using System.Linq;
+using SmartHouse.Models.Physics;
 
 namespace SmartHouse.Views
 {
@@ -17,20 +19,18 @@ namespace SmartHouse.Views
 
         public void DevicesListChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            LoadDevices();
+            LoadDevices(Model.InputsMode);
             // ScenePage.Instance.Refresh(this.Model);
         }
 
-        public void LoadDevices()
+        public void LoadDevices(bool _isInput)
         {
-            Model.Devices.Items = new ObservableCollection<DeviceModel>();
-            foreach (var e in Target.Devices)
-            {
-                var m = ViewModel.CreateModel(e) as DeviceModel;
+            Model.Devices.Items = new ObservableCollection<DeviceModel>(Target.Devices.Where(i => i.IsInput == _isInput).Select(i => {
+                var m = DeviceModel.CreateModel(i) as DeviceModel;
                 m.Enabled = true;
                 m.Group = Target;
-                Model.Devices.Items.Add(m);
-            }
+                return m;
+            }));
         }
 
         public Group SetTarget(Group target)
@@ -46,7 +46,7 @@ namespace SmartHouse.Views
             Model.Target = target;
             Model.Scenes.Items = Target.Items;
             Model.Scenes.SelectedItem = null;
-            LoadDevices();
+            LoadDevices(Model.InputsMode);
             // Model.Devices.Items.Add(ViewModel.CreateModel(e) as DeviceModel);
             Model.Devices.SelectedItem = null;
             return target;
@@ -111,23 +111,60 @@ namespace SmartHouse.Views
 
         }
 
-        private void AddButton_Clicked(object sender, EventArgs e)
+        private async void AddButton_Clicked(object sender, EventArgs e)
         {
             if (Model.ScenesMode)
                 Target.Items.Add(new Scene(Scene.IntID.NewID(), "Новая сцена", "scenes_brightlight.png"));
             if (Model.DevicesMode)
             {
-                Target.Devices.Add(new Lamp("Новое устройство", 50));
-                /* Model.Devices.SelectedItem = 
-                    var dm = e.Item as DeviceModel;
-                    var dp = new DevicePage() { Title = dm.Name };
-                    dp.IsVisible = true;
-                    dp.SetTarget(e.Item as DeviceModel);
-                    CurrentItem = e.Item as DeviceModel;
+                var dbp = new DevicesBrowserPage();
+                dbp.Disappearing += async (s, e0) =>
+                {
+                    var p = dbp.Model.SelectedPort;
+                    var pd = dbp.Model.SelectedItem;
+                    SmartHouse.Models.Logic.Device d = null;
+                    if (p != null)
+                    {
+                        if (p is InputPort)
+                        {
+                            if (pd is IRPanel || pd is MSTPanel || pd is Dimmer || pd is Relay)
+                                d = new SmartHouse.Models.Logic.Switch("Новый выключатель", p.value != 0);
+                        }
+                        else
+                        if (p is OutputPort)
+                        {
+                            if (pd is Relay)
+                                d = new Socket("Новая розетка", p.value != 0);
+                            else if (pd is Dimmer)
+                                d = new Lamp("Новый светильник", p.value);
+                        }
+                    }
+                    else
+                    {
+                        if (pd is IRPanel || pd is MSTPanel)
+                            d = new SmartHouse.Models.Logic.Panel("Новая панель", pd.Inputs.Select(i => i.Value != 0));
 
-                    if (Utils.IsDoubleTap())
-                        Navigation.PushAsync(dp); */
+                    }
+
+                    if (d == null)
+                        await DisplayAlert("Ошибка", "Выбрано неправильное устройство", "Принять");
+                    else
+                    {
+                        Target.Devices.Add(d);
+                        var sdid = d.ID.ToString();
+                        var dm = Model.Devices.Items.FirstOrDefault(i => i.ID == sdid);
+                        var dp = new DevicePage();
+                        if(dm != null)
+                            dp.SetTarget(dm);
+                        await Navigation.PushAsync(dp);
+
+                    }
+
+                };
+                await Navigation.PushAsync(dbp);
             }
+
+
         }
 
         private void DevicesButton_Pressed(object sender, EventArgs e)
@@ -156,6 +193,18 @@ namespace SmartHouse.Views
                 }
             }
 
+        }
+
+        private void InputDevicesButton_Pressed(object sender, EventArgs e)
+        {
+            Model.InputsMode = true;
+            LoadDevices(Model.InputsMode);
+        }
+
+        private void OutputDevicesButton_Pressed(object sender, EventArgs e)
+        {
+            Model.InputsMode = false;
+            LoadDevices(Model.InputsMode);
         }
     }
 }

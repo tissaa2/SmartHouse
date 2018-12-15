@@ -26,6 +26,7 @@ namespace SmartHouse.ViewModels
                 selectedPort.Parent.Fold = false;
                 OnPropertyChanged("SelectedPort");
                 OnPropertyChanged("SelectButtonVisible");
+                SelectedItem = selectedPort.Parent;
             }
         }
 

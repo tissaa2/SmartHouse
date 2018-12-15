@@ -123,5 +123,10 @@ namespace SmartHouse.Views
                     Target.Items.Add(st);
                 }
         }
+
+        private void GetActivatorUIDButton_Pressed(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartHouse.Models.Logic;
 using Xamarin.Forms;
 using SmartHouse.ViewModels;
 using SmartHouse.Models;

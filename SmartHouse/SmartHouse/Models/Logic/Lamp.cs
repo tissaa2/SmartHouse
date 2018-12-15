@@ -7,6 +7,7 @@ namespace SmartHouse.Models.Logic
     {
         public override string TypeName { get => "Светильник"; set => base.TypeName = value; }
         public override string Icon { get => "device_lamp.png"; set => base.Icon = value; }
+        public override bool IsInput { get => false; set => base.IsInput = value; }
 
         public Lamp()
         {

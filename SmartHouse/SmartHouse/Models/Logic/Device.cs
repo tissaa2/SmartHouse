@@ -9,6 +9,7 @@ namespace SmartHouse.Models.Logic
     {
         public virtual string TypeName { get; set; }
         public byte PortID { get; set; } = 0;
+        public virtual bool IsInput { get; set; }
 
         /* private bool _checked;
         public bool Checked {

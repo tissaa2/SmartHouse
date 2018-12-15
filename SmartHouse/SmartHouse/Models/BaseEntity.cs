@@ -39,7 +39,7 @@ namespace SmartHouse.Models
         public Boolean IsAdmin { get { return Settings.Instance.IsAdmin; } }
         [JsonIgnore]
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
-    
+
         [JsonIgnore]
         private IDType id;
 
@@ -49,6 +49,26 @@ namespace SmartHouse.Models
             get { return id; }
             set { id = value; OnPropertyChanged("ID"); }
         }
+
+
+        [JsonIgnore]
+        private string stringId = null;
+
+        [JsonIgnore]
+        public virtual string StringID
+        {
+            get {
+                if (stringId == null)
+                    stringId = ID.ToString();
+                return stringId;
+            }
+            set {
+                stringId = value;
+                OnPropertyChanged("StringID");
+            }
+        }
+
+
 
         [JsonIgnore]
         private byte securityLevel;

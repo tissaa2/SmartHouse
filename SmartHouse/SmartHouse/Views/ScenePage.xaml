@@ -5,25 +5,23 @@
              xmlns:controls="clr-namespace:SmartHouse.Controls" 
              x:Class="SmartHouse.Views.ScenePage"
              IsVisible="False">
-    <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="64" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="48" />
-            </Grid.RowDefinitions>
-            <Grid x:Name="EditorGrid" Grid.Row="0" BindingContext="{Binding Target}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="64" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0"/>
-                <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" Grid.Column="0" HorizontalOptions="Fill" HeightRequest="24" Source="{Binding Icon}" Grid.Row="0" Data="{Binding }" OnPressed="IconButton_Clicked"/>
-                <Label IsVisible="{Binding NotIsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
-                <Entry IsVisible="{Binding IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
-            </Grid>
+    <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal" BindingContext="{Binding Target}">
+                <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}"/>
+                <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HorizontalOptions="Fill" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}" Data="{Binding }" OnPressed="IconButton_Clicked"/>
+                <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" VerticalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
+                <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" Text="{Binding Name}" FontSize="Large"/>
+            </StackLayout>
+        <StackLayout Orientation="Horizontal" BindingContext="{Binding Target}">
+            <Label Margin="8, 8" Text="UID" FontSize="Large"/>
+            <Entry IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding StringID}" FontSize="Large"/>
+            <Label Margin="8, 8" Text="Порт" FontSize="Large"/>
+            <Entry IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding StringPort}" FontSize="Large"/>
+            <Button x:Name="GetActivatorUIDButton" Text="Найти" Pressed="GetActivatorUIDButton_Pressed"/>
+        </StackLayout>
 
-        <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" Grid.Row="1" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+        <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" 
                                    ItemsSource="{Binding Items}" BackgroundColor="White" />
-        <Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" Grid.Row="2"/>
-    </Grid>
+        <Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" HorizontalOptions="Fill" HeightRequest="48"/>
+    </StackLayout>
 </ContentPage>

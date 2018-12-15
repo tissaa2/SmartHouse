@@ -7,7 +7,7 @@ using SmartHouse.Models.Logic;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Group : IconListEntity<int, UID, Scene>
+    public class Group : IconListEntity<int, int, Scene>
     {
         public ObservableCollection<Group> Children { get; set; } = new ObservableCollection<Group>();
         public ObservableCollection<Device> Devices { get; set; } = new ObservableCollection<Device>();
@@ -36,7 +36,10 @@ namespace SmartHouse.Models.Logic
                     new Fan("Батареи", 50),
                     new Socket("Розетка у окна", true),
                     new Socket("Розетка у дивана", true),
-                    new Socket("Розетка у двери", true)
+                    new Socket("Розетка у двери", true),
+                    new Switch("Выключатель у двери", true),
+                    new Panel("Панель на стене", new bool[8]),
+                    new MotionSensor("Датчик движени", new bool[4])
                 }
             };
 

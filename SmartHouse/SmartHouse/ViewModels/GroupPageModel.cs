@@ -26,8 +26,21 @@ namespace SmartHouse.ViewModels
             }
         }
 
+        private bool inputsMode = false;
+        public bool InputsMode
+        {
+            get { return inputsMode; }
+            set { inputsMode = value; OnPropertyChanged("InputsMode"); OnPropertyChanged("OutputsMode"); }
+        }
+
+        public bool OutputsMode
+        {
+            get { return !inputsMode; }
+        }
+
         private bool devicesMode = false;
-        public bool DevicesMode {
+        public bool DevicesMode
+        {
             get { return devicesMode; }
             set { devicesMode = value; OnPropertyChanged("DevicesMode"); OnPropertyChanged("ScenesMode"); }
         }

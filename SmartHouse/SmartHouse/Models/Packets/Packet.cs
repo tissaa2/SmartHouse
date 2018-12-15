@@ -144,7 +144,7 @@ namespace SmartHouse.Models.Packets
             0,      // 11 channel
             0,      // 12 level (value)
             0,      // 13 delay (in sec/4)
-            2,      // 14 fade time (in sec/4)
+            0,      // 14 fade time (in sec/4)
             0,      // 15 GN (group number)
             0       // 16 BN (button number)
         };
