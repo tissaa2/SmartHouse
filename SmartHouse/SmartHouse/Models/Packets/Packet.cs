@@ -119,12 +119,29 @@ namespace SmartHouse.Models.Packets
             76,     // 2
             0,      // 3
             0x30,   // 4
-            12,     // 5 data size
+            // 12,     // 5 data size
+            6,     // 5 data size
             0x05,   // 6 config byte
             0,      // 7 UID3
             0,      // 8 UID2
             0,      // 9 UID1
             0x5A,   // 10 command 
+            01
+        };
+
+        public static byte[] CaptureDeviceModeRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4
+            6,     // 5 data size
+            0x05,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0xAA,   // 10 command 
             01
         };
 

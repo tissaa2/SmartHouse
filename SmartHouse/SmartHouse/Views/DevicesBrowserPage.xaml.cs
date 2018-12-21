@@ -7,6 +7,11 @@ using SmartHouse.Controls;
 using SmartHouse.Models.Physics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SmartHouse.Services;
+using SmartHouse.Models.Packets;
+using SmartHouse.Models.Packets.Processors.CAN;
+using SmartHouse.Models;
+using System.Linq;
 
 namespace SmartHouse.Views
 {
@@ -104,6 +109,9 @@ namespace SmartHouse.Views
                 case (2):
                     FindPort();
                     break;
+                case (3):
+                    CaptureDevice();
+                    break;
             }
             MenuPicker.SelectedIndex = -1;
         }
@@ -112,7 +120,30 @@ namespace SmartHouse.Views
         {
             List<OutputPort> ps = new List<OutputPort>(PDevice.AllOutputs);
             SetValue<OutputPort>(ps, 0);
-            SelectPort(await FindPort<OutputPort>(ps));
+            SelectPort(await FindPort<OutputPort>(ps), true);
+        }
+
+        private void DeviceCaptured(CANCaptureDeviceResponse.ResponseData rd)
+        {
+            var id = new UID(rd.UID[2], rd.UID[1], rd.UID[0]);
+            var d = PDevice.All.FirstOrDefault(e => e.ID == id);
+            if (d != null)
+            {
+                var port = d.Inputs.FirstOrDefault(e => e.ID == rd.InputNumber);
+                if (port != null)
+                {
+                    Model.SelectedPort = port;
+                    DevicesListView.SelectedItem = d;
+                    DevicesListView.ScrollTo(DevicesListView.SelectedItem, ScrollToPosition.Start, true);
+                }
+            }
+            CANCaptureDeviceResponse.OnDeviceCaptured -= DeviceCaptured;
+        }
+
+        public async void CaptureDevice()
+        {
+            CANCaptureDeviceResponse.OnDeviceCaptured += DeviceCaptured;
+            await Client.CurrentServer.SendAndWaitForConfirm(Packet.CaptureDeviceModeRequest, 0x30, "set device capture mode");
         }
 
         private void SelectButton_Pressed(object sender, EventArgs e)
@@ -139,13 +170,14 @@ namespace SmartHouse.Views
         {
         }
 
-        private void SelectPort(Port port)
+        private void SelectPort(Port port, bool scrollTo)
         {
             Model.SelectedPort = port;
             if (port != null)
             {
-                DevicesListView.SelectedItem = port.Parent;
-                DevicesListView.ScrollTo(DevicesListView.SelectedItem, ScrollToPosition.Start, true);
+                DevicesListView.SelectedItem = port.Parent; 
+                if (scrollTo)
+                    DevicesListView.ScrollTo(DevicesListView.SelectedItem, ScrollToPosition.Start, true);
             }
         }
 
@@ -153,7 +185,7 @@ namespace SmartHouse.Views
         {
             if (sender is StackLayout)
             {
-                SelectPort((sender as StackLayout).BindingContext as Port);
+                SelectPort((sender as StackLayout).BindingContext as Port, false);
             }
         }
     }

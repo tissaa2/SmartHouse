@@ -62,6 +62,7 @@
                 <x:String>Загрузить тестовые данные</x:String>
                 <x:String>Настройки</x:String>
                 <x:String>Отладка</x:String>
+                <x:String>Просмотр сети CAN</x:String>
             </Picker.Items>
         </Picker>
 

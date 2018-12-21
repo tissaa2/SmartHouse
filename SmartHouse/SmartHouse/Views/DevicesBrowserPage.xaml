@@ -17,6 +17,7 @@
                 <x:String>Обновить</x:String>
                 <x:String>Окно отладки</x:String>
                 <x:String>Найти устройство</x:String>
+                <x:String>Захват устройства</x:String>
             </Picker.Items>
         </Picker>
 
@@ -117,12 +118,13 @@
                                 <controls:RepeaterView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell Height="32" >
-                                            <StackLayout Orientation="Horizontal">
+                                            <StackLayout Orientation="Horizontal" BackgroundColor="{Binding BGColor}" Spacing = "4" Padding="4">
                                                 <StackLayout.GestureRecognizers>
                                                     <TapGestureRecognizer x:Name="InputsTapGestureRecognizer" NumberOfTapsRequired="1" Tapped="PortsTapGestureRecognizer_Tapped" />
                                                 </StackLayout.GestureRecognizers>
                                                 <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="32"/>
-                                                <controls:ESlider IsEnabled="{Binding Enabled}" VerticalOptions="Fill" Margin="0" Value="{Binding Value, Mode=TwoWay}" Caption="{Binding Name}" HorizontalOptions="FillAndExpand" />
+                                                <Label Margin="16, 0, 0, 0" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="Black" FontSize="Large"/>
+                                                <!--<controls:ESlider IsEnabled="{Binding Enabled}" VerticalOptions="Fill" Margin="0" Value="{Binding Value, Mode=TwoWay}" Caption="{Binding Name}" HorizontalOptions="FillAndExpand" />-->
                                             </StackLayout>
                                         </ViewCell>
                                     </DataTemplate>

@@ -74,6 +74,20 @@ namespace SmartHouse.Models.Physics
             }
         }
 
+        private static ObservableCollection<InputPort> allInputs = new ObservableCollection<InputPort>();
+        public static ObservableCollection<InputPort> AllInputs
+        {
+            get
+            {
+                if (allInputs == null)
+                {
+                    allInputs = new ObservableCollection<InputPort>();
+                    LoadAllAsync();
+                }
+                return allInputs;
+            }
+        }
+
         /* public static void LoadInputsAsync()
         {
             foreach (var d in all)
@@ -96,6 +110,9 @@ namespace SmartHouse.Models.Physics
                     if (allOutputs != null)
                         foreach (var i in device.Outputs)
                             allOutputs.Add(i);
+                if (allInputs != null)
+                    foreach (var i in device.Inputs)
+                        allInputs.Add(i);
             }
         }
 
@@ -158,25 +175,25 @@ namespace SmartHouse.Models.Physics
         {
             if (all != null)
                 all.Clear();
-            Fk(1, 0x01, 8, 8);
-            Fk(2, 0x01, 0, 16);
-            Fk(3, 0x01, 4, 4);
-            Fk(4, 0x01, 0, 8);
-            Fk(5, 0x01, 8, 8);
-            Fk(6, 0x58, 1, 1);
-            Fk(7, 0x08, 1, 1);
-            Fk(8, 0x70, 1, 1);
-            Fk(9, 0x02, 8, 8);
-            Fk(10, 0x02, 8, 8);
-            Fk(11, 0x02, 8, 8); 
+            //Fk(1, 0x01, 8, 8);
+            //Fk(2, 0x01, 0, 16);
+            //Fk(3, 0x01, 4, 4);
+            //Fk(4, 0x01, 0, 8);
+            //Fk(5, 0x01, 8, 8);
+            //Fk(6, 0x58, 1, 1);
+            //Fk(7, 0x08, 1, 1);
+            //Fk(8, 0x70, 1, 1);
+            //Fk(9, 0x02, 8, 8);
+            //Fk(10, 0x02, 8, 8);
+            //Fk(11, 0x02, 8, 8); 
 
-            //await Task.Run(() =>
-            //{
-            //    while (!Client.Instance.Initialized)
-            //        Thread.Sleep(100);
-            //    Client.CurrentServer.Send(Packet.AutodetectRequest);
-            //    // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
-            //});
+            await Task.Run(() =>
+            {
+                while (!Client.Instance.Initialized)
+                    Thread.Sleep(100);
+                Client.CurrentServer.Send(Packet.AutodetectRequest);
+                // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
+            });
 
             //await Task.Run(() =>
             //{

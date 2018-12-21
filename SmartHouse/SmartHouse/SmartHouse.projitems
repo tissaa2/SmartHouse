@@ -52,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Panel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileHeaderData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileChunkData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANCaptureDeviceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServerFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DeviceState.cs" />
