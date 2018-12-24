@@ -75,6 +75,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Relay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ActionCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicesBrowserPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\MotionSensorModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\PanelModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SwitchModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsPageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />

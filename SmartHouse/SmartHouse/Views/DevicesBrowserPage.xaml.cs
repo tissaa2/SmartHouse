@@ -132,9 +132,13 @@ namespace SmartHouse.Views
                 var port = d.Inputs.FirstOrDefault(e => e.ID == rd.InputNumber);
                 if (port != null)
                 {
-                    Model.SelectedPort = port;
-                    DevicesListView.SelectedItem = d;
-                    DevicesListView.ScrollTo(DevicesListView.SelectedItem, ScrollToPosition.Start, true);
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Model.SelectedPort = port;
+                        Model.SelectedItem = d;
+                        // DevicesListView.SelectedItem = d;
+                        DevicesListView.ScrollTo(DevicesListView.SelectedItem, ScrollToPosition.Start, true);
+                    });
                 }
             }
             CANCaptureDeviceResponse.OnDeviceCaptured -= DeviceCaptured;

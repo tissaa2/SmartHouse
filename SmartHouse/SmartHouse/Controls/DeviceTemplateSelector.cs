@@ -11,6 +11,9 @@ namespace SmartHouse.Controls
 {
     public class DeviceTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate SwitchTemplate { get; set; }
+        public DataTemplate PanelTemplate { get; set; }
+        public DataTemplate MotionSensorTemplate { get; set; }
         public DataTemplate FanTemplate { get; set; }
         public DataTemplate LampTemplate { get; set; }
         public DataTemplate SocketTemplate { get; set; }
@@ -27,6 +30,12 @@ namespace SmartHouse.Controls
                     return LampTemplate;
                 if (d is Socket)
                     return SocketTemplate;
+                if (d is SmartHouse.Models.Logic.Switch)
+                    return SwitchTemplate;
+                if (d is Panel)
+                    return PanelTemplate;
+                if (d is MotionSensor)
+                    return MotionSensorTemplate;
             }
             return DefaultTemplate;
         }

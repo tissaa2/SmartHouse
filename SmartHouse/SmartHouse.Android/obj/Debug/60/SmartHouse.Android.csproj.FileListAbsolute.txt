@@ -169,6 +169,9 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\asset
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\System.Web.Services.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\System.Xml.Linq.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\android\assets\System.Xml.pdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\device_motionsensor.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\device_panel.png
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\res\drawable\device_switch.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\60\linksrc\FormsViewGroup.dll.mdb
