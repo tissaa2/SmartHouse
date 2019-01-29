@@ -43,7 +43,7 @@ namespace SmartHouse.Services
         {
             this.LocalAddress = localAddress;
             this.socket = new UdpClient(localAddress);
-            this.Stream = new DuplexStream(-1, 32768);
+            this.Stream = new DuplexStream(5000, 32768);
             this.socket.DontFragment = true;
         }
 

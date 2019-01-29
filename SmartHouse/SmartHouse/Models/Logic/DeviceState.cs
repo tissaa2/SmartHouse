@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.Models.Logic
 {
-    public class DeviceState : BaseEntity<UID>
+    public class DeviceState : BaseEntity<int>
     {
         public string Value { get; set; }
 
@@ -9,7 +9,7 @@
 
         }
 
-        public DeviceState (UID id, string value): base(id)
+        public DeviceState (int id, string value): base(id)
         {
             Value = value;
         }

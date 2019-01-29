@@ -43,6 +43,10 @@ namespace SmartHouse.Views
             Target.Apply();
             Title = Target.Name;
         }
+        //2DO:
+        //пофиксить баги слайдера
+        //добавить активацию сцен
+        //проверить программирование сцен в сети CAN
 
         private async void FindDeviceButton_Clicked(object sender, EventArgs e)
         {
@@ -52,7 +56,7 @@ namespace SmartHouse.Views
                 var p = dbp.Model.SelectedPort;
                 if (p != null)
                 {
-                    Target.ID = p.Parent.ID.ToString();
+                    Target.UID = p.Parent.ID.ToString();
                     Target.PortID = p.ID.ToString();
                 }
             };

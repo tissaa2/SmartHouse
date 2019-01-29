@@ -5,10 +5,15 @@ using Xamarin.Forms;
 
 namespace SmartHouse.Controls
 {
-    public class TouchEventArgs: EventArgs
+    public class Coordinates
     {
         public double X { get; set; }
         public double Y { get; set; }
+    }
+
+    public class TouchEventArgs : EventArgs
+    {
+        public Coordinates TouchPosition { get; set; }
     }
 
     public delegate void TouchEventDelegate(object sender, TouchEventArgs args);
@@ -16,8 +21,10 @@ namespace SmartHouse.Controls
     public class EFrame: Frame
 
     {
-        public void CallTouchEvent(TouchEventArgs args)
+        public Coordinates LastTouchPosition { get; set; }
+        public void ProcessTouchEvent(TouchEventArgs args)
         {
+            LastTouchPosition = args.TouchPosition;
             Touched?.Invoke(this, args);
         }
         public event TouchEventDelegate Touched;

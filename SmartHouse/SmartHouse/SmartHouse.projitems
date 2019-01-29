@@ -53,6 +53,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileHeaderData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileChunkData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANCaptureDeviceResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\PScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServerFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DeviceState.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\MotionSensorModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\PanelModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SwitchModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ScenePageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsPageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />

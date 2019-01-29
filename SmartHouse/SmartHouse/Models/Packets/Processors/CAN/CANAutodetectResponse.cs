@@ -146,7 +146,8 @@ namespace SmartHouse.Models.Packets.Processors.CAN
                     Packet.GetOutputStatesRequest[7] = d.ID.B2;
                     Packet.GetOutputStatesRequest[8] = d.ID.B1;
                     Packet.GetOutputStatesRequest[9] = d.ID.B0;
-                    Client.CurrentServer.Send(Packet.GetOutputStatesRequest);
+                    if (Client.CurrentServer != null)
+                        Client.CurrentServer.Send(Packet.GetOutputStatesRequest);
                     Log.Write("Device {0} found ", d);
                 }
             }

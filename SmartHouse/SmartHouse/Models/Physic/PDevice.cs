@@ -11,6 +11,7 @@ using System.Threading;
 using System.Reflection;
 using System.Linq;
 using SmartHouse.Models.Packets.Processors.CAN;
+using Newtonsoft.Json;
 
 namespace SmartHouse.Models.Physics
 {
@@ -186,39 +187,40 @@ namespace SmartHouse.Models.Physics
             //Fk(9, 0x02, 8, 8);
             //Fk(10, 0x02, 8, 8);
             //Fk(11, 0x02, 8, 8); 
-
-            await Task.Run(() =>
-            {
-                while (!Client.Instance.Initialized)
+            if (Utils.EmulateCAN)
+                await Task.Run(() =>
+                {
+                    Fk(1, 0x01, 8, 8);
                     Thread.Sleep(100);
-                Client.CurrentServer.Send(Packet.AutodetectRequest);
+                    Fk(2, 0x01, 0, 16);
+                    Thread.Sleep(100);
+                    Fk(3, 0x01, 4, 4);
+                    Thread.Sleep(100);
+                    Fk(4, 0x01, 0, 8);
+                    Thread.Sleep(100);
+                    Fk(5, 0x01, 8, 8);
+                    Thread.Sleep(100);
+                    Fk(6, 0x58, 1, 1);
+                    Thread.Sleep(100);
+                    Fk(7, 0x08, 1, 1);
+                    Thread.Sleep(100);
+                    Fk(8, 0x70, 1, 1);
+                    Thread.Sleep(100);
+                    Fk(9, 0x02, 8, 8);
+                    Thread.Sleep(100);
+                    Fk(10, 0x02, 8, 8);
+                    Thread.Sleep(100);
+                    Fk(11, 0x02, 8, 8);
+                });
+            else
+                await Task.Run(() =>
+                {
+                    while (!Client.Instance.Initialized)
+                        Thread.Sleep(100);
+                    Client.CurrentServer.Send(Packet.AutodetectRequest);
                 // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
             });
 
-            //await Task.Run(() =>
-            //{
-            //    Fk(1, 0x01, 8, 8);
-            //    Thread.Sleep(500);
-            //    Fk(2, 0x01, 0, 16);
-            //    Thread.Sleep(500);
-            //    Fk(3, 0x01, 4, 4);
-            //    Thread.Sleep(500);
-            //    Fk(4, 0x01, 0, 8);
-            //    Thread.Sleep(500);
-            //    Fk(5, 0x01, 8, 8);
-            //    Thread.Sleep(500);
-            //    Fk(6, 0x58, 1, 1);
-            //    Thread.Sleep(500);
-            //    Fk(7, 0x08, 1, 1);
-            //    Thread.Sleep(500);
-            //    Fk(8, 0x70, 1, 1);
-            //    Thread.Sleep(500);
-            //    Fk(9, 0x02, 8, 8);
-            //    Thread.Sleep(500);
-            //    Fk(10, 0x02, 8, 8);
-            //    Thread.Sleep(500);
-            //    Fk(11, 0x02, 8, 8);
-            //});
         }
 
         /* public static Device GetDevice(UID id)
@@ -235,7 +237,10 @@ namespace SmartHouse.Models.Physics
         public override string Icon { get => "pdevice_device.png"; }
         public virtual string TypeName { get => "Устройство"; }
 
-        public string StringID { get => ID.ToString(); }
+        // public string StringID { get => ID.ToString(); }
+
+        [JsonIgnore]
+        public Dictionary<int, PScene> Scenes { get; set; }
 
         public List<InputPort> Inputs { get; set; }
         public List<OutputPort> Outputs { get; set; }
@@ -271,12 +276,12 @@ namespace SmartHouse.Models.Physics
             for (int i = 0; i < inputsCount; i++)
             {
                 v = randomValues ? rnd.NextDouble() : 0;
-                Inputs.Add(new InputPort() { ID = i, Value = v, Name = String.Format("Вход {0}", i), Parent = this });
+                Inputs.Add(new InputPort() { ID = i, Value = v, Name = String.Format("Вход {0}", i + 1), Parent = this });
             }
             for (int i = 0; i < outputsCount; i++)
             {
                 v = randomValues ? rnd.NextDouble() : 0;
-                Outputs.Add(new OutputPort() { ID = i, Value = v, Name = String.Format("Выход {0}", i), Parent = this });
+                Outputs.Add(new OutputPort() { ID = i, Value = v, Name = String.Format("Выход {0}", i + 1), Parent = this });
             }
         }
 
@@ -296,6 +301,44 @@ namespace SmartHouse.Models.Physics
             Outputs = CloneList<OutputPort>(source.Outputs);
             ID = source.ID;
             return this;
+        }
+
+        public virtual byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        {
+            return null;
+        }
+
+        public async void WriteScenes()
+        {
+            int i = 0;
+            if (await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 0, 0)))
+                foreach (var ps in Scenes.Values)
+            {
+                    if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0))))
+                    {
+                        if (await Utils.P(Packet.CreateSceneSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort, 0)))
+                        {
+                            int j = 0;
+                            byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
+                            while (j < ps.OutputStates.Count)
+                            {
+                                byte[] iq = { 0, 0, 0, 0 };
+                                int l = ps.OutputStates.Count - j;
+                                Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
+                                if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3])))
+                                    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
+                                j += 4;
+                            }
+                        }
+                        else
+                            Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                    }
+                    else
+                        Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i );
+                    if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, (byte)(i == 0 ? 1 : 0))))
+                        Log.Write("Error finishing scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID);
+                i++;
+            }
         }
 
         public virtual PDevice Clone()

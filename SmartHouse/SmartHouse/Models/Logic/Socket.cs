@@ -13,14 +13,14 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Socket(string name, bool state): base(name, state)
+        public Socket(string name, bool state, UID uid, byte portID) : base(name, state, uid, portID)
         {
         }
 
 
-        public override BaseEntity<UID> Clone()
+        public override BaseEntity<int> Clone()
         {
-            return new Socket() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
+            return new Socket() { ID = ID, UID = UID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }
 
     }

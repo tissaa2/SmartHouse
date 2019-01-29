@@ -16,11 +16,11 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Switch(string name, bool state): base(name, state)
+        public Switch(string name, bool state, UID uid, byte portID) : base(name, state, uid, portID)
         {
         }
 
-        public override BaseEntity<UID> Clone()
+        public override BaseEntity<int> Clone()
         {
             return new Switch() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }

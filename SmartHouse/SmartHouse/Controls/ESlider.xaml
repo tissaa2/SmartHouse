@@ -1,10 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+<AbsoluteLayout xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SmartHouse.Controls"
     x:Class="SmartHouse.Controls.ESlider" 
  BackgroundColor="Silver">
-    <local:EFrame HorizontalOptions="Fill" VerticalOptions="Fill" Touched="EFrame_Touched"/>
+    <!--<Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>-->
+    <!--<AbsoluteLayout.GestureRecognizers>
+        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+    </AbsoluteLayout.GestureRecognizers>-->
+    <!--<local:EFrame x:Name="Frame" HorizontalOptions="Fill" VerticalOptions="Fill" Touched="EFrame_Touched" />
     <BoxView VerticalOptions="Fill" HorizontalOptions="Start" x:Name="ProgressBox" BackgroundColor="Blue" />
-    <Label Margin="16, 0, 0, 0" x:Name="CaptionLabel" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="White" FontSize="Large"/>
-</Grid>
+    <Label Margin="16, 0, 0, 0" x:Name="CaptionLabel" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="White" FontSize="Large" />-->
+    <local:EFrame x:Name="Frame" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" Touched="EFrame_Touched" />
+    <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1" x:Name="ProgressBox" BackgroundColor="Blue" />
+    <Label Margin="16, 0, 0, 0" x:Name="CaptionLabel" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" VerticalTextAlignment="Center" TextColor="White" FontSize="Large" />
+</AbsoluteLayout>

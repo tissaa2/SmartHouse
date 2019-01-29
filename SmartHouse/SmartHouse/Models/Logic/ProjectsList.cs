@@ -14,9 +14,10 @@ namespace SmartHouse.Models.Logic
             get {
                 return new ProjectsList()
                 {
-                    Items = new ObservableCollection<Project>() {
-                            Project.Create("Квартира", "project_flat.png", IntID.NewID()),
-                            Project.Create("Дом", "project_house.png", IntID.NewID()) }
+                    //Items = new ObservableCollection<Project>() {
+                    //        Project.Create("Квартира", "project_flat.png", IntID.NewID()),
+                    //        Project.Create("Дом", "project_house.png", IntID.NewID()) }
+                    Items = new ObservableCollection<Project>() { Project.Create("Офис", "project_flat.png", IntID.NewID())}
                 };
             }
         }

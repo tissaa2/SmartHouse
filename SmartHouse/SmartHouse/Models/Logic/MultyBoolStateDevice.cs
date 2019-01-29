@@ -26,7 +26,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public MultyBoolStateDevice(string name, IEnumerable<bool> _state): base (UIDID.NewID(), name, null)
+        public MultyBoolStateDevice(string name, IEnumerable<bool> _state, UID uid, byte portID): base (IntID.NewID(), uid, portID, name, null)
         {
             state = new List<bool>(_state);
         }

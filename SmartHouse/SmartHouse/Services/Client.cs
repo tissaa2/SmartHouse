@@ -134,10 +134,10 @@ namespace SmartHouse.Services
 
         public void ActivateScene(byte id)
         {
-            Packet.ActivateSceneCANRequest[11] = id;
-            Packet.ActivateSceneCANRequest[15] = this.previousSceneId;
+            Packet.ActivateSceneRequest[11] = id;
+            Packet.ActivateSceneRequest[15] = this.previousSceneId;
             this.previousSceneId = id;
-            Client.CurrentServer.SendAndWaitForResponse(Packet.ActivateSceneCANRequest, 0x30, string.Format("activate scene {0}", id), null);
+            Client.CurrentServer.SendAndWaitForResponse(Packet.ActivateSceneRequest, 0x30, string.Format("activate scene {0}", id), null);
         }
 
         public void Broadcast(byte[] data, int port)

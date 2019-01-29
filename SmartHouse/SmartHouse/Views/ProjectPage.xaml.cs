@@ -3,10 +3,14 @@ using SmartHouse.Models.Logic;
 using SmartHouse.Models.Packets;
 using SmartHouse.Services;
 using SmartHouse.ViewModels;
+using SmartHouse.Models.Physics;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using Xamarin.Forms;
+using System.Linq;
+using SmartHouse.Models;
 
 namespace SmartHouse.Views
 {
@@ -111,6 +115,49 @@ namespace SmartHouse.Views
         public void SaveProjectToCAN()
         {
             Client.CurrentServer.SaveProjectFile(Target.Zip());
+
+            var ad = new List<Models.Logic.Device>();
+            foreach (var g in Model.Items)
+                foreach (var d in g.Devices)
+                    if (!ad.Contains(d))
+                        ad.Add(d);
+
+            var pds = new List<PDevice>();
+
+            foreach (var g in Model.Items)
+                foreach (var s in g.Items)
+                {
+                    foreach (var ds in s.Items)
+                    {
+                        var d = ad.FirstOrDefault(e => e.ID == ds.ID);
+                        var pd = PDevice.All.FirstOrDefault(e => e.ID == d.UID);
+                        if (!pds.Contains(pd))
+                        {
+                            pd.Scenes = new Dictionary<int, PScene>();
+                            pds.Add(pd);
+                        }
+                        double v = 0;
+                        if (double.TryParse(ds.Value, out v))
+                        {
+
+                        }
+                        else
+                        {
+                            bool b;
+                            if (bool.TryParse(ds.Value, out b))
+                                v = b ? 0 : 1;
+                        }
+                        if (!pd.Scenes.ContainsKey(s.ID))
+                            pd.Scenes.Add(s.ID, new PScene(s.ID, s.Event is UIDEvent ? (s.Event as UIDEvent).UID : new UID(0, 0, (s.Event as GroupEvent).GroupID), s.Event.InputID, s.Event.TypeID ));
+                        var ps = pd.Scenes[s.ID];
+                        ps.OutputStates.Add(d.PortID, v);
+                    }
+                }
+
+            foreach(var pd in pds)
+            {
+                pd.WriteScenes();
+            }
         }
 
         // 1: Загрузить проект из CAN
@@ -156,6 +203,9 @@ namespace SmartHouse.Views
                     break;
                 case (2):
                     ShowDebug();
+                    break;
+                case (3):
+                    ClearProject();
                     break;
             }
             ProjectMenuPicker.SelectedIndex = -1;

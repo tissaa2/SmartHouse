@@ -3,13 +3,16 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
+using SmartHouse.Services;
+using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Scene : IconListEntity<int, UID, DeviceState>
+    public class Scene : IconListEntity<int, int, DeviceState>
     // public class Scene : IconListEntity<UID, UID, Device>
     // public class Scene : IconEntity<UID>
     {
+
         public static Scene LightsOff(int id, Group group)
         {
             return new Scene(id, "Выключить все", "scene_switchoff.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices);
@@ -32,18 +35,28 @@ namespace SmartHouse.Models.Logic
 
         public void Activate(Group group)
         {
-            foreach (var i in Items)
-            {
-                var d = group.Devices.FirstOrDefault(e => e.ID == i.ID);
-                if (d is DoubleStateDevice)
-                    (d as DoubleStateDevice).ApplyState(i.Value);
-                else
-                if (d is BoolStateDevice)
-                    (d as BoolStateDevice).ApplyState(i.Value);
-            }
+
+            // закомментил принудительное выставление параметров слайдеров. пусть работает обратная связь 
+            //foreach (var i in Items)
+            //{
+            //    var d = group.Devices.FirstOrDefault(e => e.ID == i.ID);
+            //    if (d is DoubleStateDevice)
+            //        (d as DoubleStateDevice).ApplyState(i.Value);
+            //    else
+            //    if (d is BoolStateDevice)
+            //        (d as BoolStateDevice).ApplyState(i.Value);
+            //}
+
+            
+            UID id = Event is UIDEvent ? (Event as UIDEvent).UID : new UID(0, 0, (Event as GroupEvent).GroupID);
+
+            var ar = Utils.P(Packet.CreateActivateSceneRequest(id, Event.InputID, Event.TypeID, 4, 0));
+            //ar.Wait();
+            //if (!ar.Result)
+            //    Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
         }
 
-        public Event Event { get; set; }
+        public Event Event { get; set; } = new UIDEvent(0, new UID(0));
         // public string Event { get; set; }
 
         public Scene()
@@ -81,6 +94,16 @@ namespace SmartHouse.Models.Logic
                     var e = new DeviceState() { ID = i.ID, SecurityLevel = i.SecurityLevel, Value = v };
                     Items.Add(e);
                 }
+            }
+        }
+
+        public Scene(string name, string icon, Event _event, IEnumerable<DeviceState> deviceStates, double value) : base(Scene.IntID.NewID(), name, icon)
+        {
+            Event = _event;
+            Items = new System.Collections.ObjectModel.ObservableCollection<DeviceState>(deviceStates);
+            foreach(var ds in Items)
+            {
+                ds.Value = value.ToString();
             }
         }
 

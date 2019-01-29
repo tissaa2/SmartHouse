@@ -96,6 +96,9 @@ namespace SmartHouse.Models.Packets
             0
         };
 
+        //сделать пакеты для записи сцен в диммеры и реле
+        //    почему под ID сцены отведен только 1 байт?
+
         public static byte[] AutodetectRequest = new byte[]
         {
             36,
@@ -166,6 +169,268 @@ namespace SmartHouse.Models.Packets
             0       // 16 BN (button number)
         };
 
+        public static byte GetCANCommand(byte[] data)
+        {
+            return data[10];
+        }
+
+        public static byte[] DeviceFlashRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+            8,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x6d,   // 10 command 
+            0,      // 11 0 - write scenes to device
+            0,      // 12 0/1 - start/stop procedure
+            0,      // 13 0/1 - disable/eable indication
+        };
+
+        /// <summary>
+        /// Prepares device for flashing
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="operationType">0 - write scenes to device</param>
+        /// <param name="startstopFlag">0/1 - start/stop procedure</param>
+        /// <param name="indicationFlag">0/1 - disable/eable indication</param>
+        /// <returns></returns>
+        public static byte[] CreateDeviceFlashRequest(UID uid, byte operationType, byte startstopFlag, byte indicationFlag)
+        {
+            var p = DeviceFlashRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = operationType;
+            p[12] = startstopFlag;
+            p[13] = indicationFlag;
+            return p;
+        }
+
+        public static byte[] SceneWriteRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+            8,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x6c,   // 10 command 
+            0,      // 11 scene number in device
+            0,      // 12 0/1 - start/stop write scene
+            0      // 13 если 1 - стереть остальные сцены в устройстве
+        };
+
+        /// <summary>
+        /// Start scene writing to device procedure (once per scene)
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        /// <param name="startstopFlag">Start/stop flag</param>
+        /// <param name="eraseFlag">если 1 - стереть остальные сцены в устройстве</param>
+        /// <returns></returns>
+        public static byte[] CreateSceneWriteRequest(UID uid, byte sceneNumber, byte startstopFlag, byte eraseFlag)
+        {
+            var p = DeviceFlashRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = sceneNumber;
+            p[12] = startstopFlag;
+            p[13] = eraseFlag;
+            return p;
+        }
+
+        public static byte[] SceneSettingsWriteRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+            11,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x62,   // 10 command 
+            0,      // 11 scene number in device
+            0,      // 12 UID3
+            0,      // 13 UID2
+            0,      // 14 UID1
+            0,      // 15 номер входа
+            0       // 16 параметры сцены
+        };
+
+        /// <summary>
+        /// Create scene settings write request (once per scene)
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        /// <param name="sourceUID">Event source ID</param>
+        /// <param name="inputNumber">Event source input number</param>
+        /// <param name="sceneParams">Scene params</param>
+        /// <returns></returns>
+        public static byte[] CreateSceneSettingsWriteRequest(UID uid, byte sceneNumber, UID sourceUID, byte inputNumber, byte sceneParams)
+        {
+            var p = DeviceFlashRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = sceneNumber;
+            p[12] = sourceUID.B2;
+            p[13] = sourceUID.B1;
+            p[14] = sourceUID.B0;
+            p[15] = inputNumber;
+            p[16] = sceneParams;
+            return p;
+        }
+
+        public static byte[] DimmerSceneIntensityWriteRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+            8,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x6c,   // 10 command 
+            0,      // 11 scene number in device
+            0,      // 12 номер четверки 0..3
+            0,      // 13 яркость 0 (0..100%)
+            0,      // 14 яркость 1
+            0,      // 15 яркость 2
+            0       // 16 яркость 3
+        };
+
+        /// <summary>
+        /// Create Dimmer Scene Intensity Write Request
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        /// <param name="quadNum"> номер четверки 0..3</param>
+        /// <param name="intensity0">яркость 0 (0..100%)</param>
+        /// <param name="intensity1">яркость 1 (0..100%)</param>
+        /// <param name="intensity2">яркость 2 (0..100%)</param>
+        /// <param name="intensity3">яркость 3 (0..100%)</param>
+        /// <returns></returns>
+        public static byte[] CreateDimmerSceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        {
+            var p = DeviceFlashRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = sceneNumber;
+            p[12] = quadNum;
+            p[13] = intensity0;
+            p[14] = intensity1;
+            p[15] = intensity2;
+            p[16] = intensity3;
+            return p;
+        }
+
+        public static byte[] RelaySceneIntensityWriteRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+            8,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x6c,   // 10 command 
+            0,      // 11 scene number in device
+            0,      // 12 номер четверки 0..3
+            0,      // 13 яркость 0 (0..100%)
+            0,      // 14 яркость 1
+            0,      // 15 яркость 2
+            0       // 16 яркость 3
+        };
+
+        /// <summary>
+        /// Create Relay Scene Intensity Write Request
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        /// <param name="quadNum"> номер четверки 0..3</param>
+        /// <param name="intensity0">яркость 0 (0..100%)</param>
+        /// <param name="intensity1">яркость 1 (0..100%)</param>
+        /// <param name="intensity2">яркость 2 (0..100%)</param>
+        /// <param name="intensity3">яркость 3 (0..100%)</param>
+        /// <returns></returns>
+        public static byte[] CreateRelaySceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        {
+            var p = DeviceFlashRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = sceneNumber;
+            p[12] = quadNum;
+            p[13] = intensity0;
+            p[14] = intensity1;
+            p[15] = intensity2;
+            p[16] = intensity3;
+            return p;
+        }
+
+        public static byte[] ActivateSceneRequest = new byte[] {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+
+            //  убрал поле предыдущего активированного входа 10,     // 5 data size
+            9,     // 5 data size
+            0xd,    // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x50,   // 10 command 
+            0,      // 11 input number
+            0,      // 12 event type
+            0,      // 13 arg HI
+            0      // 14 arg LO
+            // 0       // 15 previous input number 
+        };
+
+        /// <summary>
+        /// Create activate Scene Request
+        /// </summary>
+        /// <param name="uid">Event source</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        public static byte[] CreateActivateSceneRequest(UID uid, byte inputID, byte eventTypeID, short arg, byte prevInputID)
+        {
+            var p = ActivateSceneRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = inputID;
+            p[12] = eventTypeID;
+            p[13] = (byte) (arg >> 8);
+            p[14] = (byte) (arg & 0xFF);
+            // p[15] = prevInputID;
+            return p;
+        }
+
+
+
         public static byte[] PortSelectRequest = new byte[]
         {
             36,
@@ -200,7 +465,6 @@ namespace SmartHouse.Models.Packets
         };
 
         // public static byte[] ActivateSceneCANRequest = new byte[] { 36, 72, 76, 0, 48, 10, 13, 1, 0, 0, 80, 0, 5, 0, 4, 0 };
-        public static byte[] ActivateSceneCANRequest = new byte[] { 0x24, 0x48, 0x4c, 0, 0x30, 0xa, 0xd, 0, 0x3, 0x84, 0x50, 0, 5, 0, 4, 0 };
 
         public static byte START_SEQUENCE_SIZE = 3;
 

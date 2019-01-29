@@ -16,11 +16,11 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public MotionSensor(string name, IEnumerable<bool> state): base(name, state)
+        public MotionSensor(string name, IEnumerable<bool> state, UID uid, byte portID) : base(name, state, uid, portID)
         {
         }
 
-        public override BaseEntity<UID> Clone()
+        public override BaseEntity<int> Clone()
         {
             return new MotionSensor() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }

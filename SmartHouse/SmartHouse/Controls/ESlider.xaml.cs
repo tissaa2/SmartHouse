@@ -14,7 +14,7 @@ namespace SmartHouse.Controls
     public delegate void ESliderValueChangeDelegate(object sender, ESliderValueChangeEvents args);
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ESlider : Grid
+    public partial class ESlider : AbsoluteLayout
     {
         public event ESliderValueChangeDelegate ValueChanged;
 
@@ -93,9 +93,18 @@ namespace SmartHouse.Controls
 
         protected void UpdateVisuals()
         {
-            if (ProgressBox != null)
-                ProgressBox.WidthRequest = (Value / (Delta)) * Width; 
-            //    ProgressBarWidth = (Value / (Delta)) * Width;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+
+                if (ProgressBox != null)
+                //ProgressBox.WidthRequest = (Value / (Delta)) * Width;
+                {
+                    AbsoluteLayout.SetLayoutBounds(ProgressBox, new Rectangle(0, 0, (Value / (Delta)) * Width, 1));
+                    AbsoluteLayout.SetLayoutFlags(ProgressBox, AbsoluteLayoutFlags.HeightProportional);
+                    // ForceLayout();
+                    InvalidateLayout();
+                }
+            });
         }
 
         // public Command TapCommand => new Command<Foo>((fooObject) => Tapped(fooObject));
@@ -119,16 +128,18 @@ namespace SmartHouse.Controls
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            var coords = Frame.LastTouchPosition;
+            // CaptionLabel.Text = Caption;
+            Value = coords.X * Delta / (Width);
+            // ProgressBox.WidthRequest = args.X;
+            // ProgressGrid.ColumnDefinitions[1].Width = Width - args.X;
 
         }
 
         private void EFrame_Touched(object sender, TouchEventArgs args)
         {
-
             CaptionLabel.Text = Caption;
-            Value = args.X * Delta / (Width);
-            // ProgressBox.WidthRequest = args.X;
-            // ProgressGrid.ColumnDefinitions[1].Width = Width - args.X;
+            Value = args.TouchPosition.X * Delta / (Width);
         }
     }
 }

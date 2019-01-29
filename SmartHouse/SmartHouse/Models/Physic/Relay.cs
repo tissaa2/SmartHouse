@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHouse.Models.Packets;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +15,11 @@ namespace SmartHouse.Models.Physics
         {
             base.Init(inputsCount, outputsCount);
         } */
+
+        public override byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        {
+            return Packet.CreateRelaySceneIntensityWriteRequest(uid, sceneNumber, quadNum, intensity0, intensity1, intensity2, intensity3);
+        }
 
         public Relay()
         {

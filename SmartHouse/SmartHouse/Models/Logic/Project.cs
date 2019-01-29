@@ -15,19 +15,18 @@ namespace SmartHouse.Models.Logic
                 Name = name,
                 Icon = icon,
                 ID = id,
-                /* Items = new List<Group>() {
-                            Group.Create("Прихожая", "hall.png", 1 + bid),
-                            Group.Create("Зал", "livingroom.png", 2  + bid),
-                            Group.Create("Кухня", "kitchen.png", 3 + bid),
-                            Group.Create("Спальня", "bedroom.png", 4 + bid),
-                            Group.Create("Туалет", "toilet.png", 5 + bid) */
+                //Items = new ObservableCollection<Group>() {
+                //            Group.Create("Прихожая", "group_hall.png", IntID.NewID()),
+                //            Group.Create("Зал", "group_livingroom.png", IntID.NewID()),
+                //            Group.Create("Кухня", "group_kitchen.png", IntID.NewID()),
+                //            Group.Create("Спальня", "group_bedroom.png", IntID.NewID()),
+                //            Group.Create("Туалет", "group_toilet.png", IntID.NewID())
+                //}
+
                 Items = new ObservableCollection<Group>() {
-                            Group.Create("Прихожая", "group_hall.png", IntID.NewID()),
-                            Group.Create("Зал", "group_livingroom.png", IntID.NewID()),
-                            Group.Create("Кухня", "group_kitchen.png", IntID.NewID()),
-                            Group.Create("Спальня", "group_bedroom.png", IntID.NewID()),
-                            Group.Create("Туалет", "group_toilet.png", IntID.NewID())
+                              Group.Create("Тронный зал", "group_toilet.png", IntID.NewID())
                 }
+
             };
         }
 

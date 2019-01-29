@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
+using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Services
 {
     public static class Utils
     {
-
+        public static bool EmulateCAN { get; set; } = false;
         private static long lastTapTime = 0;
 
         public static bool IsDoubleTap()
@@ -62,6 +64,13 @@ namespace SmartHouse.Services
         {
             Type derivedType = typeof(T);
             return Enumerable.ToList<Type>(Enumerable.Where<Type>(assembly.GetTypes(), (Type t) => t != derivedType && derivedType.IsAssignableFrom(t)));
+        }
+
+        public static async Task<bool> P(byte[] request)
+        {
+            var p = await Client.CurrentServer.SendAndWaitForResponse(request, Packet.GetCANCommand(request), "");
+            var cc = CommandConfirmation.Read(p.Data);
+            return cc.Result == 0;
         }
 
     }

@@ -15,7 +15,7 @@ namespace SmartHouse.Models
 
         public volatile byte[] Buffer;
 
-        public volatile int Timeout = -1;
+        public volatile int Timeout = 5000;
 
         public int Available
         {

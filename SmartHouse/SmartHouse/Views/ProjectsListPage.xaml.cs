@@ -37,6 +37,7 @@ namespace SmartHouse.Views
             var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить проект?", "Да", "Нет");
             if (answer)
             {
+                Model.Items.Remove(item);
             }
         }
 

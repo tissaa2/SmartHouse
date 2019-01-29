@@ -15,7 +15,10 @@ namespace SmartHouse.Views {
     public partial class ScenePage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.Button GetActivatorUIDButton;
+        private global::Xamarin.Forms.Button GroupEventButton;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
+        private global::Xamarin.Forms.Button UIDEventButton;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::SmartHouse.Controls.DevicesListView DevicesListView;
@@ -26,7 +29,8 @@ namespace SmartHouse.Views {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(ScenePage));
-            GetActivatorUIDButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "GetActivatorUIDButton");
+            GroupEventButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "GroupEventButton");
+            UIDEventButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "UIDEventButton");
             DevicesListView = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::SmartHouse.Controls.DevicesListView>(this, "DevicesListView");
             ApplyButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Button>(this, "ApplyButton");
         }

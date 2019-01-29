@@ -18,6 +18,9 @@ namespace SmartHouse.ViewModels
             return m;
         }
 
+        public Boolean IsAdmin { get { return SmartHouse.Models.Settings.Instance.IsAdmin; } }
+        public Boolean NotIsAdmin { get { return !IsAdmin; } }
+
         private object target;
         public object Target
         {

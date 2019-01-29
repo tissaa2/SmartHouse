@@ -29,7 +29,8 @@
                     <ViewCell Height="64">
                         <Grid Padding="8">
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="ScenesItemGestureRecognizer" NumberOfTapsRequired="2" Tapped="ScenesItemGestureRecognizer_Tapped"/>
+                                <TapGestureRecognizer x:Name="ScenesItemTapRecognizer" NumberOfTapsRequired="1" Tapped="ScenesItemTapRecognizer_Tapped"/>
+                                <TapGestureRecognizer x:Name="ScenesItemDoubleTapRecognizer" NumberOfTapsRequired="2" Tapped="ScenesItemDoubleTapRecognizer_DoubleTapped"/>
                             </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />

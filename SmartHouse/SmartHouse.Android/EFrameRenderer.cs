@@ -34,7 +34,7 @@ namespace SmartHouse.Droid
         public override bool OnTouchEvent(MotionEvent e)
         {
             // var sw = Application.Current.MainPage.Width;
-            (Element as EFrame).CallTouchEvent(new Controls.TouchEventArgs() { X = e.GetX() / Resources.DisplayMetrics.Density, Y = e.GetY() / Resources.DisplayMetrics.Density });
+            (Element as EFrame).ProcessTouchEvent(new Controls.TouchEventArgs() { TouchPosition = new Coordinates() { X = e.GetX() / Resources.DisplayMetrics.Density, Y = e.GetY() / Resources.DisplayMetrics.Density } } );
             return base.OnTouchEvent(e);
             // return true;
         }

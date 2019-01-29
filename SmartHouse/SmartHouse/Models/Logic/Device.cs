@@ -5,11 +5,13 @@ using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Device : IconEntity<UID>
+    public class Device : IconEntity<int>
     {
         public virtual string TypeName { get; set; }
         public byte PortID { get; set; } = 0;
+        public UID UID { get; set; }
         public virtual bool IsInput { get; set; }
+
 
         /* private bool _checked;
         public bool Checked {
@@ -41,9 +43,10 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Device(UID id, string nameTemplate, string icon) : base(id, nameTemplate, icon)
+        public Device(int id, UID uid, byte portID, string nameTemplate, string icon) : base(id, nameTemplate, icon)
         {
-
+            this.UID = uid;
+            this.PortID = portID;
         }
 
         public virtual void ApplyState(string state)

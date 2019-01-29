@@ -14,11 +14,11 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Fan(string name, double state): base(name, state)
+        public Fan(string name, double state, UID uid, byte portID) : base(name, state, uid, portID)
         {
         }
 
-        public override BaseEntity<UID> Clone()
+        public override BaseEntity<int> Clone()
         {
             return new Fan() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }

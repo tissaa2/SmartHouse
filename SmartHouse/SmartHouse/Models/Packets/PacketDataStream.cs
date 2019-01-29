@@ -9,10 +9,37 @@ namespace SmartHouse.Models.Packets
     {
         public byte[] Data;
         private int readPosition = 0;
+        private int writePosition = 0;
 
         public int ReadPosition
         {
             get => readPosition;
+        }
+
+        public int WritePosition
+        {
+            get => writePosition;
+        }
+
+        public bool Write(byte[] data)
+        {
+            if (writePosition + data.Length <= Data.Length)
+            {
+                Array.Copy(data, 0, Data, writePosition, data.Length);
+                writePosition += data.Length;
+                return true;
+            }
+            return false;
+        }
+
+        public bool Write(byte data)
+        {
+            return Write(new byte[] { data });
+        }
+
+        public bool Write(UID data)
+        {
+            return Write(new byte[] { data.B2, data.B1, data.B0 });
         }
 
         public byte[] Read(int count)
@@ -30,6 +57,8 @@ namespace SmartHouse.Models.Packets
             }
             return result;
         }
+
+
 
         /// <summary>
         /// Reads to end of stream

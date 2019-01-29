@@ -20,7 +20,7 @@ namespace SmartHouse.ViewModels
         }
     } */
 
-    public class DeviceModel: ViewModel 
+    public class DeviceModel : ViewModel
     {
 
         public static List<EntityInfo> deviceTypes = BaseEntity<int>.GetInheritors(typeof(Device));
@@ -39,12 +39,14 @@ namespace SmartHouse.ViewModels
         private EntityInfo deviceType = null;
         public EntityInfo DeviceType
         {
-            get {
+            get
+            {
                 if (deviceType == null)
                     deviceType = deviceTypes[typeID];
                 return deviceType;
             }
-            set {
+            set
+            {
                 deviceType = value;
                 if (value != null)
                 {
@@ -56,13 +58,20 @@ namespace SmartHouse.ViewModels
 
         public Group Group { get; set; }
 
-
-
-        private string id;
-        public string ID
+        private int id;
+        public int ID
         {
             get { return id; }
             set { id = value; OnPropertyChanged("ID"); /* device = null; OnPropertyChanged("Device"); */}
+        }
+
+
+
+        private string uid;
+        public string UID
+        {
+            get { return uid; }
+            set { uid = value; OnPropertyChanged("UID"); /* device = null; OnPropertyChanged("Device"); */}
         }
 
         private bool enabled;
@@ -111,8 +120,8 @@ namespace SmartHouse.ViewModels
             {
                 if (device == null)
                 {
-                    UID uid = new UID(id);
-                    device = Group.Devices.FirstOrDefault(e => e.ID == uid);
+                    // UID u = new UID(uid);
+                    device = Group.Devices.FirstOrDefault(e => e.ID == id);
                 }
                 return device;
             }
@@ -125,7 +134,7 @@ namespace SmartHouse.ViewModels
             {
                 var sm = source as DeviceModel;
                 this.Group = sm.Group;
-                this.id = sm.id;
+                this.uid = sm.uid;
                 this.device = sm.device;
                 this.deviceType = sm.deviceType;
                 this.typeID = sm.typeID;
@@ -135,12 +144,21 @@ namespace SmartHouse.ViewModels
             }
         }
 
+        public void ApplyState(string state)
+        {
+            if (Device is DoubleStateDevice)
+                (Device as DoubleStateDevice).ApplyState(state);
+            else
+            if (Device is BoolStateDevice)
+                (Device as BoolStateDevice).ApplyState(state);
+        }
+
         public override void Setup(params object[] args)
         {
             if (Target is Device)
             {
                 var d = Target as Device;
-                this.id = (string)d.ID;
+                this.uid = (string)d.UID;
                 this.device = d;
                 this.name = d.Name;
                 this.securityLevel = d.SecurityLevel;
@@ -164,7 +182,8 @@ namespace SmartHouse.ViewModels
                 if (i > -1)
                     Group.Devices[i] = device;
             }
-            device.ID = new UID(id);
+            device.ID = id;
+            device.UID = new UID(uid);
             int v;
             if (int.TryParse(PortID, out v))
                 device.PortID = (byte)v;
@@ -172,7 +191,7 @@ namespace SmartHouse.ViewModels
             device.SecurityLevel = SecurityLevel;
         }
 
-        public DeviceModel(): base()
+        public DeviceModel() : base()
         {
 
         }

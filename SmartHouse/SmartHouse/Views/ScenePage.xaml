@@ -6,21 +6,66 @@
              x:Class="SmartHouse.Views.ScenePage"
              IsVisible="False">
     <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Horizontal" BindingContext="{Binding Target}">
-                <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}"/>
-                <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HorizontalOptions="Fill" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}" Data="{Binding }" OnPressed="IconButton_Clicked"/>
-                <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" VerticalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
-                <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" Text="{Binding Name}" FontSize="Large"/>
-            </StackLayout>
-        <StackLayout Orientation="Horizontal" BindingContext="{Binding Target}">
-            <Label Margin="8, 8" Text="UID" FontSize="Large"/>
-            <Entry IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding StringID}" FontSize="Large"/>
-            <Label Margin="8, 8" Text="Порт" FontSize="Large"/>
-            <Entry IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding StringPort}" FontSize="Large"/>
-            <Button x:Name="GetActivatorUIDButton" Text="Найти" Pressed="GetActivatorUIDButton_Pressed"/>
+        <StackLayout Orientation="Horizontal">
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}"/>
+            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HorizontalOptions="Fill" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}" Data="{Binding }" OnPressed="IconButton_Clicked"/>
+            <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" VerticalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" Text="{Binding Name}" FontSize="Large"/>
+        </StackLayout>
+        <Button x:Name="GroupEventButton" IsVisible="{Binding IsUIDEvent}" HorizontalOptions="Fill"  Pressed="GroupEventButton_Pressed" Text="Создать событие группы" />
+        <Button x:Name="UIDEventButton" IsVisible="{Binding IsGroupEvent}" HorizontalOptions="Fill"  Pressed="UIDEventButton_Pressed" Text="Создать UID событие" />
+        <!--<StackLayout Orientation="Horizontal">-->
+
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">
+            <Label Margin="8, 8" Text="Источник" FontSize="Large" WidthRequest="150"/>
+            <Picker IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">
+            <Label IsVisible="{Binding IsUIDEvent}" Margin="8, 8" Text="Тип" FontSize="Large" WidthRequest="150"/>
+            <Picker Title="Выберите тип" IsVisible="{Binding IsUIDEvent}" SelectedIndex="{Binding TypeID}" HorizontalOptions="FillAndExpand">
+                <Picker.Items>
+                    <x:String>Выключатель(вкл/выкл)</x:String>
+                    <x:String>Кнопка(выкл/вкл)</x:String>
+                    <x:String>Датчик движения</x:String>
+                    <x:String>Выключатель зоны</x:String>
+                    <x:String>Выключатель всего</x:String>
+                    <x:String>Кнопка(вкл/выкл)</x:String>
+                    <x:String>Геркон</x:String>
+                    <x:String>Кнопка(вкл/выкл деактивация)</x:String>
+                    <x:String>Кнопка(вкл/выкл с задержкой)</x:String>
+                    <x:String>Контроллер охраны</x:String>
+                    <x:String>Кнопка управления шторами</x:String>
+                    <x:String>Кнопка(вкл)</x:String>
+                </Picker.Items>
+            </Picker>
         </StackLayout>
 
-        <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" 
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">
+            <Label IsVisible="{Binding IsGroupEvent}" Margin="8, 8" Text="Категория" FontSize="Large" WidthRequest="150"/>
+            <Picker Title="Выберите категорию" IsVisible="{Binding IsGroupEvent}" SelectedIndex="{Binding CategoryID}" HorizontalOptions="FillAndExpand">
+                <Picker.Items>
+                    <x:String>Включить с диммированием</x:String>
+                    <x:String>Выведенная кнопка</x:String>
+                    <x:String>Управление воротами</x:String>
+                    <x:String>Управление шторами</x:String>
+                    <x:String>ИК излучатель</x:String>
+                    <x:String>Мультисобытие</x:String>
+                </Picker.Items>
+            </Picker>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">
+            <Label IsVisible="{Binding IsGroupEvent}" Margin="8, 8" Text="Время" FontSize="Large" WidthRequest="150"/>
+            <Entry IsVisible="{Binding IsGroupEvent}" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding TimePar}" FontSize="Large"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" >
+            <Label Margin="8, 8" Text="Порт" FontSize="Large" WidthRequest="150"/>
+            <Entry IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding InputID}" FontSize="Large"/>
+            <!--<Button x:Name="GetActivatorUIDButton" Text="Найти" Pressed="GetActivatorUIDButton_Pressed"/>-->
+        </StackLayout>
+
+            <!--</StackLayout>-->
+            <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" 
                                    ItemsSource="{Binding Items}" BackgroundColor="White" />
         <Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" HorizontalOptions="Fill" HeightRequest="48"/>
     </StackLayout>

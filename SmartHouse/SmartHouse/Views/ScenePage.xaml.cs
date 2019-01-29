@@ -13,7 +13,7 @@ namespace SmartHouse.Views
     public partial class ScenePage : ContentPage
     {
         // public static ScenePage Instance = null;
-        public ListPageModel<DeviceModel> Model { get; set; }
+        public ScenePageModel Model { get; set; }
         public Scene Target { get; set; }
 
         public void Refresh(GroupPageModel group)
@@ -38,7 +38,7 @@ namespace SmartHouse.Views
             if (target == null)
                 return null;
             Target = target;
-            Model.Target = target;
+            Model.Assign(target, group);
             Refresh(group);
 
             return target;
@@ -48,7 +48,7 @@ namespace SmartHouse.Views
         {
             // Instance = this;
             this.InitializeComponent();
-            BindingContext = Model = new ListPageModel<DeviceModel>(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
+            BindingContext = Model = new ScenePageModel(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
             DevicesListView.DeviceStateChanged += DevicesListView_DeviceStateChanged;
         }
 
@@ -74,6 +74,9 @@ namespace SmartHouse.Views
             //}
         }
 
+        // - порты должны нумероваться с 1
+        // - сделать комбобокс со списком задающих устройств для выбора 
+        // - после загрузки портов в устройстве в окне браузера САN заменять им названия на и иконки, если они уже добавлены в логические модели
         public async void DeleteItem(Device item)
         {
             var answer = await DisplayAlert("Удалить", "Вы действительно хотите удалить устройство?", "Да", "Нет");
@@ -107,26 +110,24 @@ namespace SmartHouse.Views
             }
         }
 
-        private void SaveButton_Clicked(object sender, EventArgs e)
-        {
-
-        }
-
         private void ApplyButton_Pressed(object sender, EventArgs e)
         {
-            Target.Items.Clear();
-            foreach(var dm in Model.Items)
-                if (dm.Enabled)
-                {
-                    var st = new DeviceState() { ID = dm.Device.ID };
-                    dm.Device.SetState(st);
-                    Target.Items.Add(st);
-                }
+            Model.Apply();
         }
 
         private void GetActivatorUIDButton_Pressed(object sender, EventArgs e)
         {
 
+        }
+
+        private void GroupEventButton_Pressed(object sender, EventArgs e)
+        {
+            Model.IsGroupEvent = true;
+        }
+
+        private void UIDEventButton_Pressed(object sender, EventArgs e)
+        {
+            Model.IsUIDEvent = true;
         }
     }
 }

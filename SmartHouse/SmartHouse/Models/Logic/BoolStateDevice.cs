@@ -14,7 +14,7 @@ namespace SmartHouse.Models.Logic
             set
             {
                 state = value;
-                Port.SetPortValue(ID, PortID, (byte)(state ? 1 : 0), 0);
+                Port.SetPortValue(UID, PortID, (byte)(state ? 1 : 0), 0);
                 OnPropertyChanged("State");
             }
         }
@@ -24,7 +24,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public BoolStateDevice(string name, bool state): base (UIDID.NewID(), name, null)
+        public BoolStateDevice(string name, bool state, UID uid, byte portID) : base(IntID.NewID(), uid, portID, name, null )
         {
             State = state;
         }

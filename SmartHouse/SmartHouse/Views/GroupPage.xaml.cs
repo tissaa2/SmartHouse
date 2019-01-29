@@ -128,21 +128,28 @@ namespace SmartHouse.Views
                         if (p is InputPort)
                         {
                             if (pd is IRPanel || pd is MSTPanel || pd is Dimmer || pd is Relay)
-                                d = new SmartHouse.Models.Logic.Switch("Новый выключатель", p.value != 0);
+                            {
+                                d = new SmartHouse.Models.Logic.Switch("Новый выключатель", p.value != 0, pd.ID, (byte)p.ID);
+                                Model.InputsMode = true;
+                            }
                         }
                         else
                         if (p is OutputPort)
                         {
                             if (pd is Relay)
-                                d = new Socket("Новая розетка", p.value != 0);
+                                d = new Socket("Новая розетка", p.value != 0, pd.ID, (byte)p.ID);
                             else if (pd is Dimmer)
-                                d = new Lamp("Новый светильник", p.value);
+                                d = new Lamp("Новый светильник", p.value, pd.ID, (byte)p.ID);
+                            Model.InputsMode = false;
                         }
                     }
                     else
                     {
                         if (pd is IRPanel || pd is MSTPanel)
-                            d = new SmartHouse.Models.Logic.Panel("Новая панель", pd.Inputs.Select(i => i.Value != 0));
+                        {
+                            d = new SmartHouse.Models.Logic.Panel("Новая панель", pd.Inputs.Select(i => i.Value != 0), pd.ID, (byte)p.ID);
+                            Model.InputsMode = true;
+                        }
 
                     }
 
@@ -151,10 +158,12 @@ namespace SmartHouse.Views
                     else
                     {
                         Target.Devices.Add(d);
-                        var sdid = d.ID.ToString();
-                        var dm = Model.Devices.Items.FirstOrDefault(i => i.ID == sdid);
-                        var dp = new DevicePage();
-                        if(dm != null)
+                        var dm = DeviceModel.CreateModel(d) as DeviceModel;
+                        dm.Enabled = true;
+                        dm.Group = Target;
+                        var dp = new DevicePage() { Title = dm.Name };
+                        dp.IsVisible = true;
+                        if (dm != null)
                             dp.SetTarget(dm);
                         await Navigation.PushAsync(dp);
 
@@ -176,8 +185,8 @@ namespace SmartHouse.Views
         {
             Model.ScenesMode = true;
         }
-
-        private void ScenesItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        
+        private void ScenesItemTapRecognizer_Tapped(object sender, EventArgs e)
         {
             if (sender is BindableObject)
             {
@@ -185,6 +194,23 @@ namespace SmartHouse.Views
                 if (bo.BindingContext is Scene)
                 {
                     var s = bo.BindingContext as Scene;
+                    s.Activate(Target);
+                    ScenesListView.SelectedItem = Model.Scenes.SelectedItem = s;
+                }
+            }
+
+        }
+
+        private void ScenesItemDoubleTapRecognizer_DoubleTapped(object sender, EventArgs e)
+        {
+            if (sender is BindableObject)
+            {
+                var bo = sender as BindableObject;
+                if (bo.BindingContext is Scene)
+                {
+                    var s = bo.BindingContext as Scene;
+                    s.Activate(Target);
+
                     var sp = new ScenePage() { Title = s.Name };
                     sp.IsVisible = true;
                     sp.SetTarget(this.Model, s);
@@ -192,7 +218,6 @@ namespace SmartHouse.Views
                     Navigation.PushAsync(sp);
                 }
             }
-
         }
 
         private void InputDevicesButton_Pressed(object sender, EventArgs e)

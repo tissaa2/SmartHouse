@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="UID:" FontSize="Large"/>
-            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding ID}" FontSize="Large"/>
+            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding UID}" FontSize="Large"/>
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
