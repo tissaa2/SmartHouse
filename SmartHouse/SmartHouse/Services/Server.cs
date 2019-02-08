@@ -30,22 +30,62 @@ namespace SmartHouse.Services
                 object d = p;
                 if (p.DataSize >= 0)
                 {
+                    lock (server.PacketCallbacks)
+                    {
+                        var c = server.PacketCallbacks.FirstOrDefault(e => e.Command == p.Command);
+                        if (c != null)
+                        {
+                            bool r = true;
+                            if (c.Callback != null)
+                                r = c.Callback(p, c.ExpireTime < DateTime.Now.Ticks);
+                            if (r)
+                                server.PacketCallbacks.Remove(c);
+                        }
+                    }
+
                     if (PacketProcessor.Processors.ContainsKey(p.Command))
                     {
                         d = PacketProcessor.Processors[p.Command].ProcessPacket(p);
                     }
                 }
-                lock (server.PacketCallbacks)
-                {
-                    var c = server.PacketCallbacks.FirstOrDefault(e => e.Data == p.Command);
-                    if (c != null)
-                    {
-                        server.PacketCallbacks.Remove(c);
-                        c.Callback?.Invoke(d);
-                    }
-                }
+
             }
         }
+
+
+
+        public static void ExpireCollectorRun(object obj)
+        {
+            var server = obj as Server;
+            while (true)
+            {
+                CANPacketProcessor.Instance.RemoveExpired();
+                server.RemoveExpired();
+                Thread.Sleep(500);
+            }
+        }
+
+        public bool RemoveExpired()
+        {
+            bool r = false;
+            lock (PacketCallbacks)
+            {
+                var rl = new List<ActionCallback>();
+                foreach (var e in PacketCallbacks)
+                {
+                    if (e.ExpireTime < DateTime.Now.Ticks)
+                    {
+                        e.Callback(null, true);
+                        rl.Add(e);
+                        r = true;
+                    }
+                }
+                foreach (var e in rl)
+                    PacketCallbacks.Remove(e);
+            }
+            return r;
+        }
+
 
 
         public void AddPacketCallback(ActionCallback callback)
@@ -54,6 +94,14 @@ namespace SmartHouse.Services
             {
                 PacketCallbacks.Add(callback);
             }
+        }
+
+
+        // сделать запуск проверки на expire для обработчиков пакетов в виде Task.Run(() => await CANPacketProcessor.Instance.)
+
+        public void AddCANPacketCallback(CANActionCallback callback)
+        {
+            CANPacketProcessor.Instance.AddPacketCallback(callback);
         }
 
         /* public void AddCANPacketCallback(ActionCallback callback)
@@ -77,29 +125,72 @@ namespace SmartHouse.Services
             this.socket.Send(data, data.Length, this.RemoteAddress);
         }
 
-        public void Send(byte[] command, int timeout, int packetType, ActionCallbackDelegate onSuccess)
+        public void Send(byte[] command, int timeout, int controllerCommand, ProcessPacketDelegate onConfirm)
         {
-            AddPacketCallback(new ActionCallback() { Callback = onSuccess, Data = packetType, ExpireTime = timeout * 10000 + DateTime.Now.Ticks });
+            AddPacketCallback(new ActionCallback() { Callback = onConfirm, Command = controllerCommand, ExpireTime = timeout * 10000 + DateTime.Now.Ticks });
             Send(command);
         }
 
-        public void SendAndWaitForResponse(byte[] command, Int16 packetType, string message, ProcessPacketDelegate onSuccess)
+        public void SendToCAN(byte[] command, int timeout, int controllerCommand, int canCommand, UID uid, ProcessPacketDelegate onConfirm, ProcessCANPacketDelegate onResponse)
         {
-            Send(command, 20000, packetType, (o) => {
-                if (o is Packet)
-                {
-                    var p = o as Packet;
-                    if (p.DataSize >= 0)
-                    {
-                        CommandConfirmation cc = CommandConfirmation.Read(p.Data);
-                        Log.Write("Command {0} executed: result = {1}", message, cc.Result);
-                        onSuccess?.Invoke(p);
-                    }
-                    else
-                        Log.Write("Command {0} sent: result did not arrived", message);
-                }
-            });
+            if (onConfirm != null)
+                AddPacketCallback(new ActionCallback() { Callback = onConfirm, Command = controllerCommand, ExpireTime = timeout * 10000 + DateTime.Now.Ticks });
+            if (onResponse != null && uid.Hash != 0)
+                AddCANPacketCallback(new CANActionCallback() { Callback = onResponse, Command = canCommand, UID = uid, ExpireTime = timeout * 10000 + DateTime.Now.Ticks });
+            Send(command);
         }
+
+        //public void SendAndWaitForResponse(byte[] command, Int16 packetType, string message, ProcessPacketDelegate onSuccess)
+        //{
+        //    Send(command, 20000, packetType, (o, isExpired) =>
+        //    {
+        //        if (isExpired)
+        //            return true;
+        //        if (o is Packet)
+        //        {
+        //            var p = o as Packet;
+        //            if (p.DataSize >= 0)
+        //            {
+        //                CommandConfirmation cc = CommandConfirmation.Read(p.Data);
+        //                Log.Write("Command {0} executed: result = {1}", message, cc.Result);
+        //                onSuccess?.Invoke(p);
+        //                return true;
+        //            }
+        //            else
+        //                Log.Write("Command {0} sent: result did not arrived", message);
+        //        }
+        //        return false;
+        //    });
+        //}
+
+        //public void SendToCANAndWaitForResponse(byte[] data, Int16 controllerCommand, Int16 canCommand, UID uid, string message, ProcessPacketDelegate onConfirm, ProcessCANPacketDelegate onResponse)
+        //{
+        //    SendToCAN(data, 20000, controllerCommand, canCommand, uid, (o, e) =>
+        //    {
+        //        if (!e)
+        //            if (o is Packet)
+        //            {
+        //                var p = o as Packet;
+        //                if (p.DataSize >= 0)
+        //                {
+        //                    CommandConfirmation cc = CommandConfirmation.Read(p.Data);
+        //                    Log.Write("Command {0} executed: result = {1}", message, cc.Result);
+        //                    return onConfirm?.Invoke(p) ?? true;
+        //                }
+        //                else
+        //                    Log.Write("Command {0} sent: result did not arrived", message);
+        //            }
+        //        return false;
+        //    }, 
+        //    (o, e) => {
+        //        if (!e)
+        //            if (o is CANPacket)
+        //            {
+        //                return onResponse?.Invoke(o as CANPacket) ?? true;
+        //            }
+        //        return false;
+        //    });
+        //}
 
         public async Task<CommandConfirmation> SendAndWaitForConfirm(byte[] command, Int16 packetType, string message)
         {
@@ -108,18 +199,22 @@ namespace SmartHouse.Services
                 CommandConfirmation cc = null;
                 while (!Client.Instance.Initialized)
                     Thread.Sleep(100);
-                Send(command, 20000, packetType, (o) => {
-                    if (o is Packet)
-                    {
-                        var p = o as Packet;
-                        if (p.DataSize >= 0)
+                Send(command, 20000, packetType, (o, e) =>
+                {
+                    if (!e)
+                        if (o is Packet)
                         {
-                            cc = CommandConfirmation.Read(p.Data);
-                            Log.Write("Command {0} executed: result = {1}", message, cc.Result);
+                            var p = o as Packet;
+                            if (p.DataSize >= 0)
+                            {
+                                cc = CommandConfirmation.Read(p.Data);
+                                Log.Write("Command {0} executed: result = {1}", message, cc.Result);
+                                return true;
+                            }
+                            else
+                                Log.Write("Command {0} sent: result did not arrived", message);
                         }
-                        else
-                            Log.Write("Command {0} sent: result did not arrived", message);
-                    }
+                    return false;
                 });
                 while (cc == null)
                     Thread.Sleep(1);
@@ -135,17 +230,21 @@ namespace SmartHouse.Services
                 Packet p = null;
                 while (!Client.Instance.Initialized)
                     Thread.Sleep(100);
-                Send(command, 20000, packetType, (o) => {
-                    if (o is Packet)
-                    {
-                        p = o as Packet;
-                        if (p.DataSize >= 0)
+                Send(command, 20000, packetType, (o, e) =>
+                {
+                    if (!e)
+                        if (o is Packet)
                         {
-                            Log.Write("Command {0} executed: result = {1}", message, p);
+                            p = o as Packet;
+                            if (p.DataSize >= 0)
+                            {
+                                Log.Write("Command {0} executed: result = {1}", message, p);
+                            }
+                            else
+                                Log.Write("Command {0} sent: result did not arrived", message);
+                            return true;
                         }
-                        else
-                            Log.Write("Command {0} sent: result did not arrived", message);
-                    }
+                    return false;
                 });
                 while (p == null)
                     Thread.Sleep(1);
@@ -233,8 +332,8 @@ namespace SmartHouse.Services
 
         public async Task<bool> SaveProjectToCAN(Project project)
         {
-            foreach(var g in project.Items)
-                foreach(var s in g.Items)
+            foreach (var g in project.Items)
+                foreach (var s in g.Items)
                 {
                     // пишем сцену в CAN await 
                     Packet res = await Client.CurrentServer.SendAndWaitForResponse(Packet.ReadAliasFileRequest, Packet.READ_ALIASFILE_COMMAND, "open alias file for reading");

@@ -54,6 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileChunkData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\Processors\CAN\CANCaptureDeviceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\PScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CANActionCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServerFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IconNameAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\DeviceState.cs" />

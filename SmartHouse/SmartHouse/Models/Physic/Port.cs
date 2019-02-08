@@ -39,13 +39,14 @@ namespace SmartHouse.Models.Physics
                 return;
             if (deviceId.Hash == 0)
                 return;
-            Packet.SetOutputValueRequest[7] = deviceId.B2;
-            Packet.SetOutputValueRequest[8] = deviceId.B1;
-            Packet.SetOutputValueRequest[9] = deviceId.B0;
-            Packet.SetOutputValueRequest[11] = (byte)portId;
-            Packet.SetOutputValueRequest[12] = (byte)value;
-            Packet.SetOutputValueRequest[13] = fadeTime;
-            Client.CurrentServer.SendAndWaitForResponse(Packet.SetOutputValueRequest, 0x30, "set value", p => { });
+            //Packet.SetOutputValueRequest[7] = deviceId.B2;
+            //Packet.SetOutputValueRequest[8] = deviceId.B1;
+            //Packet.SetOutputValueRequest[9] = deviceId.B0;
+            //Packet.SetOutputValueRequest[11] = (byte)portId;
+            //Packet.SetOutputValueRequest[12] = (byte)value;
+            //Packet.SetOutputValueRequest[13] = fadeTime;
+            var data = Packet.CreateSetOutputValueRequest(deviceId, (byte)portId, value, 0, fadeTime, 0, 0);
+            Client.CurrentServer.SendToCAN(data, 20000, Packet.GetControllerCommand(data), Packet.GetCANCommand(data), deviceId, (p, e) => { return e; }, (p, e) => { return e; });
         }
 
         // 2DO: предусмотреть booleanPort и analogPort

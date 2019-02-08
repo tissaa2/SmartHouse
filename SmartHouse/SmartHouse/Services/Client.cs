@@ -9,7 +9,8 @@ using SmartHouse.Models;
 namespace SmartHouse.Services
 {
 
-    public delegate void ProcessPacketDelegate(Packet packet);
+    public delegate bool ProcessPacketDelegate(Packet packet, bool isExpired);
+    public delegate bool ProcessCANPacketDelegate(CANPacket packet, bool isExpired);
     public class Client : UDPConnection
     {
         private static Client instance = null;
@@ -123,12 +124,14 @@ namespace SmartHouse.Services
             }
             Client.CurrentServer.RemoteAddress.Port = Settings.Instance.Port + (int)controllerPort;
             // this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
-            Client.CurrentServer.SendAndWaitForResponse(Packet.CheckConnectionRequest, 18, "check connection", (o0) => {
-                Client.CurrentServer.SendAndWaitForResponse(Packet.InitCANTranslationRequest, 32, "init CAN", (o1) =>
+            Client.CurrentServer.Send(Packet.CheckConnectionRequest, 20000, Packet.GetControllerCommand(Packet.CheckConnectionRequest), (p0, e0) => {
+                Client.CurrentServer.Send(Packet.InitCANTranslationRequest, 20000, Packet.GetControllerCommand(Packet.InitCANTranslationRequest), (p1, e1) =>
                 {
                     Thread.Sleep(1000);
                     Initialized = true;
+                    return true;
                 });
+                return true;
             });
         }
 
@@ -136,8 +139,9 @@ namespace SmartHouse.Services
         {
             Packet.ActivateSceneRequest[11] = id;
             Packet.ActivateSceneRequest[15] = this.previousSceneId;
+            // var r = Packet.CreateActivateSceneRequest(0, , )
             this.previousSceneId = id;
-            Client.CurrentServer.SendAndWaitForResponse(Packet.ActivateSceneRequest, 0x30, string.Format("activate scene {0}", id), null);
+            Client.CurrentServer.SendAndWaitForResponse(Packet.ActivateSceneRequest, 0x30, string.Format("activate scene {0}", id));
         }
 
         public void Broadcast(byte[] data, int port)

@@ -129,7 +129,7 @@ namespace SmartHouse.Views
                         {
                             if (pd is IRPanel || pd is MSTPanel || pd is Dimmer || pd is Relay)
                             {
-                                d = new SmartHouse.Models.Logic.Switch("Новый выключатель", p.value != 0, pd.ID, (byte)p.ID);
+                                d = new SmartHouse.Models.Logic.Switch(Socket.IntID.NewID(), "Новый выключатель", p.value != 0, pd.ID, (byte)p.ID);
                                 Model.InputsMode = true;
                             }
                         }
@@ -137,9 +137,9 @@ namespace SmartHouse.Views
                         if (p is OutputPort)
                         {
                             if (pd is Relay)
-                                d = new Socket("Новая розетка", p.value != 0, pd.ID, (byte)p.ID);
+                                d = new Socket(Socket.IntID.NewID(), "Новая розетка", p.value != 0, pd.ID, (byte)p.ID);
                             else if (pd is Dimmer)
-                                d = new Lamp("Новый светильник", p.value, pd.ID, (byte)p.ID);
+                                d = new Lamp(Socket.IntID.NewID(), "Новый светильник", p.value, pd.ID, (byte)p.ID);
                             Model.InputsMode = false;
                         }
                     }
@@ -147,7 +147,7 @@ namespace SmartHouse.Views
                     {
                         if (pd is IRPanel || pd is MSTPanel)
                         {
-                            d = new SmartHouse.Models.Logic.Panel("Новая панель", pd.Inputs.Select(i => i.Value != 0), pd.ID, (byte)p.ID);
+                            d = new SmartHouse.Models.Logic.Panel(Socket.IntID.NewID(), "Новая панель", pd.Inputs.Select(i => i.Value != 0), pd.ID, (byte)p.ID);
                             Model.InputsMode = true;
                         }
 

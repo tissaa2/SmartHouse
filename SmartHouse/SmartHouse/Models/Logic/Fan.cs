@@ -14,7 +14,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Fan(string name, double state, UID uid, byte portID) : base(name, state, uid, portID)
+        public Fan(int id, string name, double state, UID uid, byte portID) : base(id, name, state, uid, portID)
         {
         }
 

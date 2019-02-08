@@ -13,7 +13,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Socket(string name, bool state, UID uid, byte portID) : base(name, state, uid, portID)
+        public Socket(int id, string name, bool state, UID uid, byte portID) : base(id, name, state, uid, portID)
         {
         }
 

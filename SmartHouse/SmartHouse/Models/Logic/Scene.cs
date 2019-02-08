@@ -33,7 +33,7 @@ namespace SmartHouse.Models.Logic
             return new Scene(id, "Мягкий свет", "scene_softlight.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices);
         }
 
-        public void Activate(Group group)
+        public async void Activate(Group group)
         {
 
             // закомментил принудительное выставление параметров слайдеров. пусть работает обратная связь 
@@ -50,10 +50,11 @@ namespace SmartHouse.Models.Logic
             
             UID id = Event is UIDEvent ? (Event as UIDEvent).UID : new UID(0, 0, (Event as GroupEvent).GroupID);
 
-            var ar = Utils.P(Packet.CreateActivateSceneRequest(id, Event.InputID, Event.TypeID, 4, 0));
+            var ar = await Utils.P(Packet.CreateActivateSceneRequest(id, Event.InputID, Event.TypeID, 4, 0), 0);
             //ar.Wait();
             //if (!ar.Result)
-            //    Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
+            if (!ar)
+                Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
         }
 
         public Event Event { get; set; } = new UIDEvent(0, new UID(0));

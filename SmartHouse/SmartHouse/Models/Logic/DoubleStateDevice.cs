@@ -26,7 +26,7 @@ namespace SmartHouse.Models.Logic
         }
 
         // public DoubleStateDevice(string name, double state) : base(UIDID.NewID(), name, null)
-        public DoubleStateDevice(string name, double state, UID uid, byte portID) : base(IntID.NewID(), uid, portID, name, null )
+        public DoubleStateDevice(int id, string name, double state, UID uid, byte portID) : base(id, uid, portID, name, null )
         {
             State = state;
         }

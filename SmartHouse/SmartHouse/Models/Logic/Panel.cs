@@ -16,7 +16,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Panel(string name, IEnumerable<bool> state, UID uid, byte portID) : base(name, state, uid, portID)
+        public Panel(int id, string name, IEnumerable<bool> state, UID uid, byte portID) : base(id, name, state, uid, portID)
         {
         }
 

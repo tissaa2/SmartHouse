@@ -311,12 +311,13 @@ namespace SmartHouse.Models.Physics
         public async void WriteScenes()
         {
             int i = 0;
-            if (await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 0, 0)))
+            if (await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 0, 0), ID))
                 foreach (var ps in Scenes.Values)
             {
-                    if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0))))
+                    if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0)), ID))
                     {
-                        if (await Utils.P(Packet.CreateSceneSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort, 0)))
+                        // сделать анализ ответов от диммера 
+                        if (await Utils.P(Packet.CreateSceneSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort, 0), ID))
                         {
                             int j = 0;
                             byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
@@ -325,7 +326,7 @@ namespace SmartHouse.Models.Physics
                                 byte[] iq = { 0, 0, 0, 0 };
                                 int l = ps.OutputStates.Count - j;
                                 Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
-                                if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3])))
+                                if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
                                     Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
                                 j += 4;
                             }
@@ -335,7 +336,7 @@ namespace SmartHouse.Models.Physics
                     }
                     else
                         Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i );
-                    if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, (byte)(i == 0 ? 1 : 0))))
+                    if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, (byte)(i == 0 ? 1 : 0)), ID))
                         Log.Write("Error finishing scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID);
                 i++;
             }

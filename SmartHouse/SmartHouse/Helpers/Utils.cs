@@ -6,6 +6,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using SmartHouse.Models.Packets;
+using SmartHouse.Models;
 
 namespace SmartHouse.Services
 {
@@ -66,11 +67,37 @@ namespace SmartHouse.Services
             return Enumerable.ToList<Type>(Enumerable.Where<Type>(assembly.GetTypes(), (Type t) => t != derivedType && derivedType.IsAssignableFrom(t)));
         }
 
-        public static async Task<bool> P(byte[] request)
+        public static async Task<bool> P(byte[] request, UID uid)
         {
-            var p = await Client.CurrentServer.SendAndWaitForResponse(request, Packet.GetCANCommand(request), "");
-            var cc = CommandConfirmation.Read(p.Data);
-            return cc.Result == 0;
+            bool confirmPassed = false;
+            bool confirm = false;
+            bool responsePassed = false;
+            bool response = false;
+
+            Client.CurrentServer.SendToCAN(request, 10000, Packet.GetControllerCommand(request), Packet.GetCANCommand(request),
+                uid, (p, e) =>
+                {
+                    if (p.DataSize > 0)
+                    {
+                        var cc = CommandConfirmation.Read(p.Data);
+                        confirm = cc.Result == 0;
+                    }
+                    confirmPassed = true;
+                    return true;
+                }
+                , (p, e) =>
+                {
+                    responsePassed = true;
+                    response = !e;
+                    return true;
+                });
+
+            while (!responsePassed)
+            {
+                await Task.Delay(10);
+            }
+
+            return confirm && response;
         }
 
     }

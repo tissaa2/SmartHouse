@@ -24,7 +24,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public BoolStateDevice(string name, bool state, UID uid, byte portID) : base(IntID.NewID(), uid, portID, name, null )
+        public BoolStateDevice(int id, string name, bool state, UID uid, byte portID) : base(id, uid, portID, name, null )
         {
             State = state;
         }

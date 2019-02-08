@@ -169,6 +169,38 @@ namespace SmartHouse.Models.Packets
             0       // 16 BN (button number)
         };
 
+        /// <summary>
+        /// Creates set output value request
+        /// </summary>
+        /// <param name="uid">Device id</param>
+        /// <param name="portNumber">Port number</param>
+        /// <param name="value">Port value</param>
+        /// <param name="delay">Delay before setting value</param>
+        /// <param name="fade">Smooth fade time</param>
+        /// <param name="groupNumber">Group number</param>
+        /// <param name="buttonNumber">Button number</param>
+        /// <returns></returns>
+        public static byte[] CreateSetOutputValueRequest(UID uid, byte portNumber, byte value, byte delay, byte fade, byte groupNumber, byte buttonNumber)
+        {
+            var p = SetOutputValueRequest.Clone() as byte[];
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = portNumber;
+            p[12] = value;
+            p[13] = delay;
+            p[14] = fade;
+            p[15] = groupNumber;
+            p[16] = buttonNumber;
+            return p;
+        }
+
+        public static byte GetControllerCommand(byte[] data)
+        {
+            // return data[10];
+            return data[4];
+        }
+
         public static byte GetCANCommand(byte[] data)
         {
             return data[10];
@@ -240,7 +272,7 @@ namespace SmartHouse.Models.Packets
         /// <returns></returns>
         public static byte[] CreateSceneWriteRequest(UID uid, byte sceneNumber, byte startstopFlag, byte eraseFlag)
         {
-            var p = DeviceFlashRequest.Clone() as byte[];
+            var p = SceneWriteRequest.Clone() as byte[];
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
@@ -282,7 +314,7 @@ namespace SmartHouse.Models.Packets
         /// <returns></returns>
         public static byte[] CreateSceneSettingsWriteRequest(UID uid, byte sceneNumber, UID sourceUID, byte inputNumber, byte sceneParams)
         {
-            var p = DeviceFlashRequest.Clone() as byte[];
+            var p = SceneSettingsWriteRequest.Clone() as byte[];
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
@@ -329,7 +361,7 @@ namespace SmartHouse.Models.Packets
         /// <returns></returns>
         public static byte[] CreateDimmerSceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
         {
-            var p = DeviceFlashRequest.Clone() as byte[];
+            var p = DimmerSceneIntensityWriteRequest.Clone() as byte[];
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
@@ -376,7 +408,7 @@ namespace SmartHouse.Models.Packets
         /// <returns></returns>
         public static byte[] CreateRelaySceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
         {
-            var p = DeviceFlashRequest.Clone() as byte[];
+            var p = RelaySceneIntensityWriteRequest.Clone() as byte[];
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
@@ -406,8 +438,8 @@ namespace SmartHouse.Models.Packets
             0,      // 11 input number
             0,      // 12 event type
             0,      // 13 arg HI
-            0      // 14 arg LO
-            // 0       // 15 previous input number 
+            0,      // 14 arg LO
+            0       // 15 previous input number 
         };
 
         /// <summary>
@@ -425,7 +457,7 @@ namespace SmartHouse.Models.Packets
             p[12] = eventTypeID;
             p[13] = (byte) (arg >> 8);
             p[14] = (byte) (arg & 0xFF);
-            // p[15] = prevInputID;
+            p[15] = prevInputID;
             return p;
         }
 

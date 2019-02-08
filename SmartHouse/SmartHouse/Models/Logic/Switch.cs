@@ -16,7 +16,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public Switch(string name, bool state, UID uid, byte portID) : base(name, state, uid, portID)
+        public Switch(int id, string name, bool state, UID uid, byte portID) : base(id, name, state, uid, portID)
         {
         }
 
