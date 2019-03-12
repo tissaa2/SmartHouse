@@ -101,5 +101,13 @@ namespace SmartHouse.Models.Logic
         {
         }
 
+        public override void Init()
+        {
+            base.Init();
+            foreach (var e in Devices)
+                e.Init();
+        }
+
+
     }
 }

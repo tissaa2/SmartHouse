@@ -14,7 +14,8 @@ namespace SmartHouse.Models.Logic
             set
             {
                 state = value;
-                Port.SetPortValue(UID, PortID, (byte)(state ? 1 : 0), 0);
+                if (Initialized)
+                    Port.SetPortValue(UID, PortID, (byte)(state ? 1 : 0), 0);
                 OnPropertyChanged("State");
             }
         }
@@ -33,7 +34,9 @@ namespace SmartHouse.Models.Logic
         {
             bool v;
             if (bool.TryParse(state, out v))
+            {
                 State = v;
+            }
 
             // сюда вставить код изменения состояния выхода диммера
         }

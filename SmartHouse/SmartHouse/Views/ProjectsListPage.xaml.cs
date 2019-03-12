@@ -1,8 +1,10 @@
 ﻿using SmartHouse.Controls;
 using SmartHouse.Models.Logic;
+using SmartHouse.Models.Physics;
 using SmartHouse.Services;
 using SmartHouse.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -141,6 +143,9 @@ namespace SmartHouse.Views
                 case (5):
                     ShowDeviceBrowser();
                     break;
+                case (6):
+                    TestWriteScenes();
+                    break;
             }
             ProjectMenuPicker.SelectedIndex = -1;
         }
@@ -158,6 +163,16 @@ namespace SmartHouse.Views
         private void ShowDebug()
         {
             Navigation.PushAsync(new DebugPage());
+        }
+
+        private void TestWriteScenes()
+        {
+            var d = new Dimmer() {ID = new Models.UID(17)};
+            d.Scenes = new Dictionary<int, PScene>();
+            d.Scenes.Add(0, new PScene(0, new Models.UID(17), 5, 4));
+
+            d.Init(new Models.UID(17), 8, 8, 2);
+            d.WriteScenes();
         }
 
         private void MenuButton_Pressed(object sender, EventArgs e)

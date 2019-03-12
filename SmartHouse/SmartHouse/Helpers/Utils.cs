@@ -92,7 +92,7 @@ namespace SmartHouse.Services
                     return true;
                 });
 
-            while (!responsePassed)
+              while (!(responsePassed && confirmPassed))
             {
                 await Task.Delay(10);
             }

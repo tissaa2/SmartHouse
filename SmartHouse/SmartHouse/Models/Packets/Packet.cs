@@ -115,6 +115,11 @@ namespace SmartHouse.Models.Packets
             01
         };
 
+        public static UID GetUID(byte[] data)
+        {
+            return new UID(data[9], data[8], data[7]);
+        }
+
         public static byte[] GetOutputStatesRequest = new byte[]
         {
             36,     // 0
@@ -339,7 +344,7 @@ namespace SmartHouse.Models.Packets
             0,      // 7 UID3
             0,      // 8 UID2
             0,      // 9 UID1
-            0x6c,   // 10 command 
+            0x64,   // 10 command 
             0,      // 11 scene number in device
             0,      // 12 номер четверки 0..3
             0,      // 13 яркость 0 (0..100%)
@@ -386,7 +391,7 @@ namespace SmartHouse.Models.Packets
             0,      // 7 UID3
             0,      // 8 UID2
             0,      // 9 UID1
-            0x6c,   // 10 command 
+            0x66,   // 10 command 
             0,      // 11 scene number in device
             0,      // 12 номер четверки 0..3
             0,      // 13 яркость 0 (0..100%)
@@ -655,6 +660,14 @@ namespace SmartHouse.Models.Packets
         public virtual int Process()
         {
             return 0;
+        }
+
+        public void Write(DuplexStream stream)
+        {
+            stream.Write(StartSequence);
+            stream.Write(Command);
+            stream.Write(DataSize);
+            stream.Write(Data.Data);
         }
 
         public override string ToString()

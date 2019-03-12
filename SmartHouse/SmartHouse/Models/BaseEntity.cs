@@ -68,6 +68,8 @@ namespace SmartHouse.Models
             }
         }
 
+        [JsonIgnore]
+        public bool Initialized { get; set; } = false;
 
 
         [JsonIgnore]
@@ -99,6 +101,11 @@ namespace SmartHouse.Models
         public virtual BaseEntity<IDType> Clone()
         {
             throw new Exception("Not implemented");
+        }
+
+        public virtual void Init()
+        {
+            Initialized = true;
         }
 
     }

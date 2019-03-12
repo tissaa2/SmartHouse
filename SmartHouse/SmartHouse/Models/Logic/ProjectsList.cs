@@ -40,6 +40,10 @@ namespace SmartHouse.Models.Logic
                         LoadTestData();
                         instance.Save();
                     }
+                    if (instance != null)
+                    {
+                        instance.Init();
+                    }
                 }
                 return instance;
             }
@@ -58,6 +62,15 @@ namespace SmartHouse.Models.Logic
         public void Save()
         {
             Save(FileName);
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            foreach(var e in Items)
+            {
+                e.Init();
+            }
         }
     }
 }

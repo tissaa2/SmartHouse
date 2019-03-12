@@ -100,39 +100,55 @@ namespace SmartHouse.Services
         protected void MainThreadRun(object arg)
         {
             Initialized = false;
-            this.Broadcast(Packet.DiscoverRequest, this.BroadcastPort);
-
-            Thread.Sleep(10);
-            Packet packet = Packet.Read(Stream);
-            ControllerDiscoverPacketData discoverResponse = ControllerDiscoverPacketData.Read(packet.Data);
-            Log.Write("Got discover response: {0}", packet);
-            Log.Write("Sending port select request..");
-            byte controllerPort;
-            if (discoverResponse.PortNumber != 0)
+            if (Utils.EmulateCAN)
             {
-                controllerPort = discoverResponse.PortNumber;
-                Log.Write("Port {0} is already open for you", discoverResponse.PortNumber);
+                Thread.Sleep(1000);
+                var addr = new IPEndPoint(IPAddress.Loopback, 9000);
+                Client.CurrentServer = new Server(new IPEndPoint(IPAddress.Any, 0), addr);
+                this.ServersList.Add(addr, Client.CurrentServer);
+                Client.CurrentServer.Start();
+                Log.Write(string.Format("Server found: {0}", addr));
+
+                Initialized = true;
             }
             else
             {
-                controllerPort = this.GetPortFromMask(discoverResponse.PortMask);
-                Packet.PortSelectRequest[6] = controllerPort;
-                this.Broadcast(Packet.PortSelectRequest, this.BroadcastPort);
-                packet = Packet.Read(this.Stream);
-                CommandConfirmation cc = CommandConfirmation.Read(packet.Data);
-                Log.Write("Got port select response: {0}", cc);
-            }
-            Client.CurrentServer.RemoteAddress.Port = Settings.Instance.Port + (int)controllerPort;
-            // this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
-            Client.CurrentServer.Send(Packet.CheckConnectionRequest, 20000, Packet.GetControllerCommand(Packet.CheckConnectionRequest), (p0, e0) => {
-                Client.CurrentServer.Send(Packet.InitCANTranslationRequest, 20000, Packet.GetControllerCommand(Packet.InitCANTranslationRequest), (p1, e1) =>
+                this.Broadcast(Packet.DiscoverRequest, this.BroadcastPort);
+
+                Thread.Sleep(10);
+                Packet packet = Packet.Read(Stream);
+                ControllerDiscoverPacketData discoverResponse = ControllerDiscoverPacketData.Read(packet.Data);
+                Log.Write("Got discover response: {0}", packet);
+                Log.Write("Sending port select request..");
+                byte controllerPort;
+                if (discoverResponse.PortNumber != 0)
                 {
-                    Thread.Sleep(1000);
-                    Initialized = true;
+                    controllerPort = discoverResponse.PortNumber;
+                    Log.Write("Port {0} is already open for you", discoverResponse.PortNumber);
+                }
+                else
+                {
+                    controllerPort = this.GetPortFromMask(discoverResponse.PortMask);
+                    Packet.PortSelectRequest[6] = controllerPort;
+                    this.Broadcast(Packet.PortSelectRequest, this.BroadcastPort);
+                    packet = Packet.Read(this.Stream);
+                    CommandConfirmation cc = CommandConfirmation.Read(packet.Data);
+                    Log.Write("Got port select response: {0}", cc);
+                }
+                Client.CurrentServer.RemoteAddress.Port = Settings.Instance.Port + (int)controllerPort;
+                // this.SendRequestAndWaitForResponse(Client.CurrentServer, Packet.CheckConnectionRequest, "check connection");
+                Client.CurrentServer.Send(Packet.CheckConnectionRequest, 20000, Packet.GetControllerCommand(Packet.CheckConnectionRequest), (p0, e0) =>
+                {
+                    Client.CurrentServer.Send(Packet.InitCANTranslationRequest, 20000, Packet.GetControllerCommand(Packet.InitCANTranslationRequest), (p1, e1) =>
+                    {
+                        Thread.Sleep(1000);
+                        Initialized = true;
+                        return true;
+                    });
                     return true;
                 });
-                return true;
-            });
+            }
+
         }
 
         public void ActivateScene(byte id)

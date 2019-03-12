@@ -158,6 +158,7 @@ namespace SmartHouse.Views
                     else
                     {
                         Target.Devices.Add(d);
+                        d.Init();
                         var dm = DeviceModel.CreateModel(d) as DeviceModel;
                         dm.Enabled = true;
                         dm.Group = Target;

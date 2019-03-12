@@ -11,6 +11,7 @@ using System.Text;
 using Xamarin.Forms;
 using System.Linq;
 using SmartHouse.Models;
+using System.Threading.Tasks;
 
 namespace SmartHouse.Views
 {
@@ -112,9 +113,9 @@ namespace SmartHouse.Views
         }
 
         // 0: Сохранить проект в CAN
-        public void SaveProjectToCAN()
+        public async Task<bool> SaveProjectToCAN()
         {
-            Client.CurrentServer.SaveProjectFile(Target.Zip());
+            await Client.CurrentServer.SaveProjectFile(Target.Zip());
 
             var ad = new List<Models.Logic.Device>();
             foreach (var g in Model.Items)
@@ -154,10 +155,14 @@ namespace SmartHouse.Views
                     }
                 }
 
+            bool r = true;
             foreach(var pd in pds)
             {
-                pd.WriteScenes();
+                r = await pd.WriteScenes();
+                if (!r)
+                    return false;
             }
+            return true;
         }
 
         // 1: Загрузить проект из CAN

@@ -101,7 +101,7 @@ namespace SmartHouse.Views
             switch (MenuPicker.SelectedIndex)
             {
                 case (0):
-                    PDevice.LoadAllAsync();
+                    PDevice.LoadAll();
                     break;
                 case (1):
                     ShowDebug();

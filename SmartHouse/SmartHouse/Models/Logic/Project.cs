@@ -44,5 +44,12 @@ namespace SmartHouse.Models.Logic
             Items.Clear();
         }
 
+        public override void Init()
+        {
+            base.Init();
+            foreach (var e in Items)
+                e.Init();
+        }
+
     }
 }

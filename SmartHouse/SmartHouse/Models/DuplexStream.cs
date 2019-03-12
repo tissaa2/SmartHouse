@@ -125,7 +125,17 @@ namespace SmartHouse.Models
             return this.WritePosition;
         }
 
+        public int Write(byte value)
+        {
+            return Write(new byte[] { value });
+        }
 
+        public int Write(Int16 value)
+        {
+            Int16 v = IPAddress.HostToNetworkOrder(value);
+            var bts = BitConverter.GetBytes(v);
+            return Write(bts);
+        }
 
         public byte[] ReadBytes(int count)
         {

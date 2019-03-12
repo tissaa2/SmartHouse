@@ -12,7 +12,6 @@ namespace SmartHouse.Models.Logic
         public UID UID { get; set; }
         public virtual bool IsInput { get; set; }
 
-
         /* private bool _checked;
         public bool Checked {
             get {

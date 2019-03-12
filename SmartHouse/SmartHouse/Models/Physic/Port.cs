@@ -35,6 +35,7 @@ namespace SmartHouse.Models.Physics
 
         public static void SetPortValue(UID deviceId, int portId, byte value, byte fadeTime)
         {
+            // return;
             if (Client.CurrentServer == null)
                 return;
             if (deviceId.Hash == 0)

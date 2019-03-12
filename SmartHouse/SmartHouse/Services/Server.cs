@@ -26,7 +26,8 @@ namespace SmartHouse.Services
             var server = obj as Server;
             while (true)
             {
-                Packet p = Packet.Read(server.Stream);
+                Packet p;
+                p = Packet.Read(server.Stream);
                 object d = p;
                 if (p.DataSize >= 0)
                 {
@@ -122,7 +123,32 @@ namespace SmartHouse.Services
 
         public virtual void Send(byte[] data)
         {
-            this.socket.Send(data, data.Length, this.RemoteAddress);
+            if (Utils.EmulateCAN)
+            {
+
+                Thread.Sleep(50);
+                Packet p = new Packet() {
+                    Command = Packet.GetControllerCommand(data),
+                    Data = new PacketDataStream(new byte[] { 0 }),
+                    DataSize = 1,
+                    StartSequence = new byte[] { (byte)'#', (byte)'H', (byte)'L' }
+                };
+                p.Write(Stream);
+                Thread.Sleep(200);
+                var cc = Packet.GetCANCommand(data);
+                if (cc == Packet.GetCANCommand(Packet.DeviceFlashRequest))
+                {
+                    var id = Packet.GetUID(data);
+                    p = new Packet() { Command = 0x31, DataSize = 8,
+                        Data = new PacketDataStream(new byte[8] {(byte)0x05, (byte)id.B2, (byte)id.B1, (byte)id.B0, 0xff, cc, 0, 0x00 })};
+                    // var cp = new CANPacket() { };
+                    // создаем ответ на DeviceFlashRequest
+                    p.Write(Stream);
+                }
+                // и так далее для прочих пакетов
+            }
+            else
+                this.socket.Send(data, data.Length, this.RemoteAddress);
         }
 
         public void Send(byte[] command, int timeout, int controllerCommand, ProcessPacketDelegate onConfirm)
@@ -133,6 +159,9 @@ namespace SmartHouse.Services
 
         public void SendToCAN(byte[] command, int timeout, int controllerCommand, int canCommand, UID uid, ProcessPacketDelegate onConfirm, ProcessCANPacketDelegate onResponse)
         {
+            // сделать этот метод асинхронным?
+
+            // может быть, переделать на таски и асинхронное ожидание каждого колбэка в отдельности?  
             if (onConfirm != null)
                 AddPacketCallback(new ActionCallback() { Callback = onConfirm, Command = controllerCommand, ExpireTime = timeout * 10000 + DateTime.Now.Ticks });
             if (onResponse != null && uid.Hash != 0)
@@ -284,7 +313,7 @@ namespace SmartHouse.Services
         }
 
         // 0: Сохранить проект в CAN
-        public async void SaveProjectFile(byte[] data)
+        public async Task<bool> SaveProjectFile(byte[] data)
         {
             CommandConfirmation res = await Client.CurrentServer.SendAndWaitForConfirm(Packet.WriteAliasFileRequest, Packet.WRITE_ALIASFILE_COMMAND, "open alias file for writing");
             if (res.Result == 0)
@@ -328,18 +357,19 @@ namespace SmartHouse.Services
                 }
                 while (res.Result != 0);
             }
-        }
-
-        public async Task<bool> SaveProjectToCAN(Project project)
-        {
-            foreach (var g in project.Items)
-                foreach (var s in g.Items)
-                {
-                    // пишем сцену в CAN await 
-                    Packet res = await Client.CurrentServer.SendAndWaitForResponse(Packet.ReadAliasFileRequest, Packet.READ_ALIASFILE_COMMAND, "open alias file for reading");
-                }
             return true;
         }
+
+        //public async Task<bool> SaveProjectToCAN(Project project)
+        //{
+        //    foreach (var g in project.Items)
+        //        foreach (var s in g.Items)
+        //        {
+        //            // пишем сцену в CAN await 
+        //            Packet res = await Client.CurrentServer.SendAndWaitForResponse(Packet.WriteAliasFileRequest, Packet.WRITE_ALIASFILE_COMMAND, "open alias file for reading");
+        //        }
+        //    return true;
+        //}
 
         public async Task<ServerFile> LoadProjectFile()
         {

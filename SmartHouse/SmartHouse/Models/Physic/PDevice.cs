@@ -55,7 +55,7 @@ namespace SmartHouse.Models.Physics
                 if (all == null)
                 {
                     all = new ObservableCollection<PDevice>();
-                    LoadAllAsync();
+                    LoadAll();
                 }
                 return all;
             }
@@ -69,7 +69,7 @@ namespace SmartHouse.Models.Physics
                 if (allOutputs == null)
                 {
                     allOutputs = new ObservableCollection<OutputPort>();
-                    LoadAllAsync();
+                    LoadAll();
                 }
                 return allOutputs;
             }
@@ -83,7 +83,7 @@ namespace SmartHouse.Models.Physics
                 if (allInputs == null)
                 {
                     allInputs = new ObservableCollection<InputPort>();
-                    LoadAllAsync();
+                    LoadAll();
                 }
                 return allInputs;
             }
@@ -172,7 +172,7 @@ namespace SmartHouse.Models.Physics
         }
 
 
-        public static async void LoadAllAsync()
+        public static void LoadAll()
         {
             if (all != null)
                 all.Clear();
@@ -188,38 +188,72 @@ namespace SmartHouse.Models.Physics
             //Fk(10, 0x02, 8, 8);
             //Fk(11, 0x02, 8, 8); 
             if (Utils.EmulateCAN)
-                await Task.Run(() =>
-                {
-                    Fk(1, 0x01, 8, 8);
-                    Thread.Sleep(100);
-                    Fk(2, 0x01, 0, 16);
-                    Thread.Sleep(100);
-                    Fk(3, 0x01, 4, 4);
-                    Thread.Sleep(100);
-                    Fk(4, 0x01, 0, 8);
-                    Thread.Sleep(100);
-                    Fk(5, 0x01, 8, 8);
-                    Thread.Sleep(100);
-                    Fk(6, 0x58, 1, 1);
-                    Thread.Sleep(100);
-                    Fk(7, 0x08, 1, 1);
-                    Thread.Sleep(100);
-                    Fk(8, 0x70, 1, 1);
-                    Thread.Sleep(100);
-                    Fk(9, 0x02, 8, 8);
-                    Thread.Sleep(100);
-                    Fk(10, 0x02, 8, 8);
-                    Thread.Sleep(100);
-                    Fk(11, 0x02, 8, 8);
-                });
+            {
+                Fk(1, 0x01, 8, 8);
+                Thread.Sleep(100);
+                Fk(2, 0x01, 0, 16);
+                Thread.Sleep(100);
+                Fk(3, 0x01, 4, 4);
+                Thread.Sleep(100);
+                Fk(4, 0x01, 0, 8);
+                Thread.Sleep(100);
+                Fk(5, 0x01, 8, 8);
+                Thread.Sleep(100);
+                Fk(6, 0x58, 1, 1);
+                Thread.Sleep(100);
+                Fk(7, 0x08, 1, 1);
+                Thread.Sleep(100);
+                Fk(8, 0x70, 1, 1);
+                Thread.Sleep(100);
+                Fk(9, 0x02, 8, 8);
+                Thread.Sleep(100);
+                Fk(10, 0x02, 8, 8);
+                Thread.Sleep(100);
+                Fk(11, 0x02, 8, 8);
+            }
+            //await Task.Run(() =>
+            //{
+            //    Fk(1, 0x01, 8, 8);
+            //    Thread.Sleep(100);
+            //    Fk(2, 0x01, 0, 16);
+            //    Thread.Sleep(100);
+            //    Fk(3, 0x01, 4, 4);
+            //    Thread.Sleep(100);
+            //    Fk(4, 0x01, 0, 8);
+            //    Thread.Sleep(100);
+            //    Fk(5, 0x01, 8, 8);
+            //    Thread.Sleep(100);
+            //    Fk(6, 0x58, 1, 1);
+            //    Thread.Sleep(100);
+            //    Fk(7, 0x08, 1, 1);
+            //    Thread.Sleep(100);
+            //    Fk(8, 0x70, 1, 1);
+            //    Thread.Sleep(100);
+            //    Fk(9, 0x02, 8, 8);
+            //    Thread.Sleep(100);
+            //    Fk(10, 0x02, 8, 8);
+            //    Thread.Sleep(100);
+            //    Fk(11, 0x02, 8, 8);
+            //});
             else
-                await Task.Run(() =>
-                {
-                    while (!Client.Instance.Initialized)
-                        Thread.Sleep(100);
-                    Client.CurrentServer.Send(Packet.AutodetectRequest);
+            //await Task.Run(() =>
+            //{
+            //    while (!Client.Instance.Initialized)
+            //        Thread.Sleep(100);
+            //    Client.CurrentServer.Send(Packet.AutodetectRequest);
+            //    // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
+            //});
+            {
+                while (!Client.Instance.Initialized)
+                    Thread.Sleep(100);
+                Client.CurrentServer.Send(Packet.AutodetectRequest);
+                Thread.Sleep(2000);
+                Client.CurrentServer.Send(Packet.AutodetectRequest);
+                Thread.Sleep(2000);
+                Client.CurrentServer.Send(Packet.AutodetectRequest);
+                Thread.Sleep(2000);
                 // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
-            });
+            }
 
         }
 
@@ -308,12 +342,13 @@ namespace SmartHouse.Models.Physics
             return null;
         }
 
-        public async void WriteScenes()
+        public async Task<bool> WriteScenes()
         {
             int i = 0;
-            if (await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 0, 0), ID))
-                foreach (var ps in Scenes.Values)
+            if (await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 0, 1), ID))
             {
+                foreach (var ps in Scenes.Values)
+                {
                     if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0)), ID))
                     {
                         // сделать анализ ответов от диммера 
@@ -332,14 +367,35 @@ namespace SmartHouse.Models.Physics
                             }
                         }
                         else
+                        {
                             Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                            return false;
+                        }
                     }
                     else
-                        Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i );
-                    if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, (byte)(i == 0 ? 1 : 0)), ID))
+                    {
+                        Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                        return false;
+                    }
+                    if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, 0), ID))
+                    {
                         Log.Write("Error finishing scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID);
-                i++;
+                        return false;
+                    }
+                    i++;
+                }
+                if (!await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 1, 1), ID))
+                {
+                    Log.Write("Error finishing device flashing: device = {0}({1})", this.Name, this.ID);
+                    return false;
+                }
             }
+            else
+            {
+                Log.Write("Error starting device flashing: device = {0}({1})", this.Name, this.ID);
+                return false;
+            }
+            return true;
         }
 
         public virtual PDevice Clone()

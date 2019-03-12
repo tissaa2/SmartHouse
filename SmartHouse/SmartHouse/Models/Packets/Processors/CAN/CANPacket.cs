@@ -43,6 +43,21 @@ namespace SmartHouse.Models.Packets
             }
         }
 
+        public virtual void WriteTo(PacketDataStream stream)
+        {
+            try
+            {
+                stream.Write(ConfigByte);
+                stream.Write(UID);
+                stream.Write(StartByte);
+                stream.Write(Command);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+        }
+
         public static CANPacket Read(PacketDataStream stream)
         {
             CANPacket cr = new CANPacket();
