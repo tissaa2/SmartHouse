@@ -301,11 +301,11 @@ namespace SmartHouse.Models.Packets
             0,      // 9 UID1
             0x62,   // 10 command 
             0,      // 11 scene number in device
-            0,      // 12 UID3
+            0,      // 12 UID1
             0,      // 13 UID2
-            0,      // 14 UID1
+            0,      // 14 UID3
             0,      // 15 номер входа
-            0       // 16 параметры сцены
+            0x80       // 16 параметры сцены
         };
 
         /// <summary>
@@ -324,9 +324,9 @@ namespace SmartHouse.Models.Packets
             p[8] = uid.B1;
             p[9] = uid.B0;
             p[11] = sceneNumber;
-            p[12] = sourceUID.B2;
+            p[12] = sourceUID.B0;
             p[13] = sourceUID.B1;
-            p[14] = sourceUID.B0;
+            p[14] = sourceUID.B2;
             p[15] = inputNumber;
             p[16] = sceneParams;
             return p;
@@ -339,7 +339,7 @@ namespace SmartHouse.Models.Packets
             76,     // 2
             0,      // 3
             0x30,   // 4 command (30 - send command to CAN)
-            8,      // 5 data size
+            11,      // 5 data size
             0x04,   // 6 config byte
             0,      // 7 UID3
             0,      // 8 UID2
@@ -386,7 +386,7 @@ namespace SmartHouse.Models.Packets
             76,     // 2
             0,      // 3
             0x30,   // 4 command (30 - send command to CAN)
-            8,      // 5 data size
+            11,      // 5 data size
             0x04,   // 6 config byte
             0,      // 7 UID3
             0,      // 8 UID2
