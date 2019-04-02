@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using SmartHouse.Services;
@@ -287,7 +288,52 @@ namespace SmartHouse.Models.Packets
             return p;
         }
 
-        public static byte[] SceneSettingsWriteRequest = new byte[]
+        //public static byte[] SceneSettingsWriteRequest = new byte[]
+        //{
+        //    36,     // 0
+        //    72,     // 1
+        //    76,     // 2
+        //    0,      // 3
+        //    0x30,   // 4 command (30 - send command to CAN)
+        //    11,      // 5 data size
+        //    0x04,   // 6 config byte
+        //    0,      // 7 UID3
+        //    0,      // 8 UID2
+        //    0,      // 9 UID1
+        //    0x62,   // 10 command 
+        //    0,      // 11 scene number in device
+        //    0,      // 12 UID1
+        //    0,      // 13 UID2
+        //    0,      // 14 UID3
+        //    0,      // 15 номер входа
+        //    0x80       // 16 параметры сцены
+        //};
+
+        ///// <summary>
+        ///// Create scene settings write request (once per scene)
+        ///// </summary>
+        ///// <param name="uid">Device to flash</param>
+        ///// <param name="sceneNumber">Scene number in device</param>
+        ///// <param name="sourceUID">Event source ID</param>
+        ///// <param name="inputNumber">Event source input number</param>
+        ///// <param name="sceneParams">Scene params</param>
+        ///// <returns></returns>
+        //public static byte[] CreateSceneSettingsWriteRequest(UID uid, byte sceneNumber, UID sourceUID, byte inputNumber, byte sceneParams)
+        //{
+        //    var p = SceneSettingsWriteRequest.Clone() as byte[];
+        //    p[7] = uid.B2;
+        //    p[8] = uid.B1;
+        //    p[9] = uid.B0;
+        //    p[11] = sceneNumber;
+        //    p[12] = sourceUID.B0;
+        //    p[13] = sourceUID.B1;
+        //    p[14] = sourceUID.B2;
+        //    p[15] = inputNumber;
+        //    p[16] = sceneParams;
+        //    return p;
+        //}
+
+        public static byte[] SceneSettingsReadWriteRequest = new byte[]
         {
             36,     // 0
             72,     // 1
@@ -299,31 +345,81 @@ namespace SmartHouse.Models.Packets
             0,      // 7 UID3
             0,      // 8 UID2
             0,      // 9 UID1
-            0x62,   // 10 command 
+            0x60,   // 10 command 
             0,      // 11 scene number in device
-            0,      // 12 UID1
-            0,      // 13 UID2
-            0,      // 14 UID3
-            0,      // 15 номер входа
-            0x80       // 16 параметры сцены
+            0,      // 12 scene data type
+            0,      // 13 UID1
+            0,      // 14 UID2
+            0,      // 15 UID3
+            0       // 16 номер входа
         };
 
         /// <summary>
-        /// Create scene settings write request (once per scene)
+        /// Create scene settings read/write request (once per scene)
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        /// <param name="sourceUID">Event source ID</param>
+        /// <param name="inputNumber">Event source input number</param>
+        /// <returns></returns>
+        public static byte[] CreateSceneEventSettingsWriteRequest(UID uid, byte sceneNumber, UID sourceUID, byte inputNumber)
+        {
+            var p = SceneSettingsReadWriteRequest.Clone() as byte[];
+            p[5] = 11;
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = (byte)(sceneNumber | 0x80);
+            p[12] = 0;
+            p[13] = sourceUID.B0;
+            p[14] = sourceUID.B1;
+            p[15] = sourceUID.B2;
+            p[16] = inputNumber;
+            return p;
+        }
+
+        /// <summary>
+        /// Create scene settings read/write request (once per scene)
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="sceneNumber">Scene number in device</param>
+        /// <param name="sourceUID">Event source ID</param>
+        /// <param name="inputNumber">Event source input number</param>
+        /// <returns></returns>
+        public static byte[] CreateSceneParamsSettingsWriteRequest(UID uid, byte sceneNumber, byte sceneParams = 0x80, byte sceneCmd = 5)
+        {
+            var p = SceneSettingsReadWriteRequest.Clone() as byte[];
+            p[5] = 11;
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = (byte)(sceneNumber | 0x80);
+            p[12] = 1;
+            p[13] = sceneParams;
+            p[14] = sceneCmd;
+            p[15] = 0;
+            p[16] = 0;
+            return p;
+        }
+
+        /// <summary>
+        /// Create scene settings read/write request (once per scene)
         /// </summary>
         /// <param name="uid">Device to flash</param>
         /// <param name="sceneNumber">Scene number in device</param>
         /// <param name="sourceUID">Event source ID</param>
         /// <param name="inputNumber">Event source input number</param>
         /// <param name="sceneParams">Scene params</param>
+        /// <param name="isWriteRequest">If true, request is recognized as write request</param> 
         /// <returns></returns>
-        public static byte[] CreateSceneSettingsWriteRequest(UID uid, byte sceneNumber, UID sourceUID, byte inputNumber, byte sceneParams)
+        public static byte[] CreateSceneSettingsReadWriteRequest(UID uid, bool isWriteRequest, byte sceneNumber, UID sourceUID, byte inputNumber, byte sceneParams)
         {
-            var p = SceneSettingsWriteRequest.Clone() as byte[];
+            var p = SceneSettingsReadWriteRequest.Clone() as byte[];
+            p[5] = 11;
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
-            p[11] = sceneNumber;
+            p[11] = (byte)(sceneNumber | (isWriteRequest ? 0x80 : 0));
             p[12] = sourceUID.B0;
             p[13] = sourceUID.B1;
             p[14] = sourceUID.B2;
@@ -332,46 +428,72 @@ namespace SmartHouse.Models.Packets
             return p;
         }
 
-        public static byte[] DimmerSceneIntensityWriteRequest = new byte[]
-        {
-            36,     // 0
-            72,     // 1
-            76,     // 2
-            0,      // 3
-            0x30,   // 4 command (30 - send command to CAN)
-            11,      // 5 data size
-            0x04,   // 6 config byte
-            0,      // 7 UID3
-            0,      // 8 UID2
-            0,      // 9 UID1
-            0x64,   // 10 command 
-            0,      // 11 scene number in device
-            0,      // 12 номер четверки 0..3
-            0,      // 13 яркость 0 (0..100%)
-            0,      // 14 яркость 1
-            0,      // 15 яркость 2
-            0       // 16 яркость 3
-        };
+        //public static byte[] DimmerSceneIntensityWriteRequest = new byte[]
+        //{
+        //    36,     // 0
+        //    72,     // 1
+        //    76,     // 2
+        //    0,      // 3
+        //    0x30,   // 4 command (30 - send command to CAN)
+        //    11,      // 5 data size
+        //    0x04,   // 6 config byte
+        //    0,      // 7 UID3
+        //    0,      // 8 UID2
+        //    0,      // 9 UID1
+        //    0x64,   // 10 command 
+        //    0,      // 11 scene number in device
+        //    0,      // 12 номер четверки 0..3
+        //    0,      // 13 яркость 0 (0..100%)
+        //    0,      // 14 яркость 1
+        //    0,      // 15 яркость 2
+        //    0       // 16 яркость 3
+        //};
+
+        ///// <summary>
+        ///// Create Dimmer Scene Intensity Write Request
+        ///// </summary>
+        ///// <param name="uid">Device to flash</param>
+        ///// <param name="sceneNumber">Scene number in device</param>
+        ///// <param name="quadNum"> номер четверки 0..3</param>
+        ///// <param name="intensity0">яркость 0 (0..100%)</param>
+        ///// <param name="intensity1">яркость 1 (0..100%)</param>
+        ///// <param name="intensity2">яркость 2 (0..100%)</param>
+        ///// <param name="intensity3">яркость 3 (0..100%)</param>
+        ///// <returns></returns>
+        //public static byte[] CreateDimmerSceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        //{
+        //    var p = DimmerSceneIntensityWriteRequest.Clone() as byte[];
+        //    p[7] = uid.B2;
+        //    p[8] = uid.B1;
+        //    p[9] = uid.B0;
+        //    p[11] = sceneNumber;
+        //    p[12] = quadNum;
+        //    p[13] = intensity0;
+        //    p[14] = intensity1;
+        //    p[15] = intensity2;
+        //    p[16] = intensity3;
+        //    return p;
+        //}
 
         /// <summary>
         /// Create Dimmer Scene Intensity Write Request
         /// </summary>
         /// <param name="uid">Device to flash</param>
         /// <param name="sceneNumber">Scene number in device</param>
-        /// <param name="quadNum"> номер четверки 0..3</param>
         /// <param name="intensity0">яркость 0 (0..100%)</param>
         /// <param name="intensity1">яркость 1 (0..100%)</param>
         /// <param name="intensity2">яркость 2 (0..100%)</param>
         /// <param name="intensity3">яркость 3 (0..100%)</param>
         /// <returns></returns>
-        public static byte[] CreateDimmerSceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        public static byte[] CreateDimmerSceneIntensityWriteRequest(UID uid, byte sceneNumber, bool isNight, bool isHighQuarter, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
         {
-            var p = DimmerSceneIntensityWriteRequest.Clone() as byte[];
+            var p = SceneSettingsReadWriteRequest.Clone() as byte[];
+            p[5] = 11;
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
-            p[11] = sceneNumber;
-            p[12] = quadNum;
+            p[11] = (byte)(sceneNumber | 0x80);
+            p[12] = (byte)((isNight ? 4 : 2) + (isHighQuarter ? 1 : 0));
             p[13] = intensity0;
             p[14] = intensity1;
             p[15] = intensity2;
@@ -379,26 +501,52 @@ namespace SmartHouse.Models.Packets
             return p;
         }
 
-        public static byte[] RelaySceneIntensityWriteRequest = new byte[]
-        {
-            36,     // 0
-            72,     // 1
-            76,     // 2
-            0,      // 3
-            0x30,   // 4 command (30 - send command to CAN)
-            11,      // 5 data size
-            0x04,   // 6 config byte
-            0,      // 7 UID3
-            0,      // 8 UID2
-            0,      // 9 UID1
-            0x66,   // 10 command 
-            0,      // 11 scene number in device
-            0,      // 12 номер четверки 0..3
-            0,      // 13 яркость 0 (0..100%)
-            0,      // 14 яркость 1
-            0,      // 15 яркость 2
-            0       // 16 яркость 3
-        };
+        //public static byte[] RelaySceneIntensityWriteRequest = new byte[]
+        //{
+        //    36,     // 0
+        //    72,     // 1
+        //    76,     // 2
+        //    0,      // 3
+        //    0x30,   // 4 command (30 - send command to CAN)
+        //    11,      // 5 data size
+        //    0x04,   // 6 config byte
+        //    0,      // 7 UID3
+        //    0,      // 8 UID2
+        //    0,      // 9 UID1
+        //    0x66,   // 10 command 
+        //    0,      // 11 scene number in device
+        //    0,      // 12 номер четверки 0..3
+        //    0,      // 13 яркость 0 (0..100%)
+        //    0,      // 14 яркость 1
+        //    0,      // 15 яркость 2
+        //    0       // 16 яркость 3
+        //};
+
+        ///// <summary>
+        ///// Create Relay Scene Intensity Write Request
+        ///// </summary>
+        ///// <param name="uid">Device to flash</param>
+        ///// <param name="sceneNumber">Scene number in device</param>
+        ///// <param name="quadNum"> номер четверки 0..3</param>
+        ///// <param name="intensity0">яркость 0 (0..100%)</param>
+        ///// <param name="intensity1">яркость 1 (0..100%)</param>
+        ///// <param name="intensity2">яркость 2 (0..100%)</param>
+        ///// <param name="intensity3">яркость 3 (0..100%)</param>
+        ///// <returns></returns>
+        //public static byte[] CreateRelaySceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        //{
+        //    var p = RelaySceneIntensityWriteRequest.Clone() as byte[];
+        //    p[7] = uid.B2;
+        //    p[8] = uid.B1;
+        //    p[9] = uid.B0;
+        //    p[11] = sceneNumber;
+        //    p[12] = quadNum;
+        //    p[13] = intensity0;
+        //    p[14] = intensity1;
+        //    p[15] = intensity2;
+        //    p[16] = intensity3;
+        //    return p;
+        //}
 
         /// <summary>
         /// Create Relay Scene Intensity Write Request
@@ -411,24 +559,33 @@ namespace SmartHouse.Models.Packets
         /// <param name="intensity2">яркость 2 (0..100%)</param>
         /// <param name="intensity3">яркость 3 (0..100%)</param>
         /// <returns></returns>
-        public static byte[] CreateRelaySceneIntensityWriteRequest(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        public static byte[] CreateRelaySceneSwitchesWriteRequest(UID uid, byte sceneNumber, bool isNight, byte[] intensity)
         {
-            var p = RelaySceneIntensityWriteRequest.Clone() as byte[];
+            var p = SceneSettingsReadWriteRequest.Clone() as byte[];
+            p[5] = 11;
             p[7] = uid.B2;
             p[8] = uid.B1;
             p[9] = uid.B0;
-            p[11] = sceneNumber;
-            p[12] = quadNum;
-            p[13] = intensity0;
-            p[14] = intensity1;
-            p[15] = intensity2;
-            p[16] = intensity3;
+            p[11] = (byte)(sceneNumber | 0x80);
+            p[12] = (byte)((isNight ? 7 : 6));
+
+            // int v = 0b1010_1010_1010_1010_1010_1010_1010;
+            int v = 0b1010_1010_1010_1010_1010_1010_1010;
+            for (int i = 0; i < intensity.Length; i++)
+            {
+                v = v | ((int)(intensity[i]) << i * 2);
+            }
+            var bts = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(v));
+            p[13] = bts[0];
+            p[14] = bts[1];
+            p[15] = bts[2];
+            p[16] = bts[3];
             return p;
         }
 
         public static byte[] ActivateSceneRequest = new byte[] {
             36,     // 0
-            72,     // 1
+            72,     // 1s
             76,     // 2
             0,      // 3
             0x30,   // 4 command (30 - send command to CAN)

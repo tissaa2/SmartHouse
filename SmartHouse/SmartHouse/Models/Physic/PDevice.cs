@@ -337,7 +337,12 @@ namespace SmartHouse.Models.Physics
             return this;
         }
 
-        public virtual byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        //public virtual byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
+        //{
+        //    return null;
+        //}
+
+        public virtual byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte offset, bool isNight, byte[] intensity)
         {
             return null;
         }
@@ -352,38 +357,56 @@ namespace SmartHouse.Models.Physics
                     if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0)), ID))
                     {
                         // сделать анализ ответов от диммера 
-                        if (await Utils.P(Packet.CreateSceneSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort, 0x80), ID))
+                        if (await Utils.P(Packet.CreateSceneEventSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort), ID))
                         {
-                            int j = 0;
-                            byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
-                            //while (j < ps.OutputStates.Count)
-                            //{
-                            //    byte[] iq = { 0, 0, 0, 0 };
-                            //    int l = ps.OutputStates.Count - j;
-                            //    Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
-                            //    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
-                            //        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
-                            //    j += 4;
-                            //}
-                            byte[] iq = { 0, 0, 0, 0 };
-                            int l = ps.OutputStates.Count - j;
-                            Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
-                            if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
-                                Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
-                            j += 4;
-                            Array.Fill<byte>(iq, 0);
-                            l = ps.OutputStates.Count - j;
-                            if (l > 0)
-                                Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
-                            if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
-                                Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
+                            if (await Utils.P(Packet.CreateSceneParamsSettingsWriteRequest(ID, (byte)i, 0x80, 5), ID))
+                            {
+                                //int j = 0;
+                                //byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
+                                //byte[] iq = { 0, 0, 0, 0 };
+                                //int l = ps.OutputStates.Count - j;
+                                //Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
+                                //if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
+                                //    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
+                                //j += 4;
+                                //Array.Fill<byte>(iq, 0);
+                                //l = ps.OutputStates.Count - j;
+                                //if (l > 0)
+                                //    Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
+                                //if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
+                                //    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
+                                byte[] stts = new byte[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+                                foreach (var st in ps.OutputStates)
+                                    stts[st.Key] = (byte)st.Value;
+                                if (this is Dimmer)
+                                {
+                                    // byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
+                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, false, stts), ID))
+                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 0", this.Name, this.ID, i);
+                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, false, stts), ID))
+                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 4", this.Name, this.ID, i);
+                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, true, stts), ID))
+                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 0", this.Name, this.ID, i);
+                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, true, stts), ID))
+                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 4", this.Name, this.ID, i);
+                                }
+                                else
+                                if (this is Relay)
+                                {
+                                    //byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
+                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, false, stts), ID))
+                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, true, stts), ID))
+                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                                }
+                            }
                         }
                         else
                         {
                             Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
                             return false;
                         }
-                    } продублировать сохранение для ночной сцены 
+                    } // продублировать сохранение для ночной сцены 
                     else
                     {
                         Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
