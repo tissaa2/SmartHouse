@@ -252,6 +252,8 @@ namespace SmartHouse.Models.Physics
                 Thread.Sleep(2000);
                 Client.CurrentServer.Send(Packet.AutodetectRequest);
                 Thread.Sleep(2000);
+
+                // Thread.Sleep(5000);
                 // Client.Instance.SendAndProcessResponses(Client.CurrentServer, Packet.AutodetectRequest, 20000, "autodetect", ProcessAutodetectPacket);
             }
 
@@ -352,78 +354,83 @@ namespace SmartHouse.Models.Physics
             int i = 0;
             if (await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 0, 1), ID))
             {
-                foreach (var ps in Scenes.Values)
+                if (await Utils.P(Packet.CreateDevicePortSettingsWriteRequest(ID, new byte[] { 5, 5, 5, 5, 5, 5, 5, 5 }), ID))
                 {
-                    if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0)), ID))
+                    foreach (var ps in Scenes.Values)
                     {
-                        // сделать анализ ответов от диммера 
-                        if (await Utils.P(Packet.CreateSceneEventSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort), ID))
+                        if (await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 0, (byte)(i == 0 ? 1 : 0)), ID))
                         {
-                            if (await Utils.P(Packet.CreateSceneParamsSettingsWriteRequest(ID, (byte)i, 0x80, 5), ID))
+                            // сделать анализ ответов от диммера 
+                            if (await Utils.P(Packet.CreateSceneEventSettingsWriteRequest(ID, (byte)i, ps.SourceID, ps.SourcePort), ID))
                             {
-                                //int j = 0;
-                                //byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
-                                //byte[] iq = { 0, 0, 0, 0 };
-                                //int l = ps.OutputStates.Count - j;
-                                //Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
-                                //if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
-                                //    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
-                                //j += 4;
-                                //Array.Fill<byte>(iq, 0);
-                                //l = ps.OutputStates.Count - j;
-                                //if (l > 0)
-                                //    Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
-                                //if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
-                                //    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
-                                byte[] stts = new byte[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
-                                foreach (var st in ps.OutputStates)
-                                    stts[st.Key] = (byte)st.Value;
-                                if (this is Dimmer)
+                                if (await Utils.P(Packet.CreateSceneParamsSettingsWriteRequest(ID, (byte)i, 0x80, 5), ID))
                                 {
-                                    // byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
-                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, false, stts), ID))
-                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 0", this.Name, this.ID, i);
-                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, false, stts), ID))
-                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 4", this.Name, this.ID, i);
-                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, true, stts), ID))
-                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 0", this.Name, this.ID, i);
-                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, true, stts), ID))
-                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 4", this.Name, this.ID, i);
-                                }
-                                else
-                                if (this is Relay)
-                                {
+                                    //int j = 0;
                                     //byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
-                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, false, stts), ID))
-                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
-                                    if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, true, stts), ID))
-                                        Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                                    //byte[] iq = { 0, 0, 0, 0 };
+                                    //int l = ps.OutputStates.Count - j;
+                                    //Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
+                                    //if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
+                                    //    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
+                                    //j += 4;
+                                    //Array.Fill<byte>(iq, 0);
+                                    //l = ps.OutputStates.Count - j;
+                                    //if (l > 0)
+                                    //    Array.Copy(stts, j, iq, 0, l > 4 ? 4 : l);
+                                    //if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, (byte)(j >> 2), iq[0], iq[1], iq[2], iq[3]), ID))
+                                    //    Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, quad = {3}", this.Name, this.ID, i, j >> 2);
+                                    byte[] stts = new byte[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+                                    foreach (var st in ps.OutputStates)
+                                        stts[st.Key] = (byte)st.Value;
+                                    if (this is Dimmer)
+                                    {
+                                        // byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
+                                        if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, false, stts), ID))
+                                            Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 0", this.Name, this.ID, i);
+                                        if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, false, stts), ID))
+                                            Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 4", this.Name, this.ID, i);
+                                        if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, true, stts), ID))
+                                            Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 0", this.Name, this.ID, i);
+                                        if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, true, stts), ID))
+                                            Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}, offset = 4", this.Name, this.ID, i);
+                                    }
+                                    else
+                                    if (this is Relay)
+                                    {
+                                        //byte[] stts = ps.OutputStates.Values.Select(e => (byte)e).ToArray();
+                                        if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 0, false, stts), ID))
+                                            Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                                        if (!await Utils.P(CreateWriteScenePacket(ID, (byte)i, 4, true, stts), ID))
+                                            Log.Write("Error writing scene intensity quad: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                                    }
                                 }
                             }
-                        }
+                            else
+                            {
+                                Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                                return false;
+                            }
+                        } // продублировать сохранение для ночной сцены 
                         else
                         {
                             Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
                             return false;
                         }
-                    } // продублировать сохранение для ночной сцены 
-                    else
+                        if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, 0), ID))
+                        {
+                            Log.Write("Error finishing scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID);
+                            return false;
+                        }
+                        i++;
+                    }
+                    if (!await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 1, 1), ID))
                     {
-                        Log.Write("Error starting scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID, i);
+                        Log.Write("Error finishing device flashing: device = {0}({1})", this.Name, this.ID);
                         return false;
                     }
-                    if (!await Utils.P(Packet.CreateSceneWriteRequest(ID, (byte)i, 1, 0), ID))
-                    {
-                        Log.Write("Error finishing scene writing: device = {0}({1}), sceneNum = {2}", this.Name, this.ID);
-                        return false;
-                    }
-                    i++;
                 }
-                if (!await Utils.P(Packet.CreateDeviceFlashRequest(ID, 0, 1, 1), ID))
-                {
-                    Log.Write("Error finishing device flashing: device = {0}({1})", this.Name, this.ID);
-                    return false;
-                }
+                else
+                    Log.Write("Error writing device port settings: device = {0}({1})", this.Name, this.ID);
             }
             else
             {

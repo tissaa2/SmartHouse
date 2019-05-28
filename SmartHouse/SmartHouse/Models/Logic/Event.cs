@@ -6,7 +6,9 @@ namespace SmartHouse.Models.Logic
     [XmlInclude(typeof(UIDEvent))]
     public class Event: BaseEntity<int>
     {
-        public byte TypeID { get; set; }
+
+        //2do: сделать заполнение параметров входов из эвентлв сцен в устройстве
+        public byte TypeID { get; set; } = 5;
         public byte InputID { get; set; }
     }
 }

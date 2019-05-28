@@ -583,6 +583,52 @@ namespace SmartHouse.Models.Packets
             return p;
         }
 
+
+
+
+        public static byte[] DevicePortSettingsWriteRequest = new byte[]
+        {
+            36,     // 0
+            72,     // 1
+            76,     // 2
+            0,      // 3
+            0x30,   // 4 command (30 - send command to CAN)
+            11,      // 5 data size
+            0x04,   // 6 config byte
+            0,      // 7 UID3
+            0,      // 8 UID2
+            0,      // 9 UID1
+            0x6A,   // 10 command 
+            0,      // 11 relay outputs mask
+            0xFF,      // 12 invert inputs mask
+            0x0,      // 13 port [0 .. 1] types
+            0x0,      // 14 port [2 .. 3] types
+            0x0,      // 15 port [4 .. 5] types
+            0x0       // 16 port [6 .. 7] types
+        };
+
+        /// <summary>
+        /// Create Dimmer Scene Intensity Write Request
+        /// </summary>
+        /// <param name="uid">Device to flash</param>
+        /// <param name="portTypes">a set of port types</param>
+            /// <returns></returns>
+        public static byte[] CreateDevicePortSettingsWriteRequest(UID uid, byte[] portTypes)
+        {
+            var p = DevicePortSettingsWriteRequest.Clone() as byte[];
+            p[5] = 11;
+            p[7] = uid.B2;
+            p[8] = uid.B1;
+            p[9] = uid.B0;
+            p[11] = 0;
+            p[12] = 0xFF;
+            for(int i = 0; i < portTypes.Length; i++)
+            {
+                p[13 + i / 2] |= (byte)((portTypes[i] & 0xf) << (i & 1) * 4);
+            }
+            return p;
+        }
+
         public static byte[] ActivateSceneRequest = new byte[] {
             36,     // 0
             72,     // 1s

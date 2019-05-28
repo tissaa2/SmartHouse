@@ -112,8 +112,11 @@ namespace SmartHouse.Views
             return (byte)((0x100 - res) & 0xFF);
         }
 
+
+
         // 0: Сохранить проект в CAN
         public async Task<bool> SaveProjectToCAN()
+        // public bool SaveProjectToCAN()
         {
             await Client.CurrentServer.SaveProjectFile(Target.Zip());
 
@@ -130,8 +133,21 @@ namespace SmartHouse.Views
                 {
                     foreach (var ds in s.Items)
                     {
+                        //Models.Logic.Device d = null;
+                        //foreach(var e in ad)
+                        //{
+                        //    if (e.ID == ds.ID)
+                        //    {
+                        //        d = e;
+                        //        break;
+                        //    }
+                        //}
+
                         var d = ad.FirstOrDefault(e => e.ID == ds.ID);
                         var pd = PDevice.All.FirstOrDefault(e => e.ID == d.UID);
+                        var td = new Dictionary<UID, string>();
+                        //foreach (var e0 in PDevice.All)
+                        //    td.Add(e0.ID, e0.Name);
                         if (!pds.Contains(pd))
                         {
                             pd.Scenes = new Dictionary<int, PScene>();
@@ -156,7 +172,7 @@ namespace SmartHouse.Views
                 }
 
             bool r = true;
-            foreach(var pd in pds)
+            foreach (var pd in pds)
             {
                 r = await pd.WriteScenes();
                 if (!r)
@@ -196,12 +212,12 @@ namespace SmartHouse.Views
         //    }
         //}
 
-        private void ProjectMenuPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private async void ProjectMenuPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (ProjectMenuPicker.SelectedIndex)
             {
                 case (0):
-                    SaveProjectToCAN();
+                    await SaveProjectToCAN();
                     break;
                 case (1):
                     LoadProjectFromCAN();

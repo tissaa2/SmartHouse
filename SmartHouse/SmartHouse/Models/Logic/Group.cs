@@ -72,7 +72,7 @@ namespace SmartHouse.Models.Logic
                 ID = id,
                 Devices = new ObservableCollection<Device>()
                 {
-                    new Lamp(lampID, "Люстра", 50, uid0, 0),
+                    new Lamp(lampID, "Люстра", 50, uid0, 6),
                     new Switch(IntID.NewID(), "Кнопка выкл", true, uid0, 2),
                     new Switch(IntID.NewID(), "Кнопка вкл", true, uid0, 3),
                 }
