@@ -65,7 +65,7 @@
                     <ViewCell Height="64">
                         <Grid Padding="8">
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped"/>
+                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="1" Tapped="ItemGestureRecognizer_Tapped"/>
                             </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
@@ -80,7 +80,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="2"/>
+        <Button x:Name="AddButton" Text="Добавить комнату" Clicked="AddButton_Clicked" Grid.Row="2"/>
     </Grid>
 
 

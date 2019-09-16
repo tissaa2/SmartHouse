@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SmartHouse.Models.Logic
 {
 
-    [IconName("device_panel.png", "Кнопочная панель")]
+    [IconName("device_panel.png", "Кнопочная панель", true)]
     public class Panel : MultyBoolStateDevice
     {
         public override string TypeName { get => "Кнопочная панель"; set => base.TypeName = value; }

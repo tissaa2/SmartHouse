@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using SmartHouse.Controls;
 using Xamarin.Forms;
 using Device = SmartHouse.Models.Logic.Device;
+using ImageButton = SmartHouse.Controls.ImageButton;
+
 
 namespace SmartHouse.Views
 {
@@ -91,10 +93,12 @@ namespace SmartHouse.Views
             {
                 if (r != null)
                 {
-                    if (Model.Target is Scene)
-                    {
-                        (Model.Target as Scene).Icon = r;
-                    }
+                    //if (Model.Target is Scene)
+                    //{
+                    //    (Model.Target as Scene).Icon = r;
+                    //}
+                    Model.Icon = r;
+                    Model.Apply();
                 }
             });
         }
@@ -128,6 +132,11 @@ namespace SmartHouse.Views
         private void UIDEventButton_Pressed(object sender, EventArgs e)
         {
             Model.IsUIDEvent = true;
+        }
+
+        private void NameEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Model.Apply();
         }
     }
 }

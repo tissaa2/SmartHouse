@@ -2,7 +2,7 @@
 
 namespace SmartHouse.Models.Logic
 {
-    [IconName("device_fan.png", "Вентилятор")]
+    [IconName("device_fan.png", "Вентилятор", false)]
     public class Fan : DoubleStateDevice
     {
         public override string TypeName { get => "Вентилятор"; set => base.TypeName = value; }

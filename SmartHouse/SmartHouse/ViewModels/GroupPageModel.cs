@@ -42,7 +42,12 @@ namespace SmartHouse.ViewModels
         public bool DevicesMode
         {
             get { return devicesMode; }
-            set { devicesMode = value; OnPropertyChanged("DevicesMode"); OnPropertyChanged("ScenesMode"); }
+            set { devicesMode = value; OnPropertyChanged("DevicesMode"); OnPropertyChanged("AddButtonText"); OnPropertyChanged("ScenesMode"); }
+        }
+
+        public string AddButtonText
+        {
+            get { return devicesMode ? "Добавить устройство" : "Добавить сцену"; }
         }
 
         public bool ScenesMode

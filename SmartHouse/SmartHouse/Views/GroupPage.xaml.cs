@@ -202,8 +202,13 @@ namespace SmartHouse.Views
 
         }
 
-        private void ScenesItemDoubleTapRecognizer_DoubleTapped(object sender, EventArgs e)
+        private bool IsInactive = false;
+
+        private async void ScenesItemDoubleTapRecognizer_DoubleTapped(object sender, EventArgs e)
         {
+            if (IsInactive)
+                return;
+            IsInactive = true;
             if (sender is BindableObject)
             {
                 var bo = sender as BindableObject;
@@ -216,9 +221,10 @@ namespace SmartHouse.Views
                     sp.IsVisible = true;
                     sp.SetTarget(this.Model, s);
                     ScenesListView.SelectedItem = Model.Scenes.SelectedItem = s;
-                    Navigation.PushAsync(sp);
+                    await Navigation.PushAsync(sp);
                 }
             }
+            IsInactive = false;
         }
 
         private void InputDevicesButton_Pressed(object sender, EventArgs e)

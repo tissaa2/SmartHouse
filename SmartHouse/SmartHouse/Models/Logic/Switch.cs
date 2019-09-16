@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace SmartHouse.Models.Logic
 {
 
-    [IconName("device_switch.png", "Выключатель")]
+    [IconName("device_switch.png", "Выключатель", true)]
     public class Switch : BoolStateDevice
     {
-        public override string TypeName { get => "Кнопочная панель"; set => base.TypeName = value; }
+        public override string TypeName { get => "Выключатель"; set => base.TypeName = value; }
         public override string Icon { get => "device_panel.png"; set => base.Icon = value; }
         public override bool IsInput { get => true; set => base.IsInput = value; }
 

@@ -35,7 +35,7 @@ namespace SmartHouse.Views
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            DeviceTypesPicker.Focus();
+            // DeviceTypesPicker.Focus();
         }
 
         private void ApplyButton_Pressed(object sender, EventArgs e)

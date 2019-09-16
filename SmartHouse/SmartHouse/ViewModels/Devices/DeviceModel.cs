@@ -20,12 +20,56 @@ namespace SmartHouse.ViewModels
         }
     } */
 
+    public class PDeviceType
+    {
+        public int ID {get; set;}
+        public string Name { get; set; }
+        public PDeviceType(int id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
+    }
+
     public class DeviceModel : ViewModel
     {
 
-        public static List<EntityInfo> deviceTypes = BaseEntity<int>.GetInheritors(typeof(Device));
+        public static List<PDeviceType> InputDeviceTypes = new List<PDeviceType>()
+        {
+            new PDeviceType(0, "Выключатель(вкл/выкл)"),
+            new PDeviceType(1, "Кнопка(выкл/вкл)"),
+            new PDeviceType(2, "Датчик движения"),
+            new PDeviceType(3, "Выключатель зоны"),
+            new PDeviceType(4, "Выключатель всего"),
+            new PDeviceType(5, "Кнопка(вкл/выкл)"),
+            new PDeviceType(6, "Геркон"),
+            new PDeviceType(7, "Кнопка(вкл/выкл деактивация)"),
+            new PDeviceType(8, "Кнопка(вкл/выкл с задержкой)"),
+            new PDeviceType(9, "Контроллер охраны"),
+            new PDeviceType(10, "Кнопка управления шторами"),
+            new PDeviceType(11, "Кнопка(вкл)"),
+            new PDeviceType(12, "Кнопка(вкл/выкл) с двойным нажатием")
+        };
 
-        public List<EntityInfo> DeviceTypes { get { return deviceTypes; } }
+        public static List<PDeviceType> OutputDeviceTypes = new List<PDeviceType>()
+        {
+            new PDeviceType(0, "Димируемый выход"),
+            new PDeviceType(1, "Релейный выход")
+        };
+
+        public static List<EntityInfo> logicDeviceTypes = BaseEntity<int>.GetInheritors(typeof(Device));
+
+        public List<PDeviceType> PhysicDeviceTypes
+        {
+            get
+            {
+                if (IsInput)
+                        return InputDeviceTypes;
+                    else
+                        return OutputDeviceTypes;
+            }
+        }
+        public List<EntityInfo> LogicDeviceTypes { get { return logicDeviceTypes; } }
 
         public static readonly BindableProperty TypeIDProperty = BindableProperty.Create("TypeID", typeof(int), typeof(DeviceModel), default(int));
         private int typeID;
@@ -42,7 +86,7 @@ namespace SmartHouse.ViewModels
             get
             {
                 if (deviceType == null)
-                    deviceType = deviceTypes[typeID];
+                    deviceType = logicDeviceTypes[typeID];
                 return deviceType;
             }
             set
@@ -64,8 +108,6 @@ namespace SmartHouse.ViewModels
             get { return id; }
             set { id = value; OnPropertyChanged("ID"); /* device = null; OnPropertyChanged("Device"); */}
         }
-
-
 
         private string uid;
         public string UID
@@ -104,6 +146,8 @@ namespace SmartHouse.ViewModels
             set { portID = value; OnPropertyChanged("PortID"); }
         }
 
+        public bool IsInput { get; set; } 
+
         private byte securityLevel;
         [JsonProperty(PropertyName = "SecurityLevel")]
         public byte SecurityLevel
@@ -141,6 +185,7 @@ namespace SmartHouse.ViewModels
                 this.securityLevel = sm.securityLevel;
                 this.name = sm.name;
                 this.portID = sm.PortID;
+                this.IsInput = sm.IsInput;
             }
         }
 
@@ -163,10 +208,11 @@ namespace SmartHouse.ViewModels
                 this.name = d.Name;
                 this.securityLevel = d.SecurityLevel;
                 this.portID = d.PortID.ToString();
+                this.IsInput = d.IsInput;
                 if (args[0] is Type)
                 {
                     var t = args[0] as Type;
-                    DeviceType = DeviceTypes.FirstOrDefault(e => e.Type.Name == t.Name);
+                    DeviceType = LogicDeviceTypes.FirstOrDefault(e => e.Type.Name == t.Name);
                 }
             }
             base.Setup();

@@ -2,7 +2,7 @@
 
 namespace SmartHouse.Models.Logic
 {
-    [IconName("device_socket.png", "Розетка")]
+    [IconName("device_socket.png", "Розетка", false)]
     public class Socket : BoolStateDevice
     {
         public override string TypeName { get => "Розетка"; set => base.TypeName = value; }

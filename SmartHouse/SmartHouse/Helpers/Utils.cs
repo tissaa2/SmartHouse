@@ -74,6 +74,8 @@ namespace SmartHouse.Services
             bool responsePassed = false;
             bool response = false;
 
+            if (Client.CurrentServer == null)
+                return false;
             Client.CurrentServer.SendToCAN(request, 10000, Packet.GetControllerCommand(request), Packet.GetCANCommand(request),
                 uid, (p, e) =>
                 {

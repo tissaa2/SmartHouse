@@ -13,8 +13,8 @@
             <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding Name}" FontSize="Large"/>
         </StackLayout>
         
-        <Button x:Name="DevicesButton" HorizontalOptions="Fill" IsVisible="{Binding ScenesMode}" Pressed="DevicesButton_Pressed" Text="Показать устройства" />
-        <Grid HorizontalOptions="Fill" IsVisible="{Binding DevicesMode}">
+        <Button x:Name="DevicesButton" HeightRequest="48" HorizontalOptions="Fill" IsVisible="{Binding ScenesMode}" Pressed="DevicesButton_Pressed" Text="Показать устройства" />
+        <Grid HorizontalOptions="Fill" IsVisible="{Binding DevicesMode}" HeightRequest="64">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*" />
                 <ColumnDefinition Width="50*" />
@@ -23,7 +23,7 @@
             <Button x:Name="InputDevicesButton" IsVisible="{Binding OutputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="InputDevicesButton_Pressed" Text="Показать входы" />
             <Button x:Name="OutputDevicesButton" IsVisible="{Binding InputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="OutputDevicesButton_Pressed" Text="Показать выходы" />
         </Grid>
-        <ListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="White" HasUnevenRows="True" ItemsSource="{Binding Scenes.Items}" >
+        <ListView BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="White" HasUnevenRows="True" ItemsSource="{Binding Scenes.Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">
@@ -46,10 +46,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <controls:DevicesListView Grid.Row="2" BindingContext="{Binding .}" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+        <controls:DevicesListView BindingContext="{Binding .}" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
                                    ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
-        <!--<controls:DevicesListView Grid.Row="4" BindingContext="{Binding .}" HorizontalOptions="Fill" VerticalOptions="Fill" 
-                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />-->
         <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked"  HorizontalOptions="Fill"/>
         
     </StackLayout>

@@ -19,7 +19,6 @@ namespace SmartHouse.Controls
     public delegate void TouchEventDelegate(object sender, TouchEventArgs args);
 
     public class EFrame: Frame
-
     {
         public Coordinates LastTouchPosition { get; set; }
         public void ProcessTouchEvent(TouchEventArgs args)

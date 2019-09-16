@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ImageButton = SmartHouse.Controls.ImageButton;
+
 
 namespace SmartHouse.Views
 {
@@ -189,8 +191,13 @@ namespace SmartHouse.Views
 
         }
 
-        private void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        private bool IsInactive = false;
+
+        private async void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            if (IsInactive)
+                return;
+            IsInactive = true;
             if (sender is BindableObject)
             {
                 var bo = sender as BindableObject;
@@ -201,9 +208,10 @@ namespace SmartHouse.Views
                     pp.IsVisible = true;
                     pp.SetTarget(p);
                     ProjectsListView.SelectedItem = p;
-                    Navigation.PushAsync(pp);
+                    await Navigation.PushAsync(pp);
                 }
             }
+            IsInactive = false;
         }
 
         /* private void EditItem_Clicked(object sender, EventArgs e)

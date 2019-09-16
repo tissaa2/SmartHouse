@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartHouse.Controls.DevicesListView" 
              xmlns:controls="clr-namespace:SmartHouse.Controls" 
-             x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+             HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
                   HasUnevenRows="True">
     
     <ListView.Resources>

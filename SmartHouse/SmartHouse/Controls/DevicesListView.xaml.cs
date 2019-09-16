@@ -72,8 +72,13 @@ namespace SmartHouse.Controls
             DeviceStateChanged?.Invoke(sw.BindingContext as DeviceModel);
         }
 
-        private void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        private bool IsInactive = false;
+
+        private async void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            if (IsInactive)
+                return;
+            IsInactive = true;
             if (sender is BindableObject)
             {
                 var bo = sender as BindableObject;
@@ -85,9 +90,10 @@ namespace SmartHouse.Controls
                     dp.SetTarget(dm);
                     CurrentItem = dm;
                     SelectedItem = dm;
-                    Navigation.PushAsync(dp);
+                    await Navigation.PushAsync(dp);
                 }
             }
+            IsInactive = false;
         }
     }
 }

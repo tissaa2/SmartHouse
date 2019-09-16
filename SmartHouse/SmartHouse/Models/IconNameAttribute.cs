@@ -8,11 +8,13 @@ namespace SmartHouse.Models
     {
         public string Name { get; set; }
         public string Icon { get; set; }
+        public bool IsInput { get; set; }
 
-        public IconNameAttribute(string icon, string name)
+        public IconNameAttribute(string icon, string name, bool isInput)
         {
             Name = name;
             Icon = icon;
+            IsInput = isInput;
         }
     }
 }

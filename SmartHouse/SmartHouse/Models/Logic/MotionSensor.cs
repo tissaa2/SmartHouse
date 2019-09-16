@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SmartHouse.Models.Logic
 {
 
-    [IconName("device_motionsensor.png", "Датчик движения")]
+    [IconName("device_motionsensor.png", "Датчик движения", true)]
     public class MotionSensor : MultyBoolStateDevice
     {
         public override string TypeName { get => "Датчик движения"; set => base.TypeName = value; }

@@ -10,34 +10,16 @@
             <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}"/>
             <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HorizontalOptions="Fill" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}" Data="{Binding }" OnPressed="IconButton_Clicked"/>
             <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" VerticalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
-            <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" Text="{Binding Name}" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" Text="{Binding Name}" FontSize="Large" TextChanged="NameEntry_TextChanged"/>
         </StackLayout>
-        <Button x:Name="GroupEventButton" IsVisible="{Binding IsUIDEvent}" HorizontalOptions="Fill"  Pressed="GroupEventButton_Pressed" Text="Создать событие группы" />
-        <Button x:Name="UIDEventButton" IsVisible="{Binding IsGroupEvent}" HorizontalOptions="Fill"  Pressed="UIDEventButton_Pressed" Text="Создать UID событие" />
+        <!--<controls:TwoTextSwitch TextOn="Настенная панель" IsToggled="{Binding IsUIDEvent}" HorizontalOptions="Fill" TextOff="Выключатель"/> -->
+        <!--<Button x:Name="GroupEventButton" IsVisible="{Binding IsUIDEvent}" HorizontalOptions="Fill"  Pressed="GroupEventButton_Pressed" Text="Создать событие группы" />
+        <Button x:Name="UIDEventButton" IsVisible="{Binding IsGroupEvent}" HorizontalOptions="Fill"  Pressed="UIDEventButton_Pressed" Text="Создать UID событие" />-->
         <!--<StackLayout Orientation="Horizontal">-->
 
         <StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">
             <Label Margin="8, 8" Text="Источник" FontSize="Large" WidthRequest="150"/>
             <Picker IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}" />
-        </StackLayout>
-        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">
-            <Label IsVisible="{Binding IsUIDEvent}" Margin="8, 8" Text="Тип" FontSize="Large" WidthRequest="150"/>
-            <Picker Title="Выберите тип" IsVisible="{Binding IsUIDEvent}" SelectedIndex="{Binding TypeID}" HorizontalOptions="FillAndExpand">
-                <Picker.Items>
-                    <x:String>Выключатель(вкл/выкл)</x:String>
-                    <x:String>Кнопка(выкл/вкл)</x:String>
-                    <x:String>Датчик движения</x:String>
-                    <x:String>Выключатель зоны</x:String>
-                    <x:String>Выключатель всего</x:String>
-                    <x:String>Кнопка(вкл/выкл)</x:String>
-                    <x:String>Геркон</x:String>
-                    <x:String>Кнопка(вкл/выкл деактивация)</x:String>
-                    <x:String>Кнопка(вкл/выкл с задержкой)</x:String>
-                    <x:String>Контроллер охраны</x:String>
-                    <x:String>Кнопка управления шторами</x:String>
-                    <x:String>Кнопка(вкл)</x:String>
-                </Picker.Items>
-            </Picker>
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">

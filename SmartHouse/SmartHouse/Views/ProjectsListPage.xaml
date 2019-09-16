@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:SmartHouse"
              xmlns:controls="clr-namespace:SmartHouse.Controls" 
              x:Class="SmartHouse.Views.ProjectsListPage"
-             x:Name="ProjectsListPage"
              Title="Проекты"
 >
     <ContentPage.ToolbarItems>
@@ -77,7 +76,7 @@
                     <ViewCell Height="64">
                         <Grid Padding="8" ColumnSpacing="8">
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped"/>
+                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="1" Tapped="ItemGestureRecognizer_Tapped"/>
                             </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
@@ -94,6 +93,6 @@
         </ListView>
 
 
-        <Button IsVisible="{Binding IsAdmin}" x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked" Grid.Row="1"/>
+        <Button IsVisible="{Binding IsAdmin}" x:Name="AddButton" Text="Добавить новый проект" Clicked="AddButton_Clicked" Grid.Row="1"/>
     </Grid>
 </ContentPage>

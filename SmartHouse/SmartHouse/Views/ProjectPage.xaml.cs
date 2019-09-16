@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using System.Linq;
 using SmartHouse.Models;
 using System.Threading.Tasks;
+using ImageButton = SmartHouse.Controls.ImageButton;
 
 namespace SmartHouse.Views
 {
@@ -42,7 +43,7 @@ namespace SmartHouse.Views
 
         private void AddButton_Clicked(object sender, EventArgs e)
         {
-            Target.Items.Add(new Group(Project.IntID.NewID(), "Новая группа {0}", "room.png"));
+            Target.Items.Add(new Group(Project.IntID.NewID(), "Новая комната {0}", "room.png"));
         }
 
         //private void GroupsListView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -249,8 +250,13 @@ namespace SmartHouse.Views
             ProjectMenuPicker.Focus();
         }
 
-        private void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
+        private bool IsInactive = false;
+
+        private async void ItemGestureRecognizer_Tapped(object sender, EventArgs e)
         {
+            if (IsInactive)
+                return;
+            IsInactive = true;
             if (sender is BindableObject)
             {
                 var bo = sender as BindableObject;
@@ -261,9 +267,10 @@ namespace SmartHouse.Views
                     gp.IsVisible = true;
                     gp.SetTarget(g);
                     GroupsListView.SelectedItem = Model.SelectedItem = g;
-                    Navigation.PushAsync(gp);
+                    await Navigation.PushAsync(gp);
                 }
             }
+            IsInactive = false;
         }
     }
 }

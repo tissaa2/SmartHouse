@@ -31,6 +31,7 @@
       <DependentUpon>DevicesListView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TwoTextSwitch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PDeviceTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\EFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ESlider.xaml.cs">
