@@ -104,6 +104,7 @@ namespace SmartHouse.ViewModels
                 this.TypeID = ev.TypeID;
                 this.SelectedDevice = g.Devices.FirstOrDefault(e => e.ID == ev.UID);
             }
+            IsDirty = false;
         }
 
         public void Apply()
@@ -135,6 +136,7 @@ namespace SmartHouse.ViewModels
             t.Event = ev;
             t.Icon = icon;
             t.Name = name;
+            IsDirty = false;
         }
     }
 }

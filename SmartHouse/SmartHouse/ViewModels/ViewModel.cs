@@ -18,6 +18,23 @@ namespace SmartHouse.ViewModels
             return m;
         }
 
+        private bool isDirty = false;
+        public bool IsDirty
+        {
+            get
+            {
+                return isDirty;
+                // return (Project)GetValue(SelectedItemProperty);
+            }
+
+            set
+            {
+                OnPropertyChanging("IsDirty");
+                isDirty = value;
+                OnPropertyChanged("IsDirty");
+            }
+        }
+
         public Boolean IsAdmin { get { return SmartHouse.Models.Settings.Instance.IsAdmin; } }
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
 

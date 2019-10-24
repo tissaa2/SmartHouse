@@ -74,6 +74,7 @@ namespace SmartHouse.Views
             //    if (st != null)
             //        Target.Items.Remove(st);
             //}
+            Model.IsDirty = true;
         }
 
         // - порты должны нумероваться с 1
@@ -98,7 +99,8 @@ namespace SmartHouse.Views
                     //    (Model.Target as Scene).Icon = r;
                     //}
                     Model.Icon = r;
-                    Model.Apply();
+                    Model.IsDirty = true;
+                    // Model.Apply();
                 }
             });
         }
@@ -136,7 +138,37 @@ namespace SmartHouse.Views
 
         private void NameEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Model.Apply();
+            Model.IsDirty = true;
+            // Model.Apply();
+        }
+
+        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model.IsDirty = true;
+        }
+
+        private void Picker_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            Model.IsDirty = true;
+
+        }
+
+        private void DevicePicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model.IsDirty = true;
+
+        }
+
+        private void TimeParEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Model.IsDirty = true;
+
+        }
+
+        private void InputIDEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Model.IsDirty = true;
+
         }
     }
 }

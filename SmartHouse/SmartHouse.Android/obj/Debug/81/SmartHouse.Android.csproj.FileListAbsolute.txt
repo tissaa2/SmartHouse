@@ -116,6 +116,7 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\System.Runtime.S
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\System.ServiceModel.Internals.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\System.Web.Services.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\Mono.Security.pdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\FormsViewGroup.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\Mono.Android.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\mscorlib.pdb
@@ -138,7 +139,6 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\Syste
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\System.Web.Services.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\Mono.Security.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\SmartHouse.Android.dll.mdb
-C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\assets\SmartHouse.Android.dll.mdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\assets\FormsViewGroup.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\assets\Mono.Android.pdb

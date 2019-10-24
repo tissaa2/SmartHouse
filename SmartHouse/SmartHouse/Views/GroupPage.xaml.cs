@@ -185,8 +185,10 @@ namespace SmartHouse.Views
         private void ScenesButton_Pressed(object sender, EventArgs e)
         {
             Model.ScenesMode = true;
+            Model.InputsMode = false;
+            LoadDevices(Model.InputsMode);
         }
-        
+
         private void ScenesItemTapRecognizer_Tapped(object sender, EventArgs e)
         {
             if (sender is BindableObject)
