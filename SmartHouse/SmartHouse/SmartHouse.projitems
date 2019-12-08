@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\MultyBoolStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\MotionSensor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\GroupSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Switch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Panel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Packets\FileHeaderData.cs" />

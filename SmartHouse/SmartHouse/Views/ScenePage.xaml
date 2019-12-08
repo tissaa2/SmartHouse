@@ -16,8 +16,9 @@
         <!--<Button x:Name="GroupEventButton" IsVisible="{Binding IsUIDEvent}" HorizontalOptions="Fill"  Pressed="GroupEventButton_Pressed" Text="Создать событие группы" />
         <Button x:Name="UIDEventButton" IsVisible="{Binding IsGroupEvent}" HorizontalOptions="Fill"  Pressed="UIDEventButton_Pressed" Text="Создать UID событие" />-->
         <!--<StackLayout Orientation="Horizontal">-->
+        <!--<StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">-->
 
-        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">
+        <StackLayout Orientation="Horizontal">
             <Label Margin="8, 8" Text="Источник" FontSize="Large" WidthRequest="150"/>
             <Picker x:Name="DevicePicker" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}"  SelectedIndexChanged="DevicePicker_SelectedIndexChanged"/>
         </StackLayout>
@@ -35,6 +36,7 @@
                 </Picker.Items>
             </Picker>
         </StackLayout>
+        
         <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">
             <Label IsVisible="{Binding IsGroupEvent}" Margin="8, 8" Text="Время" FontSize="Large" WidthRequest="150"/>
             <Entry x:Name="TimeParEntry" IsVisible="{Binding IsGroupEvent}" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding TimePar}" FontSize="Large" TextChanged="TimeParEntry_TextChanged"/>

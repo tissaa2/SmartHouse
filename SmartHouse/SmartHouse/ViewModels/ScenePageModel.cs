@@ -16,6 +16,7 @@ namespace SmartHouse.ViewModels
         {
             get
             {
+                IsGroupEvent = selectedDevice is GroupSource;
                 return selectedDevice;
                 // return (Project)GetValue(SelectedItemProperty);
             }
@@ -44,10 +45,12 @@ namespace SmartHouse.ViewModels
                 OnPropertyChanged("Devices");
             }
         }
+        // закомментил, ибо надо будет добавить групповое событие в список источников устройств и определять тип события исходя и выбранности его
+        //public bool IsGroupEvent { get => isGroupEvent; set { isGroupEvent = value; OnPropertyChanged("IsGroupEvent"); OnPropertyChanged("IsUIDEvent"); } }
+        //public bool IsUIDEvent { get => !isGroupEvent; set { IsGroupEvent = !value; } }
 
         private bool isGroupEvent = false;
         public bool IsGroupEvent { get => isGroupEvent; set { isGroupEvent = value; OnPropertyChanged("IsGroupEvent"); OnPropertyChanged("IsUIDEvent"); } }
-
         public bool IsUIDEvent { get => !isGroupEvent; set { IsGroupEvent = !value; } }
 
         private int inputID;
@@ -87,22 +90,25 @@ namespace SmartHouse.ViewModels
             Group g = groupPage.Target as Group;
             Target = scene;
             Devices = new ObservableCollection<Device>(g.Devices.Where(e => e.IsInput).Select(e => e));
+            Devices.Insert(0, new GroupSource());
             this.GroupID = (byte)g.ID;
             this.InputID = scene.Event.InputID;
-            this.IsGroupEvent = scene.Event is GroupEvent;
+            IsGroupEvent = scene.Event is GroupEvent;
             Icon = scene.Icon;
             Name = scene.Name;
-            if (isGroupEvent)
+            if (IsGroupEvent)
             {
                 var ev = scene.Event as GroupEvent;
                 this.TimePar = ev.TimePar;
                 this.CategoryID = ev.CategoryID;
+                this.SelectedDevice = Devices.FirstOrDefault(e => e is GroupSource);
             }
             else
             {
                 var ev = scene.Event as UIDEvent;
                 this.TypeID = ev.TypeID;
-                this.SelectedDevice = g.Devices.FirstOrDefault(e => e.ID == ev.UID);
+                // this.SelectedDevice = g.Devices.FirstOrDefault(e => e.UID == ev.UID && e.PortID == ev.InputID);
+                this.SelectedDevice = Devices.FirstOrDefault(e => e.ID == ev.DeviceID);
             }
             IsDirty = false;
         }
@@ -119,6 +125,7 @@ namespace SmartHouse.ViewModels
                     t.Items.Add(st);
                 }
             Event ev;
+            // bool isGroupEvent = SelectedDevice is GroupSource;
             if (isGroupEvent)
             {
                 var gev = new GroupEvent() { CategoryID = CategoryID, TimePar = TimePar, GroupID = GroupID };
@@ -129,7 +136,8 @@ namespace SmartHouse.ViewModels
                 int uid = 0;
                 if (selectedDevice != null)
                     uid = selectedDevice.UID.Hash;
-                var uev = new UIDEvent() {UID =  new Models.UID(uid), TypeID = TypeID};
+                // var uev = new UIDEvent() { UID = new Models.UID(uid), TypeID = TypeID };
+                var uev = new UIDEvent() { DeviceID = selectedDevice.ID, TypeID = TypeID };
                 ev = uev;
             }
             ev.InputID = (byte)InputID;

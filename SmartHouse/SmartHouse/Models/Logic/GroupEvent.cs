@@ -23,5 +23,10 @@ namespace SmartHouse.Models.Logic
             CategoryID = categoryId;
             TimePar = timePar;
         }
+
+        public override UID GetUID(Group group)
+        {
+            return new UID(0, 0, GroupID);
+        }
     }
 }

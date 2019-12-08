@@ -47,8 +47,10 @@ namespace SmartHouse.Models.Logic
             //        (d as BoolStateDevice).ApplyState(i.Value);
             //}
 
-            
-            UID id = Event is UIDEvent ? (Event as UIDEvent).UID : new UID(0, 0, (Event as GroupEvent).GroupID);
+
+            // UID id = Event is UIDEvent ? (Event as UIDEvent).UID : new UID(0, 0, (Event as GroupEvent).GroupID);
+
+            UID id = Event.GetUID(group);
 
             var ar = await Utils.P(Packet.CreateActivateSceneRequest(id, Event.InputID, Event.TypeID, 4, 0), 0);
             //ar.Wait();
@@ -57,7 +59,8 @@ namespace SmartHouse.Models.Logic
                 Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
         }
 
-        public Event Event { get; set; } = new UIDEvent(0, new UID(0));
+        public Event Event { get; set; } = new UIDEvent(0, 0);
+        // public Event Event { get; set; } = new UIDEvent(0, new UID(0));
         // public string Event { get; set; }
 
         public Scene()

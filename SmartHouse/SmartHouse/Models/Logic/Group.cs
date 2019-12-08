@@ -65,6 +65,8 @@ namespace SmartHouse.Models.Logic
             // var uid0 = new UID(0x189);
             var uid0 = new UID(0x2f9);
             int lampID = Lamp.IntID.NewID();
+            int offSwitchID = Switch.IntID.NewID();
+            int onSwitchID = Switch.IntID.NewID();
             var g = new Group()
             {
                 Name = name,
@@ -73,8 +75,8 @@ namespace SmartHouse.Models.Logic
                 Devices = new ObservableCollection<Device>()
                 {
                     new Lamp(lampID, "Люстра", 50, uid0, 6),
-                    new Switch(IntID.NewID(), "Кнопка выкл", true, uid0, 2),
-                    new Switch(IntID.NewID(), "Кнопка вкл", true, uid0, 3),
+                    new Switch(offSwitchID, "Кнопка выкл", true, uid0, 2),
+                    new Switch(onSwitchID, "Кнопка вкл", true, uid0, 3),
                 }
             };
 
@@ -82,12 +84,12 @@ namespace SmartHouse.Models.Logic
                                 {
                                     new Scene("Выключить все", "scene_switchoff.png",
                                          // new UIDEvent(2, new UID(0x189)),
-                                         new UIDEvent(2, new UID(0x2f9)),
+                                         new UIDEvent(2, offSwitchID),
                                          new  List<DeviceState>(){ new DeviceState(lampID, "0")}, 
                                          0),
                                     new Scene("Полный свет", "scene_brightlight.png",
                                          // new UIDEvent(3, new UID(0x189)),
-                                         new UIDEvent(3, new UID(0x2f9)),
+                                         new UIDEvent(3, onSwitchID),
                                          new  List<DeviceState>(){new DeviceState(lampID, "100")}, 100)
                                 };
 

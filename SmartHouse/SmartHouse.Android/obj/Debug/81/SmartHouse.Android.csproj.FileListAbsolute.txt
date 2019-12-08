@@ -161,5 +161,6 @@ C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\asset
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\assets\Xamarin.Forms.Core.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\assets\Xamarin.Forms.Platform.Android.pdb
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\android\assets\Xamarin.Forms.Xaml.pdb
+C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\res\drawable\device_groupsource.png
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\bin\Debug\SmartHouse.Android.dll
 C:\HouseLink\SmartHouse\SmartHouse\SmartHouse.Android\obj\Debug\81\linksrc\SmartHouse.Android.dll.mdb

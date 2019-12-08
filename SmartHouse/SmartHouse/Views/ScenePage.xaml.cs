@@ -126,15 +126,15 @@ namespace SmartHouse.Views
 
         }
 
-        private void GroupEventButton_Pressed(object sender, EventArgs e)
-        {
-            Model.IsGroupEvent = true;
-        }
+        //private void GroupEventButton_Pressed(object sender, EventArgs e)
+        //{
+        //    Model.IsGroupEvent = true;
+        //}
 
-        private void UIDEventButton_Pressed(object sender, EventArgs e)
-        {
-            Model.IsUIDEvent = true;
-        }
+        //private void UIDEventButton_Pressed(object sender, EventArgs e)
+        //{
+        //    Model.IsUIDEvent = true;
+        //}
 
         private void NameEntry_TextChanged(object sender, TextChangedEventArgs e)
         {

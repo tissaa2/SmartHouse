@@ -166,7 +166,8 @@ namespace SmartHouse.Views
                                 v = b ? 0 : 1;
                         }
                         if (!pd.Scenes.ContainsKey(s.ID))
-                            pd.Scenes.Add(s.ID, new PScene(s.ID, s.Event is UIDEvent ? (s.Event as UIDEvent).UID : new UID(0, 0, (s.Event as GroupEvent).GroupID), s.Event.InputID, s.Event.TypeID ));
+                            pd.Scenes.Add(s.ID, new PScene(s.ID, s.Event.GetUID(g), s.Event.InputID, s.Event.TypeID));
+                            // pd.Scenes.Add(s.ID, new PScene(s.ID, s.Event is UIDEvent ? (s.Event as UIDEvent).UID : new UID(0, 0, (s.Event as GroupEvent).GroupID), s.Event.InputID, s.Event.TypeID));
                         var ps = pd.Scenes[s.ID];
                         ps.OutputStates.Add(d.PortID, v);
                     }
