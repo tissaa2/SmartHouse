@@ -11,6 +11,18 @@ namespace SmartHouse.ViewModels
 
     public class ScenePageModel: ListViewModel<DeviceModel> 
     {
+        private T CheckIsDirty<T>(T oldValue, T newValue, string eventName)
+        {
+            if (oldValue.Equals(newValue))
+                return oldValue;
+            else
+            {
+                IsDirty = true;
+                OnPropertyChanged(eventName);
+                return newValue;
+            }
+        }
+
         private Device selectedDevice = null;
         public Device SelectedDevice
         {
@@ -24,8 +36,9 @@ namespace SmartHouse.ViewModels
             set
             {
                 OnPropertyChanging("SelectedDevice");
-                selectedDevice = value;
-                OnPropertyChanged("SelectedDevice");
+                //selectedDevice = value;
+                //OnPropertyChanged("SelectedDevice");
+                selectedDevice = CheckIsDirty<Device>(selectedDevice, value, "SelectedDevice");
             }
         }
 
@@ -41,8 +54,9 @@ namespace SmartHouse.ViewModels
             set
             {
                 OnPropertyChanging("Devices");
-                devices = value;
-                OnPropertyChanged("Devices");
+                //devices = value;
+                //OnPropertyChanged("Devices");
+                devices = CheckIsDirty<ObservableCollection<Device>>(devices, value, "Devices");
             }
         }
         // закомментил, ибо надо будет добавить групповое событие в список источников устройств и определять тип события исходя и выбранности его
@@ -50,29 +64,90 @@ namespace SmartHouse.ViewModels
         //public bool IsUIDEvent { get => !isGroupEvent; set { IsGroupEvent = !value; } }
 
         private bool isGroupEvent = false;
-        public bool IsGroupEvent { get => isGroupEvent; set { isGroupEvent = value; OnPropertyChanged("IsGroupEvent"); OnPropertyChanged("IsUIDEvent"); } }
+        public bool IsGroupEvent {
+            get => isGroupEvent;
+            set {
+                if (isGroupEvent != value)
+                {
+                    isGroupEvent = value;
+                    OnPropertyChanged("IsGroupEvent");
+                    OnPropertyChanged("IsUIDEvent");
+                    IsDirty = true;
+                }
+            }
+        }
+
         public bool IsUIDEvent { get => !isGroupEvent; set { IsGroupEvent = !value; } }
 
         private int inputID;
-        public int InputID { get => inputID; set { inputID = value; OnPropertyChanged("InputID"); } }
+        public int InputID {
+            get => inputID;
+            set {
+                // inputID = value;
+                // OnPropertyChanged("InputID");
+                inputID = CheckIsDirty<int>(inputID, value, "InputID");
+            }
+        }
 
         private byte groupID;
-        public byte GroupID { get => groupID; set { groupID = value; OnPropertyChanged("GroupID"); } }
+        public byte GroupID {
+            get => groupID;
+            set {
+                //groupID = value;
+                //OnPropertyChanged("GroupID");
+                groupID = CheckIsDirty<byte>(groupID, value, "GroupID");
+            }
+        }
 
         private byte categoryID;
-        public byte CategoryID { get => categoryID; set { categoryID = value; OnPropertyChanged("CategoryID"); } }
+        public byte CategoryID {
+            get => categoryID;
+            set {
+                //categoryID = value;
+                //OnPropertyChanged("CategoryID");
+                categoryID = CheckIsDirty<byte>(categoryID, value, "CategoryID");
+            }
+        }
 
         private byte timePar;
-        public byte TimePar { get => timePar; set { timePar = value; OnPropertyChanged("TimePar"); } }
+        public byte TimePar {
+            get => timePar;
+            set {
+                //timePar = value;
+                //OnPropertyChanged("TimePar");
+                timePar = CheckIsDirty<byte>(timePar, value, "TimePar");
+            }
+        }
 
         private byte typeID;
-        public byte TypeID { get => typeID; set { typeID = value; OnPropertyChanged("TypeID"); } }
+        public byte TypeID {
+            get => typeID;
+            set {
+                //typeID = value;
+                //OnPropertyChanged("TypeID");
+                typeID = CheckIsDirty<byte>(typeID, value, "TypeID");
+            }
+        }
 
         private string name;
-        public string Name { get => name; set { name = value; OnPropertyChanged("Name"); } }
+        public string Name {
+            get => name;
+            set {
+                //name = value;
+                //OnPropertyChanged("Name");
+                name = CheckIsDirty<string>(name, value, "Name");
+            }
+        }
 
         private string icon;
-        public string Icon { get => icon; set { icon = value; OnPropertyChanged("Icon"); } }
+        public string Icon {
+            get => icon;
+            set {
+                //icon = value;
+                //OnPropertyChanged("Icon");
+                icon = CheckIsDirty<string>(icon, value, "Icon");
+            }
+        }
 
         /* private string UID;
         public string UID { get => inputID; set { inputID = value; OnPropertyChanged("InputID"); } } */
@@ -113,9 +188,9 @@ namespace SmartHouse.ViewModels
             IsDirty = false;
         }
 
-        в редакторе физ устройства сделать рабочий тип входа
-        там же пофиксить кнопку 'Привенить'. пофиксить ее вообще везде
-        в редакторе сцены автоматически проставлять номер порта (поменять на 'входа') 
+        // в редакторе физ устройства сделать рабочий тип входа
+        // там же пофиксить кнопку 'Привенить'. пофиксить ее вообще везде
+        // > в редакторе сцены автоматически проставлять номер порта (поменять на 'входа') 
           
         public void Apply()
         {

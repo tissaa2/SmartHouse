@@ -25,7 +25,7 @@
 
         <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">
             <Label IsVisible="{Binding IsGroupEvent}" Margin="8, 8" Text="Категория" FontSize="Large" WidthRequest="150"/>
-            <Picker x:Name="TypePicker" Title="Выберите категорию" IsVisible="{Binding IsGroupEvent}" SelectedIndex="{Binding CategoryID}" HorizontalOptions="FillAndExpand" SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker x:Name="TypePicker" Title="Выберите категорию" IsVisible="{Binding IsGroupEvent}" SelectedIndex="{Binding CategoryID}" HorizontalOptions="FillAndExpand" SelectedIndexChanged="TypePicker_SelectedIndexChanged">
                 <Picker.Items>
                     <x:String>Включить с диммированием</x:String>
                     <x:String>Выведенная кнопка</x:String>

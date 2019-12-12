@@ -138,36 +138,29 @@ namespace SmartHouse.Views
 
         private void NameEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Model.IsDirty = true;
+            // Model.IsDirty = true;
             // Model.Apply();
-        }
-
-        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Model.IsDirty = true;
-        }
-
-        private void Picker_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            Model.IsDirty = true;
-
         }
 
         private void DevicePicker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.IsDirty = true;
-
+            // Model.IsDirty = true;
+            if (Model.SelectedDevice != null)
+                Model.InputID = Model.SelectedDevice.PortID;
         }
 
         private void TimeParEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Model.IsDirty = true;
-
+            // Model.IsDirty = true;
         }
 
         private void InputIDEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Model.IsDirty = true;
+            // Model.IsDirty = true;
+        }
+
+        private void TypePicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
