@@ -29,7 +29,7 @@ namespace SmartHouse.ViewModels
 
             set
             {
-                OnPropertyChanging("IsDirty");
+                // OnPropertyChanging("IsDirty");
                 isDirty = value;
                 OnPropertyChanged("IsDirty");
             }

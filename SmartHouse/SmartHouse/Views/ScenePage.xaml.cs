@@ -51,7 +51,7 @@ namespace SmartHouse.Views
             // Instance = this;
             this.InitializeComponent();
             BindingContext = Model = new ScenePageModel(null/* , this.Resources["viewEditTemplateSelector"] as ViewEditTemplateSelector */);
-            DevicesListView.DeviceStateChanged += DevicesListView_DeviceStateChanged;
+            // DevicesListView.DeviceStateChanged += DevicesListView_DeviceStateChanged;
         }
 
         private void DevicesListView_DeviceStateChanged(DeviceModel sender)
@@ -74,7 +74,7 @@ namespace SmartHouse.Views
             //    if (st != null)
             //        Target.Items.Remove(st);
             //}
-            Model.IsDirty = true;
+            // Model.IsDirty = true;
         }
 
         // - порты должны нумероваться с 1

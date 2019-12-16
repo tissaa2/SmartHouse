@@ -53,23 +53,23 @@ namespace SmartHouse.Controls
 
         private void ESlider_ValueChanged(object sender, ESliderValueChangeEvents args)
         {
-            // var dm = (sender as Slider).BindingContext as DeviceModel;
-            var dm = (sender as ESlider).BindingContext as DeviceModel;
-            // dm.Device.ApplyState(args.Value.ToString());
-            DeviceStateChanged?.Invoke(dm); 
+            //// var dm = (sender as Slider).BindingContext as DeviceModel;
+            //var dm = (sender as ESlider).BindingContext as DeviceModel;
+            //// dm.Device.ApplyState(args.Value.ToString());
+            //DeviceStateChanged?.Invoke(dm);
         }
 
         private void ESocketSwitch_Toggled(object sender, ToggledEventArgs e)
         {
-            var dm = (sender as ESocketSwitch).BindingContext as DeviceModel;
-            // dm.Device.ApplyState(e.Value.ToString());
-            DeviceStateChanged?.Invoke(dm);
+            //var dm = (sender as ESocketSwitch).BindingContext as DeviceModel;
+            //// dm.Device.ApplyState(e.Value.ToString());
+            //DeviceStateChanged?.Invoke(dm);
         }
 
         private void EnabledSwitch_Toggled(object sender, ToggledEventArgs e)
         {
-            var sw = sender as Switch;
-            DeviceStateChanged?.Invoke(sw.BindingContext as DeviceModel);
+            //var sw = sender as Switch;
+            //DeviceStateChanged?.Invoke(sw.BindingContext as DeviceModel);
         }
 
         private bool IsInactive = false;

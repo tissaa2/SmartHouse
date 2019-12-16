@@ -11,9 +11,11 @@ namespace SmartHouse.ViewModels
 
     public class ScenePageModel: ListViewModel<DeviceModel> 
     {
-        private T CheckIsDirty<T>(T oldValue, T newValue, string eventName)
+
+        private object CheckIsDirty(object oldValue, object newValue, string eventName)
         {
-            if (oldValue.Equals(newValue))
+
+            if (Object.Equals(oldValue, newValue))
                 return oldValue;
             else
             {
@@ -38,7 +40,7 @@ namespace SmartHouse.ViewModels
                 OnPropertyChanging("SelectedDevice");
                 //selectedDevice = value;
                 //OnPropertyChanged("SelectedDevice");
-                selectedDevice = CheckIsDirty<Device>(selectedDevice, value, "SelectedDevice");
+                selectedDevice = CheckIsDirty(selectedDevice, value, "SelectedDevice") as Device;
             }
         }
 
@@ -53,10 +55,11 @@ namespace SmartHouse.ViewModels
 
             set
             {
+
                 OnPropertyChanging("Devices");
                 //devices = value;
                 //OnPropertyChanged("Devices");
-                devices = CheckIsDirty<ObservableCollection<Device>>(devices, value, "Devices");
+                devices = CheckIsDirty(devices, value, "Devices") as ObservableCollection<Device>;
             }
         }
         // закомментил, ибо надо будет добавить групповое событие в список источников устройств и определять тип события исходя и выбранности его
@@ -85,7 +88,7 @@ namespace SmartHouse.ViewModels
             set {
                 // inputID = value;
                 // OnPropertyChanged("InputID");
-                inputID = CheckIsDirty<int>(inputID, value, "InputID");
+                inputID = (int)CheckIsDirty(inputID, value, "InputID");
             }
         }
 
@@ -95,7 +98,7 @@ namespace SmartHouse.ViewModels
             set {
                 //groupID = value;
                 //OnPropertyChanged("GroupID");
-                groupID = CheckIsDirty<byte>(groupID, value, "GroupID");
+                groupID = (byte)CheckIsDirty(groupID, value, "GroupID");
             }
         }
 
@@ -105,7 +108,7 @@ namespace SmartHouse.ViewModels
             set {
                 //categoryID = value;
                 //OnPropertyChanged("CategoryID");
-                categoryID = CheckIsDirty<byte>(categoryID, value, "CategoryID");
+                categoryID = (byte)CheckIsDirty(categoryID, value, "CategoryID");
             }
         }
 
@@ -115,7 +118,7 @@ namespace SmartHouse.ViewModels
             set {
                 //timePar = value;
                 //OnPropertyChanged("TimePar");
-                timePar = CheckIsDirty<byte>(timePar, value, "TimePar");
+                timePar = (byte)CheckIsDirty(timePar, value, "TimePar");
             }
         }
 
@@ -125,7 +128,7 @@ namespace SmartHouse.ViewModels
             set {
                 //typeID = value;
                 //OnPropertyChanged("TypeID");
-                typeID = CheckIsDirty<byte>(typeID, value, "TypeID");
+                typeID = (byte)CheckIsDirty(typeID, value, "TypeID");
             }
         }
 
@@ -135,7 +138,7 @@ namespace SmartHouse.ViewModels
             set {
                 //name = value;
                 //OnPropertyChanged("Name");
-                name = CheckIsDirty<string>(name, value, "Name");
+                name = CheckIsDirty(name, value, "Name") as string;
             }
         }
 
@@ -145,7 +148,7 @@ namespace SmartHouse.ViewModels
             set {
                 //icon = value;
                 //OnPropertyChanged("Icon");
-                icon = CheckIsDirty<string>(icon, value, "Icon");
+                icon = CheckIsDirty(icon, value, "Icon") as string;
             }
         }
 
@@ -159,7 +162,11 @@ namespace SmartHouse.ViewModels
         {
             // Items = items;
         }
-
+        логические устройства убрать из интерфейсов. вместо них юзать модели
+        в DevicesListView поменять Device на Device model
+        в Группе - то же.  
+        в ScenePageModel - то же
+        
         public void Assign(Scene scene, GroupPageModel groupPage)
         {
             Group g = groupPage.Target as Group;
