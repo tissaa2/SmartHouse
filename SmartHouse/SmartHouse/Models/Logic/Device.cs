@@ -9,6 +9,8 @@ namespace SmartHouse.Models.Logic
     {
         public virtual string TypeName { get; set; }
         public byte PortID { get; set; } = 0;
+        [JsonIgnore]
+        public byte PortTypeID { get; set; } = 0;
         public UID UID { get; set; }
         public virtual bool IsInput { get; set; }
 

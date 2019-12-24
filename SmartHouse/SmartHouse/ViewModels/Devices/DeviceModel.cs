@@ -22,12 +22,16 @@ namespace SmartHouse.ViewModels
 
     public class PPortType
     {
-        public int ID {get; set;}
+        public byte ID {get; set;}
         public string Name { get; set; }
-        public PPortType(int id, string name)
+        public PPortType(byte id, string name)
         {
             ID = id;
             Name = name;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 
@@ -103,7 +107,15 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public int PortTypeID { get; set; }
+        private int portTypeID;
+        public int PortTypeID
+        {
+            get => portTypeID;
+            set
+            {
+                CheckIsDirty(portType, value, "PortTypeID", () => { portTypeID = value; PortType = GetPortType(portTypeID, Device); });
+            }
+        }
 
         private PPortType portType = null;
         public PPortType PortType
@@ -237,6 +249,7 @@ namespace SmartHouse.ViewModels
                 this.securityLevel = sm.securityLevel;
                 this.name = sm.name;
                 this.portID = sm.PortID;
+                this.PortTypeID = sm.PortTypeID;
                 this.IsInput = sm.IsInput;
             }
         }
@@ -248,6 +261,16 @@ namespace SmartHouse.ViewModels
             else
             if (Device is BoolStateDevice)
                 (Device as BoolStateDevice).ApplyState(state);
+        }
+
+        private PPortType GetPortType(int id, Device d)
+        {
+            if (d == null)
+                return null;
+            if (d.IsInput)
+                return InputPortTypes.FirstOrDefault(e => e.ID == d.PortTypeID);
+            else
+                return OutputPortTypes.FirstOrDefault(e => e.ID == d.PortTypeID);
         }
 
         public override void Setup(params object[] args)
@@ -262,6 +285,7 @@ namespace SmartHouse.ViewModels
                 this.securityLevel = d.SecurityLevel;
                 this.portID = d.PortID.ToString();
                 this.IsInput = d.IsInput;
+                this.portType = GetPortType(d.ID, d);
                 if (args[0] is Type)
                 {
                     var t = args[0] as Type;
@@ -287,6 +311,8 @@ namespace SmartHouse.ViewModels
             if (int.TryParse(PortID, out v))
                 device.PortID = (byte)v;
             device.Name = Name;
+            if (portType != null)
+                device.PortTypeID = portType.ID;
             device.SecurityLevel = SecurityLevel;
             IsDirty = false;
         }
