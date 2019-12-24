@@ -12,54 +12,43 @@ namespace SmartHouse.ViewModels
     public class ScenePageModel: ListViewModel<DeviceModel> 
     {
 
-        private object CheckIsDirty(object oldValue, object newValue, string eventName)
-        {
-
-            if (Object.Equals(oldValue, newValue))
-                return oldValue;
-            else
-            {
-                IsDirty = true;
-                OnPropertyChanged(eventName);
-                return newValue;
-            }
-        }
-
-        private Device selectedDevice = null;
-        public Device SelectedDevice
+        private DeviceModel selectedSource = null;
+        public DeviceModel SelectedSource
         {
             get
             {
-                IsGroupEvent = selectedDevice is GroupSource;
-                return selectedDevice;
+                IsGroupEvent = selectedSource is GroupSourceModel;
+                return selectedSource;
                 // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
-                OnPropertyChanging("SelectedDevice");
+                OnPropertyChanging("SelectedSource");
                 //selectedDevice = value;
                 //OnPropertyChanged("SelectedDevice");
-                selectedDevice = CheckIsDirty(selectedDevice, value, "SelectedDevice") as Device;
+                // selectedDevice = CheckIsDirty(selectedDevice, value, "SelectedDevice") as DeviceModel;
+                CheckIsDirty(selectedSource, value, "SelectedSource", ()=> selectedSource = value);
             }
         }
 
-        private ObservableCollection<Device> devices;
-        public ObservableCollection<Device> Devices
+        private ObservableCollection<DeviceModel> sources;
+        public ObservableCollection<DeviceModel> Sources
         {
             get
             {
-                return devices;
+                return sources;
                 // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
 
-                OnPropertyChanging("Devices");
+                OnPropertyChanging("Sources");
                 //devices = value;
                 //OnPropertyChanged("Devices");
-                devices = CheckIsDirty(devices, value, "Devices") as ObservableCollection<Device>;
+                // devices = CheckIsDirty(devices, value, "Devices") as ObservableCollection<DeviceModel>;
+                CheckIsDirty(sources, value, "Sources", ()=> sources = value);
             }
         }
         // закомментил, ибо надо будет добавить групповое событие в список источников устройств и определять тип события исходя и выбранности его
@@ -88,7 +77,8 @@ namespace SmartHouse.ViewModels
             set {
                 // inputID = value;
                 // OnPropertyChanged("InputID");
-                inputID = (int)CheckIsDirty(inputID, value, "InputID");
+                // inputID = (int)CheckIsDirty(inputID, value, "InputID");
+                CheckIsDirty(inputID, value, "InputID", () => inputID = value);
             }
         }
 
@@ -98,7 +88,8 @@ namespace SmartHouse.ViewModels
             set {
                 //groupID = value;
                 //OnPropertyChanged("GroupID");
-                groupID = (byte)CheckIsDirty(groupID, value, "GroupID");
+                // groupID = (byte)CheckIsDirty(groupID, value, "GroupID");
+                CheckIsDirty(groupID, value, "GroupID", ()=>groupID = value);
             }
         }
 
@@ -108,7 +99,8 @@ namespace SmartHouse.ViewModels
             set {
                 //categoryID = value;
                 //OnPropertyChanged("CategoryID");
-                categoryID = (byte)CheckIsDirty(categoryID, value, "CategoryID");
+                // categoryID = (byte)CheckIsDirty(categoryID, value, "CategoryID");
+                CheckIsDirty(categoryID, value, "CategoryID", ()=>categoryID = value);
             }
         }
 
@@ -118,7 +110,8 @@ namespace SmartHouse.ViewModels
             set {
                 //timePar = value;
                 //OnPropertyChanged("TimePar");
-                timePar = (byte)CheckIsDirty(timePar, value, "TimePar");
+                // timePar = (byte)CheckIsDirty(timePar, value, "TimePar");
+                CheckIsDirty(timePar, value, "TimePar", ()=>timePar = value);
             }
         }
 
@@ -128,7 +121,8 @@ namespace SmartHouse.ViewModels
             set {
                 //typeID = value;
                 //OnPropertyChanged("TypeID");
-                typeID = (byte)CheckIsDirty(typeID, value, "TypeID");
+                // typeID = (byte)CheckIsDirty(typeID, value, "TypeID");
+                CheckIsDirty(typeID, value, "TypeID", ()=>typeID = value);
             }
         }
 
@@ -138,7 +132,8 @@ namespace SmartHouse.ViewModels
             set {
                 //name = value;
                 //OnPropertyChanged("Name");
-                name = CheckIsDirty(name, value, "Name") as string;
+                // name = CheckIsDirty(name, value, "Name") as string;
+                CheckIsDirty(name, value, "Name", () => name = value);
             }
         }
 
@@ -148,7 +143,8 @@ namespace SmartHouse.ViewModels
             set {
                 //icon = value;
                 //OnPropertyChanged("Icon");
-                icon = CheckIsDirty(icon, value, "Icon") as string;
+                // icon = CheckIsDirty(icon, value, "Icon") as string;
+                CheckIsDirty(icon, value, "Icon", ()=> icon = value);
             }
         }
 
@@ -162,17 +158,31 @@ namespace SmartHouse.ViewModels
         {
             // Items = items;
         }
-        логические устройства убрать из интерфейсов. вместо них юзать модели
-        в DevicesListView поменять Device на Device model
-        в Группе - то же.  
-        в ScenePageModel - то же
+
+        //логические устройства убрать из интерфейсов. вместо них юзать модели
+        //в DevicesListView поменять Device на Device model
+        //в Группе - то же.  
+        //в ScenePageModel - то же
         
+
+        private void DeviceStateChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+        }
+
         public void Assign(Scene scene, GroupPageModel groupPage)
         {
             Group g = groupPage.Target as Group;
             Target = scene;
-            Devices = new ObservableCollection<Device>(g.Devices.Where(e => e.IsInput).Select(e => e));
-            Devices.Insert(0, new GroupSource());
+            // Devices = new ObservableCollection<DeviceModel>(g.Devices.Where(e => e.IsInput).Select(e => e));
+            Sources = new ObservableCollection<DeviceModel>(g.Devices.Where(i => i.IsInput == true).Select(i => {
+                var m = DeviceModel.CreateModel(i) as DeviceModel;
+                m.Enabled = true;
+                m.Group = g;
+                m.PropertyChanged += DeviceStateChanged;
+                return m;
+            }));
+            Sources.Insert(0, new GroupSourceModel());
             this.GroupID = (byte)g.ID;
             this.InputID = scene.Event.InputID;
             IsGroupEvent = scene.Event is GroupEvent;
@@ -183,14 +193,14 @@ namespace SmartHouse.ViewModels
                 var ev = scene.Event as GroupEvent;
                 this.TimePar = ev.TimePar;
                 this.CategoryID = ev.CategoryID;
-                this.SelectedDevice = Devices.FirstOrDefault(e => e is GroupSource);
+                this.SelectedSource = Sources.FirstOrDefault(e => e is GroupSourceModel);
             }
             else
             {
                 var ev = scene.Event as UIDEvent;
                 this.TypeID = ev.TypeID;
                 // this.SelectedDevice = g.Devices.FirstOrDefault(e => e.UID == ev.UID && e.PortID == ev.InputID);
-                this.SelectedDevice = Devices.FirstOrDefault(e => e.ID == ev.DeviceID);
+                this.SelectedSource = Sources.FirstOrDefault(e => e.ID == ev.DeviceID);
             }
             IsDirty = false;
         }
@@ -220,10 +230,10 @@ namespace SmartHouse.ViewModels
             else
             {
                 int uid = 0;
-                if (selectedDevice != null)
-                    uid = selectedDevice.UID.Hash;
+                if (selectedSource != null)
+                    uid = selectedSource.Device.UID.Hash;
                 // var uev = new UIDEvent() { UID = new Models.UID(uid), TypeID = TypeID };
-                var uev = new UIDEvent() { DeviceID = selectedDevice.ID, TypeID = TypeID };
+                var uev = new UIDEvent() { DeviceID = selectedSource.ID, TypeID = TypeID };
                 ev = uev;
             }
             ev.InputID = (byte)InputID;

@@ -39,7 +39,6 @@ namespace SmartHouse.Models.Logic
 
         public Device()
         {
-
         }
 
         public Device(int id, UID uid, byte portID, string nameTemplate, string icon) : base(id, nameTemplate, icon)

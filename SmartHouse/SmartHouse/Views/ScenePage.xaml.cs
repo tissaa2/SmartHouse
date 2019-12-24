@@ -145,8 +145,12 @@ namespace SmartHouse.Views
         private void DevicePicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Model.IsDirty = true;
-            if (Model.SelectedDevice != null)
-                Model.InputID = Model.SelectedDevice.PortID;
+            if (Model.SelectedSource != null)
+            {
+                int v;
+                if (int.TryParse(Model.SelectedSource.PortID, out v))
+                    Model.InputID = v;
+            }
         }
 
         private void TimeParEntry_TextChanged(object sender, TextChangedEventArgs e)

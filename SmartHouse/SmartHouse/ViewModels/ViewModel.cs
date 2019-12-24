@@ -18,6 +18,21 @@ namespace SmartHouse.ViewModels
             return m;
         }
 
+        public delegate void ParameterlessDelegate();
+        protected virtual object CheckIsDirty(object oldValue, object newValue, string eventName, ParameterlessDelegate setter)
+        {
+
+            if (Object.Equals(oldValue, newValue))
+                return oldValue;
+            else
+            {
+                setter?.Invoke();
+                IsDirty = true;
+                OnPropertyChanged(eventName);
+                return newValue;
+            }
+        }
+
         private bool isDirty = false;
         public bool IsDirty
         {

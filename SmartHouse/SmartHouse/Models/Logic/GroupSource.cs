@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SmartHouse.ViewModels;
 using System.Collections.Generic;
 
 namespace SmartHouse.Models.Logic

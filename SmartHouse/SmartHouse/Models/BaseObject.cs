@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Java.Util.Zip;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace SmartHouse.Models
@@ -15,11 +16,15 @@ namespace SmartHouse.Models
 
     public class BaseObject: INotifyPropertyChanged
     {
-        public static List<EntityInfo> GetInheritors(Type parent)
+        public static List<EntityInfo> GetInheritors(Type parent, Type[] exclude)
         {
             List<EntityInfo> r = new List<EntityInfo>();
             foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
             {
+                if (exclude != null)
+                    if (exclude.FirstOrDefault(e => e.Name == t.Name) != null)
+                        continue;
+
                 if (t.IsSubclassOf(parent))
                 {
                     var a = t.GetCustomAttribute<IconNameAttribute>();

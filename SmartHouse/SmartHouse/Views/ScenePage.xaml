@@ -20,7 +20,7 @@
 
         <StackLayout Orientation="Horizontal">
             <Label Margin="8, 8" Text="Источник" FontSize="Large" WidthRequest="150"/>
-            <Picker x:Name="DevicePicker" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}"  SelectedIndexChanged="DevicePicker_SelectedIndexChanged"/>
+            <Picker x:Name="DevicePicker" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Sources}" SelectedItem="{Binding SelectedSource}"  SelectedIndexChanged="DevicePicker_SelectedIndexChanged"/>
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">

@@ -18,6 +18,7 @@ namespace SmartHouse.Views
                 return null;
             Target = target;
             Model.Target = target;
+            target.IsDirty = false;
             return target;
         }
 
