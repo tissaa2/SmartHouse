@@ -22,7 +22,7 @@
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Grid.GestureRecognizers>
         </Grid>
-        <Picker Grid.Column="1" Title="Тип порта" SelectedItem="" ItemsSource="{Binding PhysicPortTypes}" SelectedIndex="{Binding TypeID}" HorizontalOptions="FillAndExpand" />
+        <Picker Grid.Column="1" Title="Тип порта" ItemsSource="{Binding PhysicPortTypes}" SelectedItem="{Binding PortType}" HorizontalOptions="FillAndExpand" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="64" />

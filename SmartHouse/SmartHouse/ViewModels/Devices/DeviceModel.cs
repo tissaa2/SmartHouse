@@ -132,7 +132,11 @@ namespace SmartHouse.ViewModels
                 //    typeID = value.ID;
                 //    OnPropertyChanged("DeviceType");
                 //}
-                CheckIsDirty(portType, value, "PortType", () => { portType = value; });
+                CheckIsDirty(portType, value, "PortType", () => {
+                    portType = value;
+                    if (value != null)
+                        portTypeID = value.ID;
+                });
             }
         }
 
@@ -298,9 +302,9 @@ namespace SmartHouse.ViewModels
         public void Apply()
         {
             var od = device;
-            if (deviceType.Type.Name != device.GetType().Name)
+            if (DeviceType.Type.Name != device.GetType().Name)
             {
-                device = deviceType.CreateEntity() as Device;
+                device = DeviceType.CreateEntity() as Device;
                 var i = Group.Devices.IndexOf(od);
                 if (i > -1)
                     Group.Devices[i] = device;
