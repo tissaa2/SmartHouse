@@ -47,30 +47,38 @@ namespace SmartHouse.Views
 
         public async Task<Port> FindPort<T>(List<T> ports) where T : Port
         {
-            if (ports.Count < 1)
+            try
             {
-                return null;
-            }
-            if (ports.Count == 1)
-            {
-                ports[0].Value = 100;
-                return ports[0];
-            }
+                if (ports.Count < 1)
+                {
+                    return null;
+                }
+                if (ports.Count == 1)
+                {
+                    ports[0].Value = 100;
+                    return ports[0];
+                }
 
-            int hc = ports.Count / 2;
-            var r = ports.GetRange(0, hc);
-            // PushValue<T>(r);
-            SetValue<T>(r, 0);
-            await Task.Delay(200);
-            SetValue<T>(r, 100);
-            var result = await this.DisplayAlert("Система", "Активно ли устройство?", "Да", "Нет");
-            SetValue<T>(r, 0);
-            await Task.Delay(200);
-            // PopValue<T>(r);
-            if (result)
+                int hc = ports.Count / 2;
+                var r = ports.GetRange(0, hc);
+                // PushValue<T>(r);
+                SetValue<T>(r, 0);
+                await Task.Delay(200);
+                SetValue<T>(r, 100);
+                var result = await this.DisplayAlert("Система", "Активно ли устройство?", "Да", "Нет");
+                SetValue<T>(r, 0);
+                await Task.Delay(200);
+                // PopValue<T>(r);
+                if (result)
+                    return await FindPort<T>(r);
+                r = ports.GetRange(hc, ports.Count - hc);
                 return await FindPort<T>(r);
-            r = ports.GetRange(hc, ports.Count - hc);
-            return await FindPort<T>(r);
+            }
+            catch(Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return null;
         }
 
         // public static DevicePage Instance = null;
@@ -118,9 +126,16 @@ namespace SmartHouse.Views
 
         public async void FindPort()
         {
-            List<OutputPort> ps = new List<OutputPort>(PDevice.AllOutputs);
-            SetValue<OutputPort>(ps, 0);
-            SelectPort(await FindPort<OutputPort>(ps), true);
+            try
+            {
+                List<OutputPort> ps = new List<OutputPort>(PDevice.AllOutputs);
+                SetValue<OutputPort>(ps, 0);
+                SelectPort(await FindPort<OutputPort>(ps), true);
+            }
+            catch(Exception ex)
+            {
+                Log.Write(ex);
+            }
         }
 
         private void DeviceCaptured(CANCaptureDeviceResponse.ResponseData rd)

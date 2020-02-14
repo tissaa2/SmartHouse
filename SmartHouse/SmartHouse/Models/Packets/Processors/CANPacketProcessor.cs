@@ -12,7 +12,8 @@ namespace SmartHouse.Models.Packets.Processors
     public class CANPacketProcessor : PacketProcessor
     {
         private static CANPacketProcessor instance = null;
-        public static CANPacketProcessor Instance {
+        public static CANPacketProcessor Instance
+        {
             get
             {
                 if (instance == null)
@@ -46,10 +47,13 @@ namespace SmartHouse.Models.Packets.Processors
                 else
                 {
                     cbl = new List<CANActionCallback>();
-                    d.Add(callback.UID, cbl);
+                    lock (d)
+                        d.Add(callback.UID, cbl);
                 }
-                cbl.Add(callback);
-                ExpirationQueue.Add(callback);
+                lock (cbl)
+                    cbl.Add(callback);
+                lock (ExpirationQueue)
+                    ExpirationQueue.Add(callback);
             }
         }
 
@@ -66,29 +70,35 @@ namespace SmartHouse.Models.Packets.Processors
                 {
                     var cbl = d[id];
                     var rl = new List<CANActionCallback>();
-                    foreach (var c in cbl)
+
+                    //2DO: ошибка: пишет, что коллекция изменена
+                    lock (cbl)
                     {
-                        bool r = true;
+                        foreach (var c in cbl)
+                        {
+                            bool r = true;
 
-                        if (c.Callback != null)
-                            if (c.ExpireTime < DateTime.Now.Ticks)
-                                c.Callback(cp, true);
-                            else
-                                r = c.Callback(cp, false);
-                        if (r)
-                            rl.Add(c);
+                            if (c.Callback != null)
+                                if (c.ExpireTime < DateTime.Now.Ticks)
+                                    c.Callback(cp, true);
+                                else
+                                    r = c.Callback(cp, false);
+                            if (r)
+                                rl.Add(c);
+                        }
+
+                        foreach (var c in rl)
+                            cbl.Remove(c);
+
+                        if (cbl.Count < 1)
+                        {
+                            lock (d)
+                                d.Remove(id);
+                            if (d.Count < 1)
+                                lock (PacketCallbacks)
+                                    PacketCallbacks.Remove(cp.Command);
+                        }
                     }
-
-                    foreach (var c in rl)
-                        cbl.Remove(c);
-
-                    if (cbl.Count < 1)
-                    {
-                        d.Remove(id);
-                        if (d.Count < 1)
-                            PacketCallbacks.Remove(cp.Command);
-                    }
-
                 }
             }
 
@@ -103,25 +113,25 @@ namespace SmartHouse.Models.Packets.Processors
         public bool RemoveExpired()
         {
             bool r = false;
-            lock(PacketCallbacks)
+            var rl = new List<CANActionCallback>();
+            foreach (var e in ExpirationQueue)
             {
-                var rl = new List<CANActionCallback>();
-                foreach(var e in ExpirationQueue)
+                if (e.ExpireTime < DateTime.Now.Ticks)
                 {
-                    if (e.ExpireTime < DateTime.Now.Ticks)
-                    {
-                        e.Callback(null, true);
-                        rl.Add(e);
-                        var d = PacketCallbacks[e.Command];
+                    e.Callback(null, true);
+                    rl.Add(e);
+                    var d = PacketCallbacks[e.Command];
+                    lock (d)
                         d.Remove(e.UID);
-                        if (d.Count < 1)
+                    if (d.Count < 1)
+                        lock (PacketCallbacks)
                             PacketCallbacks.Remove(e.Command);
-                        r = true;
-                    }
+                    r = true;
                 }
+            }
+            lock (ExpirationQueue)
                 foreach (var e in rl)
                     ExpirationQueue.Remove(e);
-            }
             return r;
         }
     }
