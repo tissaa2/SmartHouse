@@ -35,7 +35,7 @@ namespace SmartHouse.ViewModels
         }
     }
 
-    public class DeviceModel : ViewModel
+    public class DeviceModel : NamedModel
     {
 
         public static List<PPortType> InputPortTypes = new List<PPortType>()
@@ -61,7 +61,8 @@ namespace SmartHouse.ViewModels
             new PPortType(1, "Релейный выход")
         };
 
-        public static List<EntityInfo> logicDeviceTypes = BaseEntity<int>.GetInheritors(typeof(Device), new Type[] {typeof(GroupSource)});
+        // public static List<EntityInfo> logicDeviceTypes = BaseEntity<int>.GetInheritors(typeof(Device), new Type[] { typeof(GroupSource) });
+        public static List<EntityInfo> logicDeviceTypes = BaseEntity.GetInheritors(typeof(Device), new Type[] { typeof(GroupSource) });
 
         public List<PPortType> PhysicPortTypes
         {
@@ -186,18 +187,6 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        private string name;
-        [JsonProperty(PropertyName = "Name")]
-        public string Name
-        {
-            get { return name; }
-            // set { name = value; OnPropertyChanged("Name"); }
-            set
-            {
-                CheckIsDirty(name, value, "Name", () => { name = value; });
-            }
-        }
-
         private string portID;
         [JsonProperty(PropertyName = "PortID")]
         public string PortID
@@ -299,8 +288,9 @@ namespace SmartHouse.ViewModels
             base.Setup();
         }
 
-        public void Apply()
+        public override void Apply()
         {
+            base.Apply();
             var od = device;
             if (DeviceType.Type.Name != device.GetType().Name)
             {
@@ -314,7 +304,7 @@ namespace SmartHouse.ViewModels
             int v;
             if (int.TryParse(PortID, out v))
                 device.PortID = (byte)v;
-            device.Name = Name;
+            // device.Name = Name;
             if (portType != null)
                 device.PortTypeID = portType.ID;
             device.SecurityLevel = SecurityLevel;

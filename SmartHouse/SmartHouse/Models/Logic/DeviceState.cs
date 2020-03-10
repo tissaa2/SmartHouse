@@ -1,8 +1,17 @@
 ﻿namespace SmartHouse.Models.Logic
 {
-    public class DeviceState : BaseEntity<int>
+    // public class DeviceState : BaseEntity<int>
+    public class DeviceState : BaseEntity
     {
-        public string Value { get; set; }
+        public string value = null;
+        public string Value
+        {
+            get => value;
+            set
+            {
+                CheckIsDirty(this.value, value, "Value", () => { this.value = value; });
+            }
+        }
 
         public DeviceState()
         {

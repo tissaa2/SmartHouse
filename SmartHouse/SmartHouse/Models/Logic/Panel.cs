@@ -18,9 +18,11 @@ namespace SmartHouse.Models.Logic
 
         public Panel(int id, string name, IEnumerable<bool> state, UID uid, byte portID) : base(id, name, state, uid, portID)
         {
+            Init();
         }
 
-        public override BaseEntity<int> Clone()
+        // public override BaseEntity<int> Clone()
+        public override BaseEntity Clone()
         {
             return new Panel() { ID = ID, UID = UID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }

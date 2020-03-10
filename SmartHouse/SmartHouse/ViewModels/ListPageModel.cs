@@ -9,7 +9,7 @@ using SmartHouse.Models;
 namespace SmartHouse.ViewModels
 {
 
-    public class ListPageModel<T>: ListViewModel<T> 
+    public class ListPageModel<T>: IconNamedListViewModel<T> 
     {
         public ListPageModel(ObservableCollection<T> items/* , ViewEditTemplateSelector templateSelector */): base(items)
         {

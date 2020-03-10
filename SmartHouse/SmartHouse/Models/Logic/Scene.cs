@@ -8,9 +8,8 @@ using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Scene : IconListEntity<int, int, DeviceState>
-    // public class Scene : IconListEntity<UID, UID, Device>
-    // public class Scene : IconEntity<UID>
+    // public class Scene : IconListEntity<int, int, DeviceState>
+    public class Scene : IconListEntity<int, DeviceState>
     {
 
         public static Scene LightsOff(int id, Group group)
@@ -59,7 +58,17 @@ namespace SmartHouse.Models.Logic
                 Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
         }
 
-        public Event Event { get; set; } = new UIDEvent(0, 0);
+        // private Event _event = new UIDEvent(0, 0);
+        private Event _event = null;
+        public Event Event
+        {
+            get => _event;
+            set
+            {
+                CheckIsDirty(_event, value, "Event", () => { _event = value; });
+            }
+        }
+
         // public Event Event { get; set; } = new UIDEvent(0, new UID(0));
         // public string Event { get; set; }
 
@@ -70,7 +79,7 @@ namespace SmartHouse.Models.Logic
 
         public Scene(int id, string nameTemplate, string icon) : base(id, nameTemplate, icon)
         {
-
+            Init();
         }
 
         private static Random vr = new Random();

@@ -5,7 +5,7 @@
              xmlns:controls="clr-namespace:SmartHouse.Controls"
              x:Class="SmartHouse.Views.DevicePage"
              IsVisible="False">
-    <StackLayout BindingContext="{Binding Target}">
+    <StackLayout>
         <Button x:Name="FindDeviceButton" Text="Найти устройство" Clicked="FindDeviceButton_Clicked"/>
         <Grid HeightRequest="64" IsEnabled="{Binding Device.IsAdmin}" >
             <Grid.ColumnDefinitions>

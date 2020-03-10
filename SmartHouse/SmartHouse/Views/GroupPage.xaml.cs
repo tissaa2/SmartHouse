@@ -14,7 +14,7 @@ namespace SmartHouse.Views
     public partial class GroupPage : ContentPage
     {
         // public static GroupPage Instance = null;
-        public GroupPageModel Model { get; set; }
+        public GroupModel Model { get; set; }
         public Group Target { get; set; }
 
         public void DevicesListChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -44,8 +44,8 @@ namespace SmartHouse.Views
             Target = target;
             Target.Devices.CollectionChanged += DevicesListChanged;
             Model.Target = target;
-            Model.Scenes.Items = Target.Items;
-            Model.Scenes.SelectedItem = null;
+            Model.Items = Target.Items;
+            Model.SelectedItem = null;
             LoadDevices(Model.InputsMode);
             // Model.Devices.Items.Add(ViewModel.CreateModel(e) as DeviceModel);
             Model.Devices.SelectedItem = null;
@@ -55,7 +55,7 @@ namespace SmartHouse.Views
         public GroupPage()
         {
             // Instance = this;
-            BindingContext = Model = new GroupPageModel();
+            BindingContext = Model = new GroupModel();
             this.InitializeComponent();
         }
 
@@ -165,7 +165,7 @@ namespace SmartHouse.Views
                         var dp = new DevicePage() { Title = dm.Name };
                         dp.IsVisible = true;
                         if (dm != null)
-                            dp.SetTarget(dm);
+                            dp.SetModel(dm);
                         await Navigation.PushAsync(dp);
 
                     }

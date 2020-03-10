@@ -9,6 +9,7 @@ using System.Text;
 using Java.Util.Zip;
 using System.Linq;
 using Xamarin.Forms;
+using SmartHouse.Models.Logic;
 
 namespace SmartHouse.Models
 {
@@ -38,6 +39,46 @@ namespace SmartHouse.Models
             return r;
         }
 
+        public delegate void ParameterlessDelegate();
+        protected virtual object CheckIsDirty(object oldValue, object newValue, string eventName, ParameterlessDelegate setter)
+        {
+            if (Object.Equals(oldValue, newValue))
+                return oldValue;
+            else
+            {
+                setter?.Invoke();
+                if (Initialized)
+                {
+                    IsDirty = true;
+                    ProjectsList.Instance.IsDirty = true;
+                }
+                OnPropertyChanged(eventName);
+                return newValue;
+            }
+        }
+
+        private bool isDirty = false;
+        public bool IsDirty
+        {
+            get
+            {
+                return isDirty;
+                // return (Project)GetValue(SelectedItemProperty);
+            }
+
+            set
+            {
+                // OnPropertyChanging("IsDirty");
+                isDirty = value;
+                if (value)
+                    ProjectsList.Instance.IsDirty = true;
+                OnPropertyChanged("IsDirty");
+            }
+        }
+
+        [JsonIgnore]
+        public bool Initialized { get; set; } = false;
+
         private event PropertyChangedEventHandler propertyChanged;
         public event PropertyChangedEventHandler PropertyChanged
         {
@@ -56,6 +97,13 @@ namespace SmartHouse.Models
         {
             propertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        public virtual void Init()
+        {
+            Initialized = true;
+        }
+
+
 
         public static T Load<T>(string fileName) where T : class
         {

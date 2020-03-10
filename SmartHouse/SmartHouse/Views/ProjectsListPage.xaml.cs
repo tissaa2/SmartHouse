@@ -25,7 +25,7 @@ namespace SmartHouse.Views
             }
         } */
         // public static ProjectsListPage Instance = null;
-        public ListPageModel<Project> Model { get; set; }
+        public ProjectsListModel Model { get; set; }
         // public ICommand EditItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
 
@@ -51,7 +51,8 @@ namespace SmartHouse.Views
             // this.EditItemCommand = new Command<Project>(EditItem);
             this.DeleteItemCommand = new Command<Project>(DeleteItem);
             this.InitializeComponent();
-            BindingContext = Model = new ListPageModel<Project>(ProjectsList.Instance.Items/* , TemplateSelector */);
+            // BindingContext = Model = new ListPageModel<Project>(ProjectsList.Instance.Items/* , TemplateSelector */);
+            BindingContext = Model = new ProjectsListModel(ProjectsList.Instance.Items);
         }
 
         private void AddButton_Clicked(object sender, EventArgs e)
@@ -66,7 +67,7 @@ namespace SmartHouse.Views
                 var p = e.Item as Project;
                 var pp = new ProjectPage() { Title = p.Name };
                 pp.IsVisible = true;
-                pp.SetTarget(p);
+                pp.SetModel(p);
                 // GroupPage.Instance.IsVisible = false;
                 // ScenePage.Instance.IsVisible = false;
                 // DevicePage.Instance.IsVisible = false;
@@ -206,7 +207,7 @@ namespace SmartHouse.Views
                     var p = bo.BindingContext as Project;
                     var pp = new ProjectPage() { Title = p.Name };
                     pp.IsVisible = true;
-                    pp.SetTarget(p);
+                    pp.SetModel(p);
                     ProjectsListView.SelectedItem = p;
                     await Navigation.PushAsync(pp);
                 }

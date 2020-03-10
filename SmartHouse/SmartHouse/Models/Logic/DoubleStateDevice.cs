@@ -14,10 +14,11 @@ namespace SmartHouse.Models.Logic
             get { return state; }
             set
             {
-                state = value > 90 ? 100 : value < 10 ? 0 : value;
-                if (Initialized)
-                    Port.SetPortValue(UID, PortID, (byte)state, 2);
-                OnPropertyChanged("State");
+                CheckIsDirty(state, value, "State", () => {
+                    state = value > 90 ? 100 : value < 10 ? 0 : value;
+                    if (Initialized)
+                        Port.SetPortValue(UID, PortID, (byte)state, 2);
+                });
             }
         }
 

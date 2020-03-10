@@ -4,6 +4,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Net;
 using SmartHouse.Models.Physics;
+using System.Threading;
+using SmartHouse.Models.Logic;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SmartHouse
@@ -16,6 +18,24 @@ namespace SmartHouse
         {
             InitializeComponent();
             SetMainPage();
+            SaveDataToDeviceThread = new Thread(SaveDataToDeviceThreadProc);
+            SaveDataToDeviceThread.Start();
+        }
+
+        public bool SaveDataToDeviceThreadTerminated;
+        private Thread SaveDataToDeviceThread = null;
+        private void SaveDataToDeviceThreadProc()
+        {
+            SaveDataToDeviceThreadTerminated = false;
+            while(!SaveDataToDeviceThreadTerminated)
+            {
+                if (ProjectsList.Instance.IsDirty)
+                {
+                    ProjectsList.Instance.Save();
+                    ProjectsList.Instance.IsDirty = false;
+                }
+                Thread.Sleep(1000);
+            }
         }
 
         public static void SetMainPage()

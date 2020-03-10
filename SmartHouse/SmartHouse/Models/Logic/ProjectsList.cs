@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 
 namespace SmartHouse.Models.Logic
 {
-    public class ProjectsList: IconListEntity<int, int, Project>
+    // public class ProjectsList : IconListEntity<int, int, Project>
+    public class ProjectsList : IconListEntity<int, Project>
     {
         public static string FileName { get; set; } = "projects.json";
         public static ProjectsList TestData {

@@ -33,6 +33,43 @@ namespace SmartHouse.ViewModels
             }
         }
 
+        //private bool isDirty = false;
+        //public bool IsDirty
+        //{
+        //    get
+        //    {
+        //        return isDirty;
+        //        // return (Project)GetValue(SelectedItemProperty);
+        //    }
+
+        //    set
+        //    {
+        //        // OnPropertyChanging("IsDirty");
+        //        isDirty = value;
+        //        OnPropertyChanged("IsDirty");
+        //    }
+        //}
+
+        //private bool isDirty = false;
+        //public bool IsDirty
+        //{
+        //    get
+        //    {
+        //        return isDirty;
+        //        // return (Project)GetValue(SelectedItemProperty);
+        //    }
+
+        //    set
+        //    {
+        //        // OnPropertyChanging("IsDirty");
+        //        isDirty = value;
+        //        if (value)
+        //            ProjectsList.Instance.IsDirty = true;
+        //        OnPropertyChanged("IsDirty");
+        //    }
+        //}
+        public ViewModel Parent { get; set; } = null;
+
         private bool isDirty = false;
         public bool IsDirty
         {
@@ -46,9 +83,17 @@ namespace SmartHouse.ViewModels
             {
                 // OnPropertyChanging("IsDirty");
                 isDirty = value;
+                if (value)
+                    ProjectsList.Instance.IsDirty = true;
                 OnPropertyChanged("IsDirty");
             }
         }
+
+        public virtual void SetDirty(bool value)
+        {
+            isDirty = true;
+        }
+
 
         public Boolean IsAdmin { get { return SmartHouse.Models.Settings.Instance.IsAdmin; } }
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
@@ -96,6 +141,10 @@ namespace SmartHouse.ViewModels
         public virtual void Assign(ViewModel source)
         {
             this.target = source.target;
+        }
+
+        public virtual void Apply()
+        {
         }
 
         public virtual ViewModel Clone()

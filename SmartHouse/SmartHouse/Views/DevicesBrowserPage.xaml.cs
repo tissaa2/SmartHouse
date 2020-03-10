@@ -82,7 +82,7 @@ namespace SmartHouse.Views
         }
 
         // public static DevicePage Instance = null;
-        public DevicesBrowserPageModel Model { get; set; }
+        public DevicesBrowserModel Model { get; set; }
 
         public DevicesBrowserPage()
         {
@@ -90,7 +90,7 @@ namespace SmartHouse.Views
             var all = PDevice.All;
             // System.Threading.Thread.Sleep(5000);
             this.InitializeComponent();
-            BindingContext = Model = new DevicesBrowserPageModel(PDevice.All);
+            BindingContext = Model = new DevicesBrowserModel(PDevice.All);
         }
 
         private void ToolbarItem_Activated(object sender, EventArgs e)

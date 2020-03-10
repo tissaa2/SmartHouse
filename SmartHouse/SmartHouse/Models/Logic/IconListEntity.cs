@@ -4,50 +4,67 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace SmartHouse.Models.Logic
 {
-    public class IconListEntity<IDType, IndexType, ItemType>: IconEntity<IDType>/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<IDType> where ItemType: BaseEntity<IndexType>
+    // public class IconListEntity<IDType, IndexType, ItemType> : IconEntity<IDType>/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<IDType> where ItemType : BaseEntity<IndexType>
+    public class IconListEntity<IndexType, ItemType> : IconEntity/*, IEnumerable<ItemType>, ICollection<ItemType> */, IUnique<int> where ItemType : BaseEntity
     {
         public IconListEntity()
         {
-
+            Items.CollectionChanged += ItemsChanged;
         }
 
-        public IconListEntity(IDType id, string nameTemplate, string icon) :base (id, nameTemplate, icon)
+        private void ItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (Initialized)
+                IsDirty = true;
         }
 
 
-        public ObservableCollection<ItemType> Items { get; set; } = new ObservableCollection<ItemType>();
+        // public IconListEntity(IDType id, string nameTemplate, string icon) : base(id, nameTemplate, icon)
+        public IconListEntity(int id, string nameTemplate, string icon) : base(id, nameTemplate, icon)
+        {
+            Items.CollectionChanged += ItemsChanged;
+        }
+
+
+        private ObservableCollection<ItemType> items = new ObservableCollection<ItemType>();
+        public ObservableCollection<ItemType> Items {
+            get => items;
+            set => CheckIsDirty(items, value, "Items", () => { items = value; });
+        }
 
         public int Count => Items.Count;
 
         public bool IsReadOnly => false;
 
-        [XmlIgnore]
-        private Dictionary<IndexType, ItemType> index = null;
+        //[XmlIgnore]
+        //// private Dictionary<IndexType, ItemType> index = null;
+        //private Dictionary<IndexType, ItemType> index = null;
 
-        protected void CheckIndex()
-        {
-            if (index == null)
-            {
-                index = new Dictionary<IndexType, ItemType>();
-                foreach (ItemType i in Items)
-                {
-                    index.Add(i.ID, i);
-                }
-            }
-        }
+        //protected void CheckIndex()
+        //{
+        //    if (index == null)
+        //    {
+        //        // index = new Dictionary<IndexType, ItemType>();
+        //        index = new Dictionary<int, ItemType>();
+        //        foreach (ItemType i in Items)
+        //        {
+        //            index.Add(i.ID, i);
+        //        }
+        //    }
+        //}
 
-        public ItemType this[IndexType id]
-        {
-            get
-            {
-                CheckIndex();
-                return index[id];
-            }
-        }
+        //public ItemType this[IndexType id]
+        //{
+        //    get
+        //    {
+        //        CheckIndex();
+        //        return index[id];
+        //    }
+        //}
 
         /* public IEnumerator<ItemType> GetEnumerator()
         {

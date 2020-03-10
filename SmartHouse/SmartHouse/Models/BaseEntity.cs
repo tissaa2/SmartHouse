@@ -11,7 +11,8 @@ namespace SmartHouse.Models
 {
     [Serializable]
 
-    public class BaseEntity<IDType> : BaseObject, IUnique<IDType>
+    // public class BaseEntity<IDType> : BaseObject, IUnique<IDType>
+    public class BaseEntity: BaseObject, IUnique<int>
     {
         /* private static Dictionary<Type, object> ids = new Dictionary<Type, object>();
         public static IDType NewID<IDType>()
@@ -30,7 +31,8 @@ namespace SmartHouse.Models
         public static IDGenerator<int> IntID = new IDGenerator<int>((v) => { return (int)v + 1; });
         public static IDGenerator<UID> UIDID = new IDGenerator<UID>((v) => { int i = (int)(UID)v; i++;  return new UID(i); });
 
-        public static explicit operator string(BaseEntity<IDType> e)
+        // public static explicit operator string(BaseEntity<IDType> e)
+        public static explicit operator string(BaseEntity e)
         {
             return String.Format("(ID={0}, Sec={1})", e.ID, e.SecurityLevel);
         }
@@ -41,13 +43,17 @@ namespace SmartHouse.Models
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
 
         [JsonIgnore]
-        private IDType id;
+        // private IDType id;
+        private int id;
 
         [JsonProperty(PropertyName = "ID")]
-        public virtual IDType ID
+        // public virtual IDType ID
+        public virtual int ID
         {
             get { return id; }
-            set { id = value; OnPropertyChanged("ID"); }
+            set {
+                CheckIsDirty(id, value, "ID", () => { id = value; });
+            }
         }
 
 
@@ -63,14 +69,9 @@ namespace SmartHouse.Models
                 return stringId;
             }
             set {
-                stringId = value;
-                OnPropertyChanged("StringID");
+                CheckIsDirty(stringId, value, "StringID", () => { stringId = value; });
             }
         }
-
-        [JsonIgnore]
-        public bool Initialized { get; set; } = false;
-
 
         [JsonIgnore]
         private byte securityLevel;
@@ -79,7 +80,9 @@ namespace SmartHouse.Models
         public virtual byte SecurityLevel
         {
             get { return securityLevel; }
-            set { securityLevel = value; OnPropertyChanged("SecurityLevel"); }
+            set {
+                CheckIsDirty(securityLevel, value, "SecurityLevel", () => { securityLevel = value; });
+            }
         }
 
         public BaseEntity()
@@ -87,25 +90,23 @@ namespace SmartHouse.Models
 
         }
 
-        public BaseEntity(IDType id)
+        // public BaseEntity(IDType id)
+        public BaseEntity(int id)
         {
             this.ID = id;
         }
 
-        public virtual void Assign(BaseEntity<IDType> source)
+        // public virtual void Assign(BaseEntity<IDType> source)
+        public virtual void Assign(BaseEntity source)
         {
             this.ID = source.ID;
             this.SecurityLevel = source.SecurityLevel;
         }
 
-        public virtual BaseEntity<IDType> Clone()
+        // public virtual BaseEntity<IDType> Clone()
+        public virtual BaseEntity Clone()
         {
             throw new Exception("Not implemented");
-        }
-
-        public virtual void Init()
-        {
-            Initialized = true;
         }
 
     }

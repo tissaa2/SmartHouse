@@ -18,7 +18,7 @@ namespace SmartHouse.Views
         public ScenePageModel Model { get; set; }
         public Scene Target { get; set; }
 
-        public void Refresh(GroupPageModel group)
+        public void Refresh(GroupModel group)
         {
             if (Target == null)
                 return;
@@ -35,7 +35,7 @@ namespace SmartHouse.Views
             Model.SelectedItem = null;
         }
 
-        public Scene SetTarget(GroupPageModel group, Scene target)
+        public Scene SetTarget(GroupModel group, Scene target)
         {
             if (target == null)
                 return null;

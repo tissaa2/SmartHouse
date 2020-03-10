@@ -87,7 +87,7 @@ namespace SmartHouse.Controls
                     var dm = bo.BindingContext as DeviceModel;
                     var dp = new DevicePage() { Title = dm.Name };
                     dp.IsVisible = true;
-                    dp.SetTarget(dm);
+                    dp.SetModel(dm);
                     CurrentItem = dm;
                     SelectedItem = dm;
                     await Navigation.PushAsync(dp);

@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Text;
 using SmartHouse.Models.Logic;
 // using SmartHouse.Models.Physics;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Group : IconListEntity<int, int, Scene>
+    // public class Group : IconListEntity<int, int, Scene>
+    public class Group : IconListEntity<int, Scene>
     {
         public ObservableCollection<Group> Children { get; set; } = new ObservableCollection<Group>();
         public ObservableCollection<Device> Devices { get; set; } = new ObservableCollection<Device>();
@@ -97,13 +99,32 @@ namespace SmartHouse.Models.Logic
             return g;
         }
 
+        private void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if(Initialized)
+                IsDirty = true;
+        }
+
+        private void DevicesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (Initialized)
+                IsDirty = true;
+        }
+
+        private void Setup()
+        {
+            Children.CollectionChanged += ChildrenChanged;
+            Devices.CollectionChanged += DevicesChanged;
+        }
+
         public Group()
         {
-
+            Setup();
         }
 
         public Group(int id, string nameTemplate, string icon) : base(id, nameTemplate, icon)
         {
+            Setup();
         }
 
         public override void Init()

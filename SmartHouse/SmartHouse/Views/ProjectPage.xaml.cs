@@ -20,16 +20,19 @@ namespace SmartHouse.Views
     public partial class ProjectPage : ContentPage
     {
         // public static ProjectPage Instance = null;
+        //public ListPageModel<Group> Model { get; set; }
+        //public Project Target { get; set; }
         public ListPageModel<Group> Model { get; set; }
-        public Project Target { get; set; }
 
-        public Project SetTarget(Project target)
+        public Project SetModel(Project target)
         {
             if (target == null)
                 return null;
-            Target = target;
-            Model.Target = target;
-            Model.Items = Target.Items;
+            // Target = target;
+
+            BindingContext = Model = new ProjectsListModel(target);
+            //Model.Target = target;
+            //Model.Items = Target.Items;
             Model.SelectedItem = null;
             return target;
         }

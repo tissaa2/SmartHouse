@@ -10,23 +10,25 @@ namespace SmartHouse.Views
 	public partial class DevicePage : ContentPage
 	{
         // public static DevicePage Instance = null;
-        public DeviceModel Target { get; set; }
-        public DevicePageModel Model { get; set; }
-        public DeviceModel SetTarget(DeviceModel target)
+        //public DeviceModel Target { get; set; }
+        // public DevicePageModel Model { get; set; }
+        public DeviceModel Model { get; set; }
+        public DeviceModel SetModel(DeviceModel model)
         {
-            if (target == null)
+            if (model == null)
                 return null;
-            Target = target;
-            Model.Target = target;
-            target.IsDirty = false;
-            return target;
+            // Target = target;
+            // Model.Target = target;
+            Model = model;
+            model.IsDirty = false;
+            return model;
         }
 
         public DevicePage()
         {
             // Instance = this;
             this.InitializeComponent();
-            BindingContext = Model = new DevicePageModel();
+            BindingContext = Model = new DeviceModel();
         }
 
         private void IconButton_OnPressed(object sender, System.EventArgs e)
@@ -41,8 +43,8 @@ namespace SmartHouse.Views
 
         private void ApplyButton_Pressed(object sender, EventArgs e)
         {
-            Target.Apply();
-            Title = Target.Name;
+            Model.Apply();
+            Title = Model.Name;
         }
         //2DO:
         //пофиксить баги слайдера
@@ -57,8 +59,8 @@ namespace SmartHouse.Views
                 var p = dbp.Model.SelectedPort;
                 if (p != null)
                 {
-                    Target.UID = p.Parent.ID.ToString();
-                    Target.PortID = p.ID.ToString();
+                    Model.UID = p.Parent.ID.ToString();
+                    Model.PortID = p.ID.ToString();
                 }
             };
             await Navigation.PushAsync(dbp);

@@ -11,13 +11,13 @@ namespace SmartHouse.Views
 	public partial class SettingsPage : ContentPage
 	{
         public static SettingsPage Instance = null;
-        public SettingsPageModel Model { get; set; }
+        public SettingsModel Model { get; set; }
 
         public SettingsPage()
         {
             Instance = this;
             this.InitializeComponent();
-            BindingContext = Model = new SettingsPageModel(Settings.Instance);
+            BindingContext = Model = new SettingsModel(Settings.Instance);
         }
 
         private void ApplyButton_Pressed(object sender, EventArgs e)

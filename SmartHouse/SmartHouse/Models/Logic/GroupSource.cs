@@ -23,7 +23,8 @@ namespace SmartHouse.Models.Logic
         //{
         //}
 
-        public override BaseEntity<int> Clone()
+        // public override BaseEntity<int> Clone()
+        public override BaseEntity Clone()
         {
             return new Switch() { ID = ID, Icon = Icon, Name = Name, SecurityLevel = SecurityLevel, State = State };
         }

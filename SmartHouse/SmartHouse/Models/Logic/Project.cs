@@ -5,7 +5,8 @@ using SmartHouse.Views;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Project : IconListEntity<int, int, Group>
+    // public class Project : IconListEntity<int, int, Group>
+    public class Project : IconListEntity<int, Group>
     {
         public static Project Create(string name, string icon, int id)
         {

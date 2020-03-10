@@ -79,12 +79,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\MotionSensor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Relay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ActionCallback.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicesBrowserPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicesBrowserModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\MotionSensorModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\PanelModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SwitchModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ScenePageModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsPageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IconNamedModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\NamedModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProjectsListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProjectModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SceneModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\StateDeviceModel.cs" />
@@ -92,9 +97,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\FanModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GroupPageModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicePageModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GroupModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IconNamedListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
       <SubType>Code</SubType>

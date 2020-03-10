@@ -136,16 +136,16 @@ namespace SmartHouse.Models.Packets.Processors.CAN
         {
             if (PDevice.DeviceTypes.ContainsKey(rd.DeviceType))
             {
-                var id = new UID(rd.UID[2], rd.UID[1], rd.UID[0]);
-                var d = PDevice.Get(id);
+                var uid = new UID(rd.UID[2], rd.UID[1], rd.UID[0]);
+                var d = PDevice.Get(uid);
                 if (d == null)
                 {
                     d = Activator.CreateInstance(PDevice.DeviceTypes[rd.DeviceType]) as PDevice;
-                    d.Init(id, rd.InputsCount, rd.OutputsCount, rd.ScenesCount);
+                    d.Init(BaseEntity.IntID.NewID(), uid, rd.InputsCount, rd.OutputsCount, rd.ScenesCount);
                     PDevice.Add(d);
-                    Packet.GetOutputStatesRequest[7] = d.ID.B2;
-                    Packet.GetOutputStatesRequest[8] = d.ID.B1;
-                    Packet.GetOutputStatesRequest[9] = d.ID.B0;
+                    Packet.GetOutputStatesRequest[7] = d.UID.B2;
+                    Packet.GetOutputStatesRequest[8] = d.UID.B1;
+                    Packet.GetOutputStatesRequest[9] = d.UID.B0;
                     if (Client.CurrentServer != null)
                         Client.CurrentServer.Send(Packet.GetOutputStatesRequest);
                     Log.Write("Device {0} found ", d);

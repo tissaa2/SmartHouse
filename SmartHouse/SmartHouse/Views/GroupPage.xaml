@@ -23,7 +23,7 @@
             <Button x:Name="InputDevicesButton" IsVisible="{Binding OutputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="InputDevicesButton_Pressed" Text="Показать входы" />
             <Button x:Name="OutputDevicesButton" IsVisible="{Binding InputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="OutputDevicesButton_Pressed" Text="Показать выходы" />
         </Grid>
-        <ListView BindingContext="{Binding .}" IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="White" HasUnevenRows="True" ItemsSource="{Binding Scenes.Items}" >
+        <ListView IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="White" HasUnevenRows="True" ItemsSource="{Binding Items}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell Height="64">

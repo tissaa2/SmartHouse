@@ -11,11 +11,20 @@ namespace SmartHouse.Models.Logic
     {
         // public UID UID { get; set; }
         // public UIDEvent(byte inputId, UID uid)
-        public int DeviceID { get; set; }
+        private int deviceID;
+        public int DeviceID {
+            get => deviceID;
+            set
+            {
+                CheckIsDirty(deviceID, value, "DeviceID", () => { deviceID = value; });
+            }
+        }
+
         public UIDEvent(byte inputId, int deviceId)
         {
             InputID = inputId;
             DeviceID = deviceId;
+            Init();
             // UID = uid;
         }
 

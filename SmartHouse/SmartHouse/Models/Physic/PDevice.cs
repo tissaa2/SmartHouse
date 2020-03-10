@@ -15,7 +15,8 @@ using Newtonsoft.Json;
 
 namespace SmartHouse.Models.Physics
 {
-    public class PDevice : IconEntity<UID>
+    // public class PDevice : IconEntity<UID>
+    public class PDevice : IconEntity
     {
         private static Dictionary<byte, Type> deviceTypes = null;
         public static Dictionary<byte, Type> DeviceTypes
@@ -177,6 +178,8 @@ namespace SmartHouse.Models.Physics
             if (all != null)
                 all.Clear();
             //Fk(1, 0x01, 8, 8);
+
+
             //Fk(2, 0x01, 0, 16);
             //Fk(3, 0x01, 4, 4);
             //Fk(4, 0x01, 0, 8);
@@ -275,6 +278,23 @@ namespace SmartHouse.Models.Physics
 
         // public string StringID { get => ID.ToString(); }
 
+
+        [JsonIgnore]
+        // private IDType id;
+        private UID uid;
+
+        [JsonProperty(PropertyName = "UID")]
+        // public virtual IDType ID
+        public virtual UID UID
+        {
+            get { return uid; }
+            set
+            {
+                CheckIsDirty(uid, value, "UID", () => { uid = value; });
+            }
+        }
+
+
         [JsonIgnore]
         public Dictionary<int, PScene> Scenes { get; set; }
 
@@ -302,10 +322,12 @@ namespace SmartHouse.Models.Physics
 
         public int Height { get => ((Fold ? (Inputs.Count + Outputs.Count) : 0) + 1) * ROW_HEIGHT; }
 
-        public virtual void Init(UID id, int inputsCount, int outputsCount, int scenesCount, bool randomValues = false)
+        // public virtual void Init(UID id, int inputsCount, int outputsCount, int scenesCount, bool randomValues = false)
+        public virtual void Init(int id, UID uid, int inputsCount, int outputsCount, int scenesCount, bool randomValues = false)
         {
             double v;
             ID = id;
+            UID = uid;
             Random rnd = new Random();
             Inputs = new List<InputPort>();
             Outputs = new List<OutputPort>();

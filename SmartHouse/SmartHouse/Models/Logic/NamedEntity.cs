@@ -8,17 +8,20 @@ using System.IO;
 
 namespace SmartHouse.Models.Logic
 {
-    public class NamedEntity<T>: BaseEntity<T>
+    // public class NamedEntity<T> : BaseEntity<T>
+    public class NamedEntity : BaseEntity
     {
         // [XmlIgnore]
-        private string name;
-
-        // [XmlAttribute("Name")]
+        private string name = null;
         public virtual string Name
         {
-            get { return name; }
-            set { name = value; OnPropertyChanged("Name"); }
+            get => name;
+            set
+            {
+                CheckIsDirty(name, value, "Name", () => { name = value; });
+            }
         }
+
 
         public override string ToString()
         {
@@ -30,7 +33,8 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public NamedEntity(T id, string nameTemplate): base(id)
+        // public NamedEntity(T id, string nameTemplate) : base(id)
+        public NamedEntity(int id, string nameTemplate) : base(id)
         {
             if (nameTemplate.Contains("{"))
                 Name = String.Format(nameTemplate, ID);
