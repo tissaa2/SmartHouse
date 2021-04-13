@@ -5,67 +5,17 @@ using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    // public class Device : IconEntity<int>
-    public class Device : IconEntity
+    public class Device : NamedIconEntity
     {
         public virtual string TypeName { get; set; }
 
-        private byte portID = 0;
-        public byte PortID {
-            get => portID;
-            set
-            {
-                CheckIsDirty(portID, value, "PortID", () => { portID = value; });
-            }
-        }
+        public byte PortID { get; set; }
 
-        [JsonIgnore]
-        private byte portTypeID = 0;
-        public byte PortTypeID
-        {
-            get => portTypeID;
-            set
-            {
-                CheckIsDirty(portTypeID, value, "PortTypeID", () => { portTypeID = value; });
-            }
-        }
+        public byte PortTypeID { get; set; }
 
-        public UID uid;
-        public UID UID
-        {
-            get => uid;
-            set
-            {
-                CheckIsDirty(uid, value, "UID", () => { uid = value; });
-            }
-        }
+        public UID UID { get; set; }
 
         public virtual bool IsInput { get; set; }
-
-        /* private bool _checked;
-        public bool Checked {
-            get {
-                return _checked;
-            }
-            set {
-                _checked = value;
-                OnPropertyChanged("Checked");
-            }
-        } */
-
-        /* private bool enabled;
-        public bool Enabled
-        {
-            get
-            {
-                return enabled;
-            }
-            set
-            {
-                enabled = value;
-                OnPropertyChanged("Enabled");
-            }
-        } */
 
         public Device()
         {
@@ -82,9 +32,9 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public virtual void SetState(DeviceState state)
+        public virtual DeviceState GetState()
         {
-
+            return null;
         }
 
     }

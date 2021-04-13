@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
+             x:Class="SmartHouse.Views.GroupPage"
+             IsVisible="False">
+    <StackLayout Orientation="Vertical">
+        <StackLayout x:Name="EditorLayout" Orientation="Horizontal" BindingContext="{Binding Target}" HeightRequest="64">
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" WidthRequest="64" VerticalOptions="Fill" Source="{Binding Icon}" />
+            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" WidthRequest="64" VerticalOptions="Fill" Source="{Binding Icon}" Data="{Binding .}" OnPressed="IconButton_Clicked"/>
+            <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding Name}" VerticalTextAlignment="Center" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding Name}" FontSize="Large"/>
+        </StackLayout>
+        
+        <Button x:Name="DevicesButton" HeightRequest="48" HorizontalOptions="Fill" IsVisible="{Binding ScenesMode}" Pressed="DevicesButton_Pressed" Text="Показать устройства" />
+        <Grid HorizontalOptions="Fill" IsVisible="{Binding DevicesMode}" HeightRequest="64">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ScenesButton" Grid.Column="0" HorizontalOptions="Fill"  Pressed="ScenesButton_Pressed" Text="Показать сцены" />
+            <Button x:Name="InputDevicesButton" IsVisible="{Binding OutputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="InputDevicesButton_Pressed" Text="Показать входы" />
+            <Button x:Name="OutputDevicesButton" IsVisible="{Binding InputsMode}" Grid.Column="1" HorizontalOptions="Fill"  Pressed="OutputDevicesButton_Pressed" Text="Показать выходы" />
+        </Grid>
+        <ListView IsVisible="{Binding ScenesMode}"  x:Name="ScenesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="White" HasUnevenRows="True" ItemsSource="{Binding Items}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="ScenesItemTapRecognizer" NumberOfTapsRequired="1" Tapped="ScenesItemTapRecognizer_Tapped"/>
+                                <TapGestureRecognizer x:Name="ScenesItemDoubleTapRecognizer" NumberOfTapsRequired="2" Tapped="ScenesItemDoubleTapRecognizer_DoubleTapped"/>
+                            </Grid.GestureRecognizers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <controls:DevicesListView BindingContext="{Binding .}" IsVisible="{Binding DevicesMode}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                   ItemsSource="{Binding Devices.Items}" BackgroundColor="White" />
+        <Button x:Name="AddButton" Text="Добавить" Clicked="AddButton_Clicked"  HorizontalOptions="Fill"/>
+        
+    </StackLayout>
+</ContentPage>

@@ -17,7 +17,7 @@
             <Image x:Name="DeviceTypeIconImage" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Source="{Binding DeviceType.Props.Icon}" />
             <!--<Label x:Name="DeviceTypeNameLabel" Grid.Column="2" Text="{Binding DeviceType.Props.Name}" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" FontSize="Large" />-->
             <!--<Picker x:Name="DeviceTypesPicker"  Grid.Column="2"  ItemsSource="{Binding LogicDeviceTypes}" SelectedItem="{Binding DeviceType}" IsVisible="False" Title="Тип устройства" HorizontalOptions="Fill" />-->
-            <Picker x:Name="DeviceTypesPicker"  Grid.Column="2"  ItemsSource="{Binding LogicDeviceTypes}" SelectedItem="{Binding DeviceType}" Title="Тип устройства" HorizontalOptions="Fill" />
+            <Picker x:Name="DeviceTypesPicker"  Grid.Column="2" ItemsSource="{Binding LogicDeviceTypes}" SelectedItem="{Binding DeviceType}" Title="Тип устройства" HorizontalOptions="Fill" />
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Grid.GestureRecognizers>
@@ -31,14 +31,6 @@
             <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="UID:" FontSize="Large"/>
             <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding UID}" FontSize="Large"/>
         </Grid>
-        <!--<Grid IsVisible="{Binding IsInput}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="64" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Margin="8, 8" Text="Тип" FontSize="Large" WidthRequest="150"/>
-            <Picker Grid.Column="1" Title="Выберите тип" IsVisible="{Binding IsUIDEvent}" SelectedIndex="{Binding TypeID}" HorizontalOptions="FillAndExpand" />
-        </Grid>-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="96" />

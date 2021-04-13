@@ -3,15 +3,8 @@
     // public class DeviceState : BaseEntity<int>
     public class DeviceState : BaseEntity
     {
-        public string value = null;
-        public string Value
-        {
-            get => value;
-            set
-            {
-                CheckIsDirty(this.value, value, "Value", () => { this.value = value; });
-            }
-        }
+        public int DeviceID { get; set; }
+        public string Value { get; set; } = null;
 
         public DeviceState()
         {

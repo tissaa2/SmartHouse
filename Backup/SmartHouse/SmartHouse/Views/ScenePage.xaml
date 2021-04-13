@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls" 
+             x:Class="SmartHouse.Views.ScenePage"
+             IsVisible="False">
+    <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Horizontal">
+            <Image IsVisible="{Binding NotIsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}"/>
+            <controls:ImageButton IsVisible="{Binding IsAdmin}" Aspect="AspectFill" BackgroundColor="LightGray" HorizontalOptions="Fill" HeightRequest="64" WidthRequest="64" Source="{Binding Icon}" Data="{Binding }" OnPressed="IconButton_Clicked"/>
+            <Label IsVisible="{Binding NotIsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" VerticalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
+            <Entry IsVisible="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" HeightRequest="64" Text="{Binding Name}" FontSize="Large" TextChanged="NameEntry_TextChanged"/>
+        </StackLayout>
+        <!--<controls:TwoTextSwitch TextOn="Настенная панель" IsToggled="{Binding IsUIDEvent}" HorizontalOptions="Fill" TextOff="Выключатель"/> -->
+        <!--<Button x:Name="GroupEventButton" IsVisible="{Binding IsUIDEvent}" HorizontalOptions="Fill"  Pressed="GroupEventButton_Pressed" Text="Создать событие группы" />
+        <Button x:Name="UIDEventButton" IsVisible="{Binding IsGroupEvent}" HorizontalOptions="Fill"  Pressed="UIDEventButton_Pressed" Text="Создать UID событие" />-->
+        <!--<StackLayout Orientation="Horizontal">-->
+        <!--<StackLayout Orientation="Horizontal" IsVisible="{Binding IsUIDEvent}">-->
+
+        <StackLayout Orientation="Horizontal">
+            <Label Margin="8, 8" Text="Источник" FontSize="Large" WidthRequest="150"/>
+            <Picker x:Name="DevicePicker" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Sources}" SelectedItem="{Binding SelectedSource}"  SelectedIndexChanged="DevicePicker_SelectedIndexChanged"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">
+            <Label IsVisible="{Binding IsGroupEvent}" Margin="8, 8" Text="Категория" FontSize="Large" WidthRequest="150"/>
+            <Picker x:Name="TypePicker" Title="Выберите категорию" IsVisible="{Binding IsGroupEvent}" SelectedIndex="{Binding CategoryID}" HorizontalOptions="FillAndExpand" SelectedIndexChanged="TypePicker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Включить с диммированием</x:String>
+                    <x:String>Выведенная кнопка</x:String>
+                    <x:String>Управление воротами</x:String>
+                    <x:String>Управление шторами</x:String>
+                    <x:String>ИК излучатель</x:String>
+                    <x:String>Мультисобытие</x:String>
+                </Picker.Items>
+            </Picker>
+        </StackLayout>
+        
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsGroupEvent}">
+            <Label IsVisible="{Binding IsGroupEvent}" Margin="8, 8" Text="Время" FontSize="Large" WidthRequest="150"/>
+            <Entry x:Name="TimeParEntry" IsVisible="{Binding IsGroupEvent}" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding TimePar}" FontSize="Large" TextChanged="TimeParEntry_TextChanged"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" >
+            <Label Margin="8, 8" Text="Порт" FontSize="Large" WidthRequest="150"/>
+            <Entry x:Name="InputIDEntry" IsEnabled="{Binding IsAdmin}" HorizontalOptions="FillAndExpand" Text="{Binding InputID}" FontSize="Large" TextChanged="InputIDEntry_TextChanged"/>
+            <!--<Button x:Name="GetActivatorUIDButton" Text="Найти" Pressed="GetActivatorUIDButton_Pressed"/>-->
+        </StackLayout>
+
+        <!--</StackLayout>-->
+        <controls:DevicesListView ShowDeleteButtons="False" BindingContext="{Binding .}" x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" 
+                                   ItemsSource="{Binding Items}" BackgroundColor="White" DeviceStateChanged="DevicesListView_DeviceStateChanged" />
+        <Button x:Name="ApplyButton" IsVisible="{Binding IsDirty}" Text="Применить" Pressed="ApplyButton_Pressed" HorizontalOptions="Fill" HeightRequest="48"/>
+    </StackLayout>
+</ContentPage>

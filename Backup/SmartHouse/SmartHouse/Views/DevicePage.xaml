@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
+             x:Class="SmartHouse.Views.DevicePage"
+             IsVisible="False">
+    <StackLayout>
+        <Button x:Name="FindDeviceButton" Text="Найти устройство" Clicked="FindDeviceButton_Clicked"/>
+        <Grid HeightRequest="64" IsEnabled="{Binding Device.IsAdmin}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" Text="Тип:" VerticalTextAlignment="Center" FontSize="Large"/>
+            <Image x:Name="DeviceTypeIconImage" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Source="{Binding DeviceType.Props.Icon}" />
+            <!--<Label x:Name="DeviceTypeNameLabel" Grid.Column="2" Text="{Binding DeviceType.Props.Name}" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" FontSize="Large" />-->
+            <!--<Picker x:Name="DeviceTypesPicker"  Grid.Column="2"  ItemsSource="{Binding LogicDeviceTypes}" SelectedItem="{Binding DeviceType}" IsVisible="False" Title="Тип устройства" HorizontalOptions="Fill" />-->
+            <Picker x:Name="DeviceTypesPicker"  Grid.Column="2" ItemsSource="{Binding LogicDeviceTypes}" SelectedItem="{Binding DeviceType}" Title="Тип устройства" HorizontalOptions="Fill" />
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </Grid.GestureRecognizers>
+        </Grid>
+        <Picker Grid.Column="1" Title="Тип порта" ItemsSource="{Binding PhysicPortTypes}" SelectedItem="{Binding PortType}" HorizontalOptions="FillAndExpand" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="UID:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding UID}" FontSize="Large"/>
+        </Grid>
+        <!--<Grid IsVisible="{Binding IsInput}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Margin="8, 8" Text="Тип" FontSize="Large" WidthRequest="150"/>
+            <Picker Grid.Column="1" Title="Выберите тип" IsVisible="{Binding IsUIDEvent}" SelectedIndex="{Binding TypeID}" HorizontalOptions="FillAndExpand" />
+        </Grid>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="96" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="№ порта:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding PortID}" FontSize="Large"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" Text="Имя:" FontSize="Large"/>
+            <Entry IsEnabled="{Binding Device.IsAdmin}" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Text="{Binding Name}" FontSize="Large"/>
+        </Grid>
+        <!--<Button x:Name="ApplyButton" Text="Применить" Pressed="ApplyButton_Pressed" />-->
+        <Button x:Name="ApplyButton" IsVisible="{Binding IsDirty}" Text="Применить" Pressed="ApplyButton_Pressed" HorizontalOptions="Fill" HeightRequest="48"/>
+    </StackLayout>
+</ContentPage>

@@ -5,26 +5,27 @@ using System.Text;
 using SmartHouse.Models.Logic;
 using System.ComponentModel;
 using SmartHouse.Models;
+using System.Linq;
 
 namespace SmartHouse.ViewModels
 {
 
-    public class GroupModel: IconNamedListViewModel<Scene> 
+    public class GroupModel: IconNamedListViewModel<SceneModel> 
     {
-        //private ListViewModel<Scene> scenes = new ListViewModel<Scene>(null);
-        //public ListViewModel<Scene> Scenes
-        //{
-        //    get
-        //    {
-        //        return scenes;
-        //    }
-        //    set
-        //    {
-        //        OnPropertyChanging("Scenes");
-        //        scenes = value;
-        //        OnPropertyChanged("Scenes");
-        //    }
-        //}
+        private ListViewModel<Scene> scenes = new ListViewModel<Scene>(null);
+        public ListViewModel<Scene> Scenes
+        {
+            get
+            {
+                return scenes;
+            }
+            set
+            {
+                OnPropertyChanging("Scenes");
+                scenes = value;
+                OnPropertyChanged("Scenes");
+            }
+        }
 
         private bool inputsMode = false;
         public bool InputsMode
@@ -71,8 +72,11 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public GroupModel()
+        public GroupModel(Group source)
         {
+            Target = source;
+            Icon = source.Icon;
+            Name = source.Name;
         }
 
         private ObservableCollection<Device> GetDevices()
@@ -85,13 +89,13 @@ namespace SmartHouse.ViewModels
             return result;
         }
 
-        public override void Apply()
+        public override void Apply(object target)
         {
-            base.Apply();
-            if (Target is Group)
+            base.Apply(target);
+            if (target is Group)
             {
-                var g = Target as Group;
-                g.Items = Items;
+                var g = target as Group;
+                g.Items = Items.Select(e => e.T);
                 g.Devices = GetDevices();
             }
         }

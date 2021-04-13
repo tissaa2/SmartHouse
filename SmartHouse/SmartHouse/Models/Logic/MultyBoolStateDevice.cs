@@ -2,41 +2,34 @@
 using SmartHouse.Models.Physics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartHouse.Models.Logic
 {
     public class MultyBoolStateDevice : /* StateDevice<double> */ Device 
     {
 
-        private List<bool> state;
         [JsonProperty(PropertyName = "State")]
-        public List<bool> State
-        {
-            get { return state; }
-            set
-            {
-                state = value;
-                // Port.SetPortValue(ID, PortID, (byte)state, 2);
-                OnPropertyChanged("State");
-            }
-        }
+        public List<bool> State { get; set; }
+
 
         public MultyBoolStateDevice()
         {
 
         }
 
-        public MultyBoolStateDevice(int id, string name, IEnumerable<bool> _state, UID uid, byte portID): base (id, uid, portID, name, null)
+        public MultyBoolStateDevice(int id, string name, IEnumerable<bool> state, UID uid, byte portID): base (id, uid, portID, name, null)
         {
-            state = new List<bool>(_state);
+            State = new List<bool>(state);
         }
 
         public override void ApplyState(string state)
         {
         }
 
-        public override void SetState(DeviceState state)
+        public override DeviceState GetState()
         {
+            return new DeviceState() { Value = string.Join("", State.Select(e => e ? "1": "0")) , DeviceID = ID };
         }
 
     }

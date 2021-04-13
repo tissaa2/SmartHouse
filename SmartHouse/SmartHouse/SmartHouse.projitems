@@ -46,10 +46,12 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DeviceTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\GroupSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\MultyBoolStateDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\MotionSensor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceStateModel - Копировать.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\GroupSourceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Switch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Panel.cs" />
@@ -92,7 +94,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\StateDeviceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceStateModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\LampModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\FanModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceModel.cs" />
@@ -144,7 +146,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Socket.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Lamp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Device.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedIconEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\GroupEvent.cs" />

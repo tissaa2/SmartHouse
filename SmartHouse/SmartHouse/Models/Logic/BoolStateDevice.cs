@@ -4,21 +4,9 @@ using System;
 
 namespace SmartHouse.Models.Logic
 {
-    public class BoolStateDevice : Device /* StateDevice<bool> */ 
+    public class BoolStateDevice : Device
     {
-        private bool state;
-        [JsonProperty(PropertyName = "State")]
-        public bool State
-        {
-            get { return state; }
-            set
-            {
-                state = value;
-                if (Initialized)
-                    Port.SetPortValue(UID, PortID, (byte)(state ? 1 : 0), 0);
-                OnPropertyChanged("State");
-            }
-        }
+        public bool State { get; set; }
 
         public BoolStateDevice()
         {
@@ -30,20 +18,9 @@ namespace SmartHouse.Models.Logic
             State = state;
         }
 
-        public override void ApplyState(string state)
+        public override DeviceState GetState()
         {
-            bool v;
-            if (bool.TryParse(state, out v))
-            {
-                State = v;
-            }
-
-            // сюда вставить код изменения состояния выхода диммера
-        }
-
-        public override void SetState(DeviceState state)
-        {
-            state.Value = State.ToString();
+            return new DeviceState() { Value = State.ToString(), DeviceID = ID };
         }
 
     }

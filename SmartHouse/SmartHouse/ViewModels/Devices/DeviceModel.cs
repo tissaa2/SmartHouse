@@ -9,17 +9,6 @@ using System.Collections.Generic;
 
 namespace SmartHouse.ViewModels
 {
-    /* public class DeviceType
-    {
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public DeviceType(int id, string name)
-        {
-            Name = name;
-            ID = id;
-        }
-    } */
-
     public class PPortType
     {
         public byte ID {get; set;}
@@ -61,7 +50,6 @@ namespace SmartHouse.ViewModels
             new PPortType(1, "Релейный выход")
         };
 
-        // public static List<EntityInfo> logicDeviceTypes = BaseEntity<int>.GetInheritors(typeof(Device), new Type[] { typeof(GroupSource) });
         public static List<EntityInfo> logicDeviceTypes = BaseEntity.GetInheritors(typeof(Device), new Type[] { typeof(GroupSource) });
 
         public List<PPortType> PhysicPortTypes
@@ -76,16 +64,7 @@ namespace SmartHouse.ViewModels
         }
         public List<EntityInfo> LogicDeviceTypes { get { return logicDeviceTypes; } }
 
-        public static readonly BindableProperty TypeIDProperty = BindableProperty.Create("TypeID", typeof(int), typeof(DeviceModel), default(int));
         private int typeID;
-        [JsonProperty(PropertyName = "TypeID")]
-        public int TypeID
-        {
-            get { return typeID; }
-            set {
-                CheckIsDirty(typeID, value, "TypeID", ()=> { deviceType = null; this.typeID = value; SetValue(TypeIDProperty, value); });
-            }
-        }
 
         private EntityInfo deviceType = null;
         public EntityInfo DeviceType
@@ -98,12 +77,6 @@ namespace SmartHouse.ViewModels
             }
             set
             {
-                // deviceType = value;
-                //if (value != null)
-                //{
-                //    typeID = value.ID;
-                //    OnPropertyChanged("DeviceType");
-                //}
                 CheckIsDirty(deviceType, value, "DeviceType", () => { deviceType = value; typeID = value == null ? -1 : value.ID; });
             }
         }
@@ -127,14 +100,8 @@ namespace SmartHouse.ViewModels
             }
             set
             {
-                // deviceType = value;
-                //if (value != null)
-                //{
-                //    typeID = value.ID;
-                //    OnPropertyChanged("DeviceType");
-                //}
-                CheckIsDirty(portType, value, "PortType", () => {
-                    portType = value;
+                CheckIsDirty(portType, value, "PortType", () => { 
+                    portType = value; 
                     if (value != null)
                         portTypeID = value.ID;
                 });
@@ -147,7 +114,6 @@ namespace SmartHouse.ViewModels
         public int ID
         {
             get { return id; }
-            // set { id = value; OnPropertyChanged("ID"); /* device = null; OnPropertyChanged("Device"); */}
             set
             {
                 CheckIsDirty(id, value, "ID", () => { id = value; });
@@ -158,7 +124,6 @@ namespace SmartHouse.ViewModels
         public string UID
         {
             get { return uid; }
-            // set { uid = value; OnPropertyChanged("UID"); /* device = null; OnPropertyChanged("Device"); */}
             set
             {
                 CheckIsDirty(uid, value, "UID", () => { uid = value; });
@@ -169,7 +134,6 @@ namespace SmartHouse.ViewModels
         public bool Enabled
         {
             get { return enabled; }
-            // set { enabled = value; OnPropertyChanged("Enabled"); }
             set
             {
                 CheckIsDirty(enabled, value, "Enabled", () => { enabled = value; });
@@ -180,7 +144,6 @@ namespace SmartHouse.ViewModels
         public bool ShowDeleteButton
         {
             get { return showDeleteButton && Device.IsAdmin; }
-            // set { showDeleteButton = value; OnPropertyChanged("ShowDeleteButton"); }
             set
             {
                 CheckIsDirty(showDeleteButton, value, "ShowDeleteButton", () => { showDeleteButton = value; });
@@ -192,7 +155,6 @@ namespace SmartHouse.ViewModels
         public string PortID
         {
             get { return portID; }
-            // set { portID = value; OnPropertyChanged("PortID"); }
             set
             {
                 CheckIsDirty(portID, value, "PortID", () => { portID = value; });
@@ -288,9 +250,9 @@ namespace SmartHouse.ViewModels
             base.Setup();
         }
 
-        public override void Apply()
+        public override void Apply(object target)
         {
-            base.Apply();
+            base.Apply(target);
             var od = device;
             if (DeviceType.Type.Name != device.GetType().Name)
             {
@@ -304,16 +266,19 @@ namespace SmartHouse.ViewModels
             int v;
             if (int.TryParse(PortID, out v))
                 device.PortID = (byte)v;
-            // device.Name = Name;
             if (portType != null)
                 device.PortTypeID = portType.ID;
             device.SecurityLevel = SecurityLevel;
-            IsDirty = false;
+        }
+
+        public DeviceModel(Device source) : base()
+        {
+            this.Target = source;
+            Setup();
         }
 
         public DeviceModel() : base()
         {
-
         }
 
         public override string ToString()

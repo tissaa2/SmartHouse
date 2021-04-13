@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls"
+             x:Class="SmartHouse.Views.DevicesBrowserPage"
+             IsVisible="True"
+             Title="Сеть CAN">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="slideout.png" Text="Меню" Activated="ToolbarItem_Activated"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Orientation="Vertical">
+        <Picker x:Name="MenuPicker" Title="Выберите действие" IsVisible="False" SelectedIndexChanged="MenuPicker_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Обновить</x:String>
+                <x:String>Окно отладки</x:String>
+                <x:String>Найти устройство</x:String>
+                <x:String>Захват устройства</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <!-- <ListView.Resources>
+                <ResourceDictionary>
+                    <DataTemplate x:Key="dimmerTemplate">
+                        <ViewCell Height="64" >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                    <DataTemplate x:Key="irpanelTemplate">
+                        <ViewCell Height="64">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                    <DataTemplate x:Key="irtrancieverTemplate">
+                        <ViewCell Height="64">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="motionsensorTemplate">
+                        <ViewCell Height="64">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="mstpanelTemplate">
+                        <ViewCell Height="64">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="relayTemplate">
+                        <ViewCell Height="64">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="defaultTemplate">
+                        <ViewCell Height="64">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding DeviceType}" />
+                                <Label VerticalOptions="Fill" WidthRequest="100" Text="{Binding ID}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                    <controls:PDeviceTemplateSelector x:Key="pdeviceTemplateSelector"
+                        DimmerTemplate="{StaticResource dimmerTemplate}"
+                        IRPanelTemplate="{StaticResource irpanelTemplate}" 
+                        IRTrancieverTemplate="{StaticResource irtrancieverTemplate}" 
+                        MotionSensorTemplate="{StaticResource motionsensorTemplate}" 
+                        RelayTemplate="{StaticResource relayTemplate}" 
+                        DefaultTemplate="{StaticResource defaultTemplate}" 
+                    />
+                </ResourceDictionary>
+            </ListView.Resources> -->
+
+        <ListView x:Name="DevicesListView" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" 
+                  HasUnevenRows="True" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" HeightRequest="64" Padding="8, 4">
+                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                                <Label FontSize="Medium" VerticalTextAlignment="Center" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Text="{Binding TypeName}" />
+                                <Label FontSize="Medium" VerticalTextAlignment="Center" VerticalOptions="Fill" WidthRequest="100" Text="{Binding StringID}" />
+                                <controls:ToggleButton Toggled="{Binding Fold, Mode=TwoWay}" HeightRequest="24" WidthRequest="24" OnImageSource="unfold.png" OffImageSource="fold.png" />
+                            </StackLayout>
+                            <controls:RepeaterView Padding="16, 0" Spacing="4" IsVisible="{Binding Unfold}" Orientation="Vertical" HorizontalOptions="Fill" ItemsSource="{Binding Inputs}" >
+                                <controls:RepeaterView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell Height="32" >
+                                            <StackLayout Orientation="Horizontal" BackgroundColor="{Binding BGColor}" Spacing = "4" Padding="4">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer x:Name="InputsTapGestureRecognizer" NumberOfTapsRequired="1" Tapped="PortsTapGestureRecognizer_Tapped" />
+                                                </StackLayout.GestureRecognizers>
+                                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="32"/>
+                                                <Label Margin="16, 0, 0, 0" Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="Black" FontSize="Large"/>
+                                                <!--<controls:ESlider IsEnabled="{Binding Enabled}" VerticalOptions="Fill" Margin="0" Value="{Binding Value, Mode=TwoWay}" Caption="{Binding Name}" HorizontalOptions="FillAndExpand" />-->
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </controls:RepeaterView.ItemTemplate>
+                            </controls:RepeaterView>
+                            <controls:RepeaterView Padding="16,0" Spacing="4" IsVisible="{Binding Unfold}" Orientation="Vertical" HorizontalOptions="Fill" ItemsSource="{Binding Outputs}">
+                                <controls:RepeaterView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell Height="32" >
+                                            <StackLayout Orientation="Horizontal" BackgroundColor="{Binding BGColor}" Spacing = "4" Padding="4">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer x:Name="OutputsTapGestureRecognizer" NumberOfTapsRequired="1" Tapped="PortsTapGestureRecognizer_Tapped" />
+                                                </StackLayout.GestureRecognizers>
+                                                <Image Source="{Binding Icon}" VerticalOptions="Fill" WidthRequest="32"/>
+                                                <controls:ESlider IsEnabled="True" VerticalOptions="Fill" Margin="0" Value="{Binding Value, Mode=TwoWay}" Caption="{Binding Name}" HorizontalOptions="FillAndExpand" ValueChanged="ESlider_ValueChanged"/>
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </controls:RepeaterView.ItemTemplate>
+                            </controls:RepeaterView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+        <Button x:Name="SelectButton" Text="Выбрать" Pressed="SelectButton_Pressed" HorizontalOptions="Fill" IsVisible="{Binding SelectButtonVisible}"/>
+    </StackLayout>
+</ContentPage>

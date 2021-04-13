@@ -18,15 +18,11 @@ namespace SmartHouse.ViewModels
             {
                 IsGroupEvent = selectedSource is GroupSourceModel;
                 return selectedSource;
-                // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
                 OnPropertyChanging("SelectedSource");
-                //selectedDevice = value;
-                //OnPropertyChanged("SelectedDevice");
-                // selectedDevice = CheckIsDirty(selectedDevice, value, "SelectedDevice") as DeviceModel;
                 CheckIsDirty(selectedSource, value, "SelectedSource", ()=> selectedSource = value);
             }
         }
@@ -74,9 +70,6 @@ namespace SmartHouse.ViewModels
         public int InputID {
             get => inputID;
             set {
-                // inputID = value;
-                // OnPropertyChanged("InputID");
-                // inputID = (int)CheckIsDirty(inputID, value, "InputID");
                 CheckIsDirty(inputID, value, "InputID", () => inputID = value);
             }
         }
@@ -85,9 +78,6 @@ namespace SmartHouse.ViewModels
         public byte GroupID {
             get => groupID;
             set {
-                //groupID = value;
-                //OnPropertyChanged("GroupID");
-                // groupID = (byte)CheckIsDirty(groupID, value, "GroupID");
                 CheckIsDirty(groupID, value, "GroupID", ()=>groupID = value);
             }
         }
@@ -96,9 +86,6 @@ namespace SmartHouse.ViewModels
         public byte CategoryID {
             get => categoryID;
             set {
-                //categoryID = value;
-                //OnPropertyChanged("CategoryID");
-                // categoryID = (byte)CheckIsDirty(categoryID, value, "CategoryID");
                 CheckIsDirty(categoryID, value, "CategoryID", ()=>categoryID = value);
             }
         }
@@ -107,9 +94,6 @@ namespace SmartHouse.ViewModels
         public byte TimePar {
             get => timePar;
             set {
-                //timePar = value;
-                //OnPropertyChanged("TimePar");
-                // timePar = (byte)CheckIsDirty(timePar, value, "TimePar");
                 CheckIsDirty(timePar, value, "TimePar", ()=>timePar = value);
             }
         }
@@ -131,10 +115,38 @@ namespace SmartHouse.ViewModels
         /* private Event _event = null;
         public Event Event { get => portNumber; set { portNumber = value; OnPropertyChanged("PortNumber"); } } */
 
-        public SceneModel(ObservableCollection<DeviceModel> items/* , ViewEditTemplateSelector templateSelector */): base(items)
+        public SceneModel(Scene source): base(source.Items.Select(e => DeviceModel.CreateModel().ToArray(), source.Icon, source.Name)
         {
             // Items = items;
         }
+
+         
+        //public Scene ToBusiness()
+        //{
+        //    Event evnt;
+        //    if (this.IsGroupEvent)
+        //        evnt = new GroupEvent()
+        //        {
+        //            CategoryID = CategoryID,
+        //            GroupID = GroupID,
+        //            InputID = (byte)InputID,
+        //            TimePar = TimePar,
+        //            TypeID = TypeID
+        //        };
+        //    else
+        //        evnt = new UIDEvent()
+        //        {
+        //            DeviceID = SelectedSource.ID,
+        //            InputID = (byte)InputID,
+        //            TypeID = TypeID
+        //        };
+
+        //    return new Scene()
+        //    {
+        //        Event = evnt,
+                
+        //    };
+        //}
 
         //логические устройства убрать из интерфейсов. вместо них юзать модели
         //в DevicesListView поменять Device на Device model
@@ -186,8 +198,9 @@ namespace SmartHouse.ViewModels
         // там же пофиксить кнопку 'Привенить'. пофиксить ее вообще везде
         // > в редакторе сцены автоматически проставлять номер порта (поменять на 'входа') 
           
-        public void Apply()
+        public override void Apply(object target)
         {
+            base.Apply(target);
             var t = Target as Scene;
             t.Items.Clear();
             foreach (var dm in Items)
@@ -215,7 +228,7 @@ namespace SmartHouse.ViewModels
             }
             ev.InputID = (byte)InputID;
             t.Event = ev;
-            t.Icon = icon;
+            t.Icon = Icon;
             t.Name = name;
             IsDirty = false;
         }

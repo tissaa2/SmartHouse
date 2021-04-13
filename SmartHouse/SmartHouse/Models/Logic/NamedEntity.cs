@@ -8,20 +8,9 @@ using System.IO;
 
 namespace SmartHouse.Models.Logic
 {
-    // public class NamedEntity<T> : BaseEntity<T>
     public class NamedEntity : BaseEntity
     {
-        // [XmlIgnore]
-        private string name = null;
-        public virtual string Name
-        {
-            get => name;
-            set
-            {
-                CheckIsDirty(name, value, "Name", () => { name = value; });
-            }
-        }
-
+        public virtual string Name { get; set; }
 
         public override string ToString()
         {
@@ -33,7 +22,6 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        // public NamedEntity(T id, string nameTemplate) : base(id)
         public NamedEntity(int id, string nameTemplate) : base(id)
         {
             if (nameTemplate.Contains("{"))

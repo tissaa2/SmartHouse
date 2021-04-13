@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\SmartHouse.Android.csproj": {}
+  },
+  "projects": {
+    "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\SmartHouse.Android.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\SmartHouse.Android.csproj",
+        "projectName": "SmartHouse.Android",
+        "projectPath": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\SmartHouse.Android.csproj",
+        "packagesPath": "C:\\Users\\Etiainen\\.nuget\\packages\\",
+        "outputPath": "C:\\HouseLink\\SmartHouse\\SmartHouse\\SmartHouse.Android\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Etiainen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "monoandroid81"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://gitlab.pluritech.com/api/v4/projects/3/packages/nuget/index.json": {}
+        },
+        "frameworks": {
+          "monoandroid81": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "monoandroid81": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "Xam.Plugin.Media": {
+              "target": "Package",
+              "version": "[4.0.1.5, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[4.2.0.910310, )"
+            }
+          }
+        }
+      }
+    }
+  }
+}

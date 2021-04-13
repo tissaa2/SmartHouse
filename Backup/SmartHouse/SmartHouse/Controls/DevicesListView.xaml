@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartHouse.Controls.DevicesListView" 
+             xmlns:controls="clr-namespace:SmartHouse.Controls" 
+             HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="White" 
+                  HasUnevenRows="True">
+    
+    <ListView.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="switchTemplate">
+                <ViewCell Height="64" >
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <Label Margin="16, 0, 0, 0" Text="{Binding Device.Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="Black" FontSize="Large"/>
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="panelTemplate">
+                <ViewCell Height="64" >
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <Label Margin="16, 0, 0, 0" Text="{Binding Device.Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="Black" FontSize="Large"/>
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="motionSensorTemplate">
+                <ViewCell Height="64" >
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <Label Margin="16, 0, 0, 0" Text="{Binding Device.Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" VerticalTextAlignment="Center" TextColor="Black" FontSize="Large"/>
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="fanTemplate">
+                <ViewCell Height="64" >
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+
+                        <Switch x:Name="EnabledSwitch" IsToggled="{Binding Enabled}" Grid.Column="0" WidthRequest="48" Toggled="EnabledSwitch_Toggled"/>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <!-- <Slider IsEnabled="{Binding Enabled}" Grid.Column="2"  HeightRequest="40" Margin="0" Value="{Binding Device.State, Mode=TwoWay}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" ValueChanged="ESlider_ValueChanged"/> -->
+                        <controls:ESlider IsEnabled="{Binding Enabled}" Grid.Column="2"  HeightRequest="40" Margin="0" Value="{Binding Device.State, Mode=TwoWay}" Caption="{Binding Device.Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" ValueChanged="ESlider_ValueChanged"/>
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="socketTemplate">
+                <ViewCell Height="64">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+
+                        <Switch  IsToggled="{Binding Enabled}" Grid.Column="0" WidthRequest="48"  Toggled="EnabledSwitch_Toggled"/>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <Label Margin="0" Text="{Binding Name}" FontSize="Large" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"/>
+                        <controls:ESocketSwitch IsEnabled="{Binding Enabled}" Grid.Column="3"  HeightRequest="40" Margin="0" IsToggled="{Binding Device.State, Mode=TwoWay}" VerticalOptions="Fill" Toggled="ESocketSwitch_Toggled"/>
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="lampTemplate">
+                <ViewCell Height="64">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                        
+                        <Switch  IsToggled="{Binding Enabled}" Grid.Column="0" WidthRequest="48" Toggled="EnabledSwitch_Toggled"/>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <!-- <Slider IsEnabled="{Binding Enabled}" Grid.Column="2"  HeightRequest="40" Margin="0" Value="{Binding Device.State, Mode=TwoWay}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" ValueChanged="ESlider_ValueChanged"/> -->
+                        <controls:ESlider IsEnabled="{Binding Enabled}" Grid.Column="2"  HeightRequest="40" Margin="0" Value="{Binding Device.State, Mode=TwoWay}" Caption="{Binding Device.Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" ValueChanged="ESlider_ValueChanged"/> 
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="defaultTemplate">
+                <ViewCell Height="64">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Padding="8, 4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="ItemGestureRecognizer_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                        <Switch  IsToggled="{Binding Enabled}" Grid.Column="0" WidthRequest="48" Toggled="EnabledSwitch_Toggled"/>
+                        <Image IsEnabled="{Binding Enabled}" Grid.Column="1" Source="{Binding Device.Icon}" VerticalOptions="Fill" WidthRequest="64"/>
+                        <controls:ESlider IsEnabled="{Binding Enabled}" Grid.Column="2"  HeightRequest="40" Margin="0" Value="{Binding Device.State, Mode=TwoWay}" Caption="{Binding Device.Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" ValueChanged="ESlider_ValueChanged"/>
+                        <controls:ImageButton IsVisible="{Binding ShowDeleteButton}" IsEnabled="{Binding Enabled}" Grid.Column="3" x:Name="DeleteDeviceButton" VerticalOptions="Fill" WidthRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteDeviceButton_OnPressed"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>            
+            <controls:DeviceTemplateSelector x:Key="deviceTemplateSelector"
+                FanTemplate="{StaticResource fanTemplate}"
+                SocketTemplate="{StaticResource socketTemplate}" 
+                LampTemplate="{StaticResource lampTemplate}" 
+                PanelTemplate="{StaticResource panelTemplate}" 
+                SwitchTemplate="{StaticResource switchTemplate}" 
+                MotionSensorTemplate="{StaticResource motionSensorTemplate}" 
+                DefaultTemplate="{StaticResource defaultTemplate}" 
+             />
+        </ResourceDictionary>
+    </ListView.Resources>
+
+</ListView>

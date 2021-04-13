@@ -4,30 +4,31 @@ using System;
 
 namespace SmartHouse.Models.Logic
 {
-    public class DoubleStateDevice : /* StateDevice<double> */ Device
+    public class DoubleStateDevice : Device
     {
 
-        private double state;
         [JsonProperty(PropertyName = "State")]
-        public double State
-        {
-            get { return state; }
-            set
-            {
-                CheckIsDirty(state, value, "State", () => {
-                    state = value > 90 ? 100 : value < 10 ? 0 : value;
-                    if (Initialized)
-                        Port.SetPortValue(UID, PortID, (byte)state, 2);
-                });
-            }
-        }
+        public double State { get; set; }
+        //private double state;
+        //[JsonProperty(PropertyName = "State")]
+        //public double State
+        //{
+        //    get { return state; }
+        //    set
+        //    {
+        //        CheckIsDirty(state, value, "State", () => {
+        //            state = value > 90 ? 100 : value < 10 ? 0 : value;
+        //            if (Initialized)
+        //                Port.SetPortValue(UID, PortID, (byte)state, 2);
+        //        });
+        //    }
+        //}
 
         public DoubleStateDevice()
         {
 
         }
 
-        // public DoubleStateDevice(string name, double state) : base(UIDID.NewID(), name, null)
         public DoubleStateDevice(int id, string name, double state, UID uid, byte portID) : base(id, uid, portID, name, null)
         {
             State = state;
@@ -43,9 +44,9 @@ namespace SmartHouse.Models.Logic
             }
         }
 
-        public override void SetState(DeviceState state)
+        public override DeviceState GetState()
         {
-            state.Value = State.ToString();
+            return new DeviceState() { Value = State.ToString(), DeviceID = ID };
         }
 
     }

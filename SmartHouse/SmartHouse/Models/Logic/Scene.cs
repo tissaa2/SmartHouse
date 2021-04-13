@@ -8,7 +8,6 @@ using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    // public class Scene : IconListEntity<int, int, DeviceState>
     public class Scene : IconListEntity<int, DeviceState>
     {
 
@@ -113,7 +112,7 @@ namespace SmartHouse.Models.Logic
         public Scene(string name, string icon, Event _event, IEnumerable<DeviceState> deviceStates, double value) : base(Scene.IntID.NewID(), name, icon)
         {
             Event = _event;
-            Items = new System.Collections.ObjectModel.ObservableCollection<DeviceState>(deviceStates);
+            Items = new List<DeviceState>(deviceStates);
             foreach(var ds in Items)
             {
                 ds.Value = value.ToString();

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHouse"
+             xmlns:controls="clr-namespace:SmartHouse.Controls" 
+             x:Class="SmartHouse.Views.ProjectsListPage"
+             Title="Проекты"
+>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="slideout.png" Text="Меню" Activated="ToolbarItem_Activated"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- DataTemplate x:Key="viewItemTemplate">
+                <ViewCell Height="64">
+                    <Grid Padding="8" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="24"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                        <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                        <local:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="edit.png" OnPressed="EditItem_Clicked"  Data="{Binding .}"/>
+                        <local:ImageButton Grid.Column="3" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Command="{Binding DeleteItemCommand}" CommandParameter="{Binding .}"/>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+
+            <DataTemplate x:Key="editItemTemplate">
+                <ViewCell Height="64">
+                    <Grid Padding="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <local:ImageButton x:Name="IconImage" Grid.Column="0" Source="{Binding Icon, Mode=TwoWay}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                        <Button x:Name="IconButton" Grid.Column="0"  Clicked="IconButton_Clicked" BackgroundColor="Transparent" />
+                        <Entry x:Name="NameEditor" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" HorizontalOptions="Fill" VerticalOptions="Center" IsEnabled="True" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+
+            <local:ViewEditTemplateSelector x:Key="viewEditTemplateSelector"
+                ViewTemplate="{StaticResource viewItemTemplate}"
+                EditTemplate="{StaticResource editItemTemplate}" / -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="48" />
+        </Grid.RowDefinitions>
+        <Picker x:Name="ProjectMenuPicker" Title="Выберите действие" IsVisible="False" SelectedIndexChanged="ProjectMenuPicker_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Загрузить данные с устройства</x:String>
+                <x:String>Сохранить данные на устройство</x:String>
+                <x:String>Загрузить тестовые данные</x:String>
+                <x:String>Настройки</x:String>
+                <x:String>Отладка</x:String>
+                <x:String>Просмотр сети CAN</x:String>
+                <x:String>Тестовая запись сцен</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <!-- ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                  Grid.Row="0" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" 
+                  ItemTemplate="{StaticResource viewEditTemplateSelector}" / -->
+        <ListView x:Name="ProjectsListView" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                  Grid.Row="0" HasUnevenRows="True" ItemTapped="ProjectsListView_ItemTapped" ItemsSource="{Binding Items}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="64">
+                        <Grid Padding="8" ColumnSpacing="8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer x:Name="ItemGestureRecognizer" NumberOfTapsRequired="1" Tapped="ItemGestureRecognizer_Tapped"/>
+                            </Grid.GestureRecognizers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding Icon}" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                            <Label Grid.Column="1"  Text="{Binding Name}" HorizontalOptions="Fill" VerticalOptions="Center" FontSize="Large"/>
+                            <controls:ImageButton Grid.Column="2" HorizontalOptions="Fill" HeightRequest="24" Source="delete.png" Data="{Binding .}" OnPressed="DeleteButton_Clicked"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <Button IsVisible="{Binding IsAdmin}" x:Name="AddButton" Text="Добавить новый проект" Clicked="AddButton_Clicked" Grid.Row="1"/>
+    </Grid>
+</ContentPage>

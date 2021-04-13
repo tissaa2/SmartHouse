@@ -9,19 +9,12 @@ using SmartHouse.Models.Logic;
 
 namespace SmartHouse.Models.Logic
 {
-    // public class Group : IconListEntity<int, int, Scene>
     public class Group : IconListEntity<int, Scene>
     {
-        public ObservableCollection<Group> Children { get; set; } = new ObservableCollection<Group>();
-        public ObservableCollection<Device> Devices { get; set; } = new ObservableCollection<Device>();
+        public List<Group> Children { get; set; } = new List<Group>();
+        public List<int> DeviceIDs { get; set; } = new List<int>();
 
-        public void ReplaceDevice(Device oldDevice, Device newDevice)
-        {
-            Devices.Remove(oldDevice);
-            Devices.Add(newDevice);
-        }
-
-        public static Group Create(string name, string icon, int id)
+        public static Group Create(Project parent, string name, string icon, int id)
         {
             ////int bid = id * 10;
             //var uid0 = Group.UIDID.NewID();
@@ -65,56 +58,33 @@ namespace SmartHouse.Models.Logic
 
             //int bid = id * 10;
             // var uid0 = new UID(0x189);
-            var uid0 = new UID(0x2f9);
-            int lampID = Lamp.IntID.NewID();
-            int offSwitchID = Switch.IntID.NewID();
-            int onSwitchID = Switch.IntID.NewID();
             var g = new Group()
             {
                 Name = name,
                 Icon = icon,
                 ID = id,
-                Devices = new ObservableCollection<Device>()
+                DeviceIDs = new List<int>()
                 {
-                    new Lamp(lampID, "Люстра", 50, uid0, 6),
-                    new Switch(offSwitchID, "Кнопка выкл", true, uid0, 2),
-                    new Switch(onSwitchID, "Кнопка вкл", true, uid0, 3),
+                    1,
+                    2,
+                    3
                 }
             };
 
-            g.Items = new ObservableCollection<Scene>()
+            g.Items = new List<Scene>()
                                 {
                                     new Scene("Выключить все", "scene_switchoff.png",
-                                         // new UIDEvent(2, new UID(0x189)),
-                                         new UIDEvent(2, offSwitchID),
-                                         new  List<DeviceState>(){ new DeviceState(lampID, "0")}, 
-                                         0),
+                                         new UIDEvent(2, 2),
+                                         new  List<DeviceState>(){ new DeviceState(1, "0")}, 0),
                                     new Scene("Полный свет", "scene_brightlight.png",
-                                         // new UIDEvent(3, new UID(0x189)),
-                                         new UIDEvent(3, onSwitchID),
-                                         new  List<DeviceState>(){new DeviceState(lampID, "100")}, 100)
+                                         new UIDEvent(3, 3),
+                                         new  List<DeviceState>(){new DeviceState(1, "100")}, 100)
                                 };
-
-
             return g;
-        }
-
-        private void ChildrenChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if(Initialized)
-                IsDirty = true;
-        }
-
-        private void DevicesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (Initialized)
-                IsDirty = true;
         }
 
         private void Setup()
         {
-            Children.CollectionChanged += ChildrenChanged;
-            Devices.CollectionChanged += DevicesChanged;
         }
 
         public Group()
