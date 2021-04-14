@@ -9,7 +9,7 @@ using Xamarin.Forms;
 namespace SmartHouse.Models.Physics
 {
     // public class Port : IconEntity<int>
-    public class Port : IconEntity
+    public class Port : NamedIconEntity
     {
         public Stack<double> previousValues = new Stack<double>();
         public PDevice Parent { get; set; }

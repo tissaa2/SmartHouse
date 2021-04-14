@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 namespace SmartHouse.Models.Physics
 {
     // public class PDevice : IconEntity<UID>
-    public class PDevice : IconEntity
+    public class PDevice : NamedIconEntity
     {
         private static Dictionary<byte, Type> deviceTypes = null;
         public static Dictionary<byte, Type> DeviceTypes

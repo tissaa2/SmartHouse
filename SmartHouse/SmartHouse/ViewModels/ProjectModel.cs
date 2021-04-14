@@ -24,9 +24,6 @@ namespace SmartHouse.ViewModels
             set
             {
                 CheckIsDirty(devices, value, "Devices", () => { devices = value; });
-                //OnPropertyChanging("Devices");
-                //devices = value;
-                //OnPropertyChanged("Devices");
             }
         }
 
@@ -48,19 +45,14 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public override void Apply()
+        public override void Apply(object target)
         {
-            base.Apply();
-            if (Target is Project)
+            base.Apply(target);
+            if (target is Project)
             {
-                var p = Target as Project;
-                //List<Group> i2add = new List<Group>();
-                //foreach (var e in Items)
-                //{
-                //    if (p.Items.FirstOrDefault(i => i.ID == e.ID) == null)
-                //        i2add.Add(e)
-                //}
-                p.Items = Items;
+                var p = target as Project;
+                GroupModel
+                p.Items = Items.Select(e => e.;
             }
         }
     }

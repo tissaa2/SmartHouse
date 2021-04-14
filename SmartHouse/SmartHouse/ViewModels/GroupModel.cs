@@ -89,13 +89,21 @@ namespace SmartHouse.ViewModels
             return result;
         }
 
+        public Group ToBusiness()
+        {
+            var g = new Group();
+            Apply(g);
+            return g;
+        }
+
         public override void Apply(object target)
         {
             base.Apply(target);
             if (target is Group)
             {
+                SceneModel
                 var g = target as Group;
-                g.Items = Items.Select(e => e.T);
+                g.Items = Items.Select(e => e.);
                 g.Devices = GetDevices();
             }
         }

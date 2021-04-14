@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 
 namespace SmartHouse.Models.Logic
 {
-    public class IconListEntity<IndexType, ItemType> : NamedIconEntity, IUnique<int> where ItemType : BaseEntity
+    public class IconListEntity<IndexType, ItemType> : IconNamedEntity, IUnique<int> where ItemType : BaseEntity
     {
         public IconListEntity()
         {

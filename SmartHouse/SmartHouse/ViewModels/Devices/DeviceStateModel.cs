@@ -8,7 +8,9 @@ namespace SmartHouse.ViewModels
 
     public class DeviceStateModel: ViewModel
     {
+        public SceneModel Scene { get; set; }
         public Device Device{ get; set; }
+        public bool Enabled { get; set; }
 
         private string state;
         public string State
@@ -19,13 +21,14 @@ namespace SmartHouse.ViewModels
             }
             set
             {
-                CheckIsDirty(state, value, "State", () => { state = value; });
+                if (Enabled)
+                    CheckIsDirty(state, value, "State", () => { state = value; });
             }
         }
 
         public void Apply()
         {
-            Device.ApplyState(StateValue);
+            Device.ApplyState(State);
         }
     }
 }

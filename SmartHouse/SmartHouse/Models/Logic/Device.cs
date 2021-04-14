@@ -5,7 +5,7 @@ using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Device : NamedIconEntity
+    public class Device : IconNamedEntity
     {
         public virtual string TypeName { get; set; }
 

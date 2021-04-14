@@ -13,6 +13,8 @@ namespace SmartHouse.Models.Logic
 
         public static Scene LightsOff(int id, Group group)
         {
+            понять, откуда ПРАВИЛЬНО брать девайсы
+            var devs = group.Project.Devices
             return new Scene(id, "Выключить все", "scene_switchoff.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices);
         }
 
@@ -118,6 +120,5 @@ namespace SmartHouse.Models.Logic
                 ds.Value = value.ToString();
             }
         }
-
     }
 }

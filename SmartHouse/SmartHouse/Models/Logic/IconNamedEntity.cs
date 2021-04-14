@@ -2,17 +2,17 @@
 
 namespace SmartHouse.Models.Logic
 {
-    public class NamedIconEntity : NamedEntity
+    public class IconNamedEntity : NamedEntity
     {
         [JsonProperty(PropertyName = "Icon")]
         public virtual string Icon { get; set; }
 
-        public NamedIconEntity()
+        public IconNamedEntity()
         {
 
         }
 
-        public NamedIconEntity(int id, string nameTemplate, string icon) : base(id, nameTemplate)
+        public IconNamedEntity(int id, string nameTemplate, string icon) : base(id, nameTemplate)
         {
             Icon = icon;
         }

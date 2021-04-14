@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
+using Newtonsoft.Json;
 using SmartHouse.Models.Logic;
 // using SmartHouse.Models.Physics;
 
@@ -11,8 +12,25 @@ namespace SmartHouse.Models.Logic
 {
     public class Group : IconListEntity<int, Scene>
     {
+        public Project Project { get; set; }
         public List<Group> Children { get; set; } = new List<Group>();
         public List<int> DeviceIDs { get; set; } = new List<int>();
+
+        //[JsonIgnore]
+        //private Dictionary<int, Device> devices = null;
+        //[JsonIgnore]
+        //public Dictionary<int, Device> Devices
+        //{
+        //    get
+        //    {
+        //        if (devices == null)
+        //        {
+        //            foreach (var e in DeviceIDs)
+        //                devices.Add(e, Project.Devices[e]);
+        //        }
+        //        return devices;
+        //    }
+        //}
 
         public static Group Create(Project parent, string name, string icon, int id)
         {
@@ -99,9 +117,9 @@ namespace SmartHouse.Models.Logic
 
         public override void Init()
         {
-            base.Init();
-            foreach (var e in Devices)
-                e.Init();
+            //base.Init();
+            //foreach (var e in Devices)
+            //    e.Init();
         }
 
 

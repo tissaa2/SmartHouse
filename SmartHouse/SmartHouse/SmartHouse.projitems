@@ -146,7 +146,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Socket.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Lamp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\Device.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedIconEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\IconNamedEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\NamedEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BaseEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Logic\GroupEvent.cs" />

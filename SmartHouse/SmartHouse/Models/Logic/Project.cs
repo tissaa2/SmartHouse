@@ -40,6 +40,7 @@ namespace SmartHouse.Models.Logic
                 };
             return result;
         }
+
         /// <summary>
         /// Девайсы у нас лежат в проекте, а все остальные на них ссылаются
         /// </summary>
