@@ -24,7 +24,7 @@ namespace SmartHouse.Controls
                 return DimmerTemplate;
             if (item is Relay)
                 return RelayTemplate;
-            if (item is IRTranciever)
+            if (item is IRTransciever)
                 return IRTrancieverTemplate;
             if (item is IRPanel)
                 return IRPanelTemplate;
