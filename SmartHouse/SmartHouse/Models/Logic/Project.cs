@@ -65,7 +65,9 @@ namespace SmartHouse.Models.Logic
         {
             base.Init();
             foreach (var e in Items)
-                e.Init();
+            {
+                e.Project = this;
+            }
         }
 
     }

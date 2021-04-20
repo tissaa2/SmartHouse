@@ -9,24 +9,13 @@ namespace SmartHouse.Models.Logic
 {
     public class UIDEvent: Event
     {
-        // public UID UID { get; set; }
-        // public UIDEvent(byte inputId, UID uid)
         public int DeviceID { get; set; }
-        //private int deviceID;
-        //public int DeviceID {
-        //    get => deviceID;
-        //    set
-        //    {
-        //        CheckIsDirty(deviceID, value, "DeviceID", () => { deviceID = value; });
-        //    }
-        //}
 
         public UIDEvent(byte inputId, int deviceId)
         {
             InputID = inputId;
             DeviceID = deviceId;
             Init();
-            // UID = uid;
         }
 
         public UIDEvent()
@@ -36,7 +25,7 @@ namespace SmartHouse.Models.Logic
 
         public override UID GetUID(Group group)
         {
-            var device = group.Devices.FirstOrDefault(e => e.ID == DeviceID);
+            var device = group.Devices[DeviceID];
             if (device != null)
                 return device.UID;
             return base.GetUID(group);

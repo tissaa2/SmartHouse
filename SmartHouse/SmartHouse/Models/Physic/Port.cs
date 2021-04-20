@@ -8,8 +8,7 @@ using Xamarin.Forms;
 
 namespace SmartHouse.Models.Physics
 {
-    // public class Port : IconEntity<int>
-    public class Port : NamedIconEntity
+    public class Port : IconNamedEntity
     {
         public Stack<double> previousValues = new Stack<double>();
         public PDevice Parent { get; set; }
@@ -17,7 +16,6 @@ namespace SmartHouse.Models.Physics
         public double Value { get => value ; set => SetValue(value); }
         public Color bgColor = Color.Transparent;
         public Color BGColor { get => bgColor; set { bgColor = value; OnPropertyChanged("BGColor"); } }
-        
 
         public void PushValue()
         {
@@ -28,8 +26,7 @@ namespace SmartHouse.Models.Physics
         {
             Value = previousValues.Pop();
         }
-
-        public virtual Port Clone()
+        public new virtual Port Clone()
         {
             return null;
         }

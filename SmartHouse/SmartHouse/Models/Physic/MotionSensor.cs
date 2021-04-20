@@ -9,20 +9,11 @@ namespace SmartHouse.Models.Physics
     {
         public override string Icon { get => "pdevice_motionsensor.png"; }
         public override string TypeName { get => "Детектор движения"; }
-        /* public override void Init(int inputsCount, int outputsCount)
-        {
-            base.Init(inputsCount, outputsCount);
-        } */
 
         public MotionSensor()
         {
 
         }
-
-        /* public MotionSensor(UID id, int inputs, int outputs)
-        {
-            Init(id, inputs, outputs, true);
-        } */
 
         public override PDevice Assign(PDevice source)
         {

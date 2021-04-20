@@ -11,36 +11,6 @@ namespace SmartHouse.Models.Logic
         public byte CategoryID { get; set; }
         public byte TimePar { get; set; }
 
-        //private byte groupID = 0;
-        //public byte GroupID
-        //{
-        //    get => groupID;
-        //    set
-        //    {
-        //        CheckIsDirty(groupID, value, "GroupID", () => { groupID = value; });
-        //    }
-        //}
-
-        //private byte categoryID = 0;
-        //public byte CategoryID
-        //{
-        //    get => categoryID;
-        //    set
-        //    {
-        //        CheckIsDirty(categoryID, value, "CategoryID", () => { categoryID = value; });
-        //    }
-        //}
-
-        //private byte timePar = 0;
-        //public byte TimePar
-        //{
-        //    get => timePar;
-        //    set
-        //    {
-        //        CheckIsDirty(timePar, value, "TimePar", () => { timePar = value; });
-        //    }
-        //}
-
         public GroupEvent()
         {
 

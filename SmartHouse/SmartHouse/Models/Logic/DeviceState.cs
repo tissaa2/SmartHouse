@@ -1,9 +1,13 @@
-﻿namespace SmartHouse.Models.Logic
+﻿using Newtonsoft.Json;
+
+namespace SmartHouse.Models.Logic
 {
-    // public class DeviceState : BaseEntity<int>
     public class DeviceState : BaseEntity
     {
+        [JsonIgnore]
+        public Scene Scene { get; set; }
         public int DeviceID { get; set; }
+        
         public string Value { get; set; } = null;
 
         public DeviceState()

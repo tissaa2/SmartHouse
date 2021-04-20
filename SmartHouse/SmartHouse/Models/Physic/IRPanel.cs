@@ -9,20 +9,11 @@ namespace SmartHouse.Models.Physics
     {
         public override string Icon { get => "pdevice_irpanel.png"; }
         public override string TypeName { get => "ИК-панель"; }
-        /* public override void Init(int inputsCount, int outputsCount)
-         {
-             base.Init(inputsCount, outputsCount);
-         } */
 
         public IRPanel()
         {
 
         }
-
-        /* public IRPanel(UID id, int inputs, int outputs)
-        {
-            Init(id, inputs, outputs, true);
-        } */
 
         public override PDevice Assign(PDevice source)
         {

@@ -108,8 +108,6 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public Group Group { get; set; }
-
         private int id;
         public int ID
         {
@@ -175,20 +173,19 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        protected Device device = null;
-        [JsonIgnore]
-        public Device Device
-        {
-            get
-            {
-                if (device == null)
-                {
-                    // UID u = new UID(uid);
-                    device = Group.Devices.FirstOrDefault(e => e.ID == id);
-                }
-                return device;
-            }
-        }
+        //protected Device device = null;
+        //[JsonIgnore]
+        //public Device Device
+        //{
+        //    get
+        //    {
+        //        if (device == null)
+        //        {
+        //            device = Group.Devices[id];
+        //        }
+        //        return device;
+        //    }
+        //}
 
         public override void Assign(ViewModel source)
         {
@@ -196,9 +193,9 @@ namespace SmartHouse.ViewModels
             if (source is DeviceModel)
             {
                 var sm = source as DeviceModel;
-                this.Group = sm.Group;
+                // this.Group = sm.Group;
                 this.uid = sm.uid;
-                this.device = sm.device;
+                // this.device = sm.device;
                 this.deviceType = sm.deviceType;
                 this.typeID = sm.typeID;
                 this.securityLevel = sm.securityLevel;
@@ -254,13 +251,13 @@ namespace SmartHouse.ViewModels
         {
             base.Apply(target);
             var od = device;
-            if (DeviceType.Type.Name != device.GetType().Name)
-            {
-                device = DeviceType.CreateEntity() as Device;
-                var i = Group.Devices.IndexOf(od);
-                if (i > -1)
-                    Group.Devices[i] = device;
-            }
+            //if (DeviceType.Type.Name != device.GetType().Name)
+            //{
+            //    device = DeviceType.CreateEntity() as Device;
+            //    var i = Group.Devices.IndexOf(od);
+            //    if (i > -1)
+            //        Group.Devices[i] = device;
+            //}
             device.ID = id;
             device.UID = new UID(uid);
             int v;

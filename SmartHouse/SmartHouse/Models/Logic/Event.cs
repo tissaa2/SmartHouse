@@ -18,7 +18,6 @@ namespace SmartHouse.Models.Logic
         {
 
         }
-
         public virtual UID GetUID(Group group)
         {
             return default(UID);

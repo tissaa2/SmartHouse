@@ -11,20 +11,10 @@ namespace SmartHouse.Models.Physics
         public override string Icon { get => "pdevice_mstpanel.png"; }
         public override string TypeName { get => "Панель с датчиками"; }
 
-        /* public override void Init(int inputsCount, int outputsCount)
-        {
-            base.Init(inputsCount, outputsCount);
-        } */
-
         public MSTPanel()
         {
 
         }
-
-        /* public MSTPanel(UID id, int inputs, int outputs)
-        {
-            Init(id, inputs, outputs, true);
-        } */
 
         public override PDevice Assign(PDevice source)
         {

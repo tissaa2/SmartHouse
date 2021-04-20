@@ -12,7 +12,6 @@ namespace SmartHouse.Models.Physics
 
         public override Port Clone()
         {
-            // this.Name
             return new OutputPort() { ID = this.ID, Value = this.Value };
         }
     }

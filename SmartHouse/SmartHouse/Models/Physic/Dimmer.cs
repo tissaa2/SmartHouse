@@ -11,16 +11,6 @@ namespace SmartHouse.Models.Physics
         public override string Icon { get => "pdevice_dimmer.png"; }
         public override string TypeName { get => "Диммер"; }
 
-        /* public override void Init(int inputsCount, int outputsCount)
-        {
-            base.Init(inputsCount, outputsCount);
-        } */
-
-        //public override byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte quadNum, byte intensity0, byte intensity1, byte intensity2, byte intensity3)
-        //{
-        //    return Packet.CreateDimmerSceneIntensityWriteRequest(uid, sceneNumber, intensity0, intensity1, intensity2, intensity3);
-        //}
-
         public override byte[] CreateWriteScenePacket(UID uid, byte sceneNumber, byte offset, bool isNight, byte[] intensity)
         {
             return Packet.CreateDimmerSceneIntensityWriteRequest(uid, sceneNumber, isNight, offset > 0, intensity[offset], intensity[offset + 1], intensity[offset + 2], intensity[offset + 3]);
@@ -30,11 +20,6 @@ namespace SmartHouse.Models.Physics
         {
 
         }
-
-        /* public Dimmer(UID id, int inputs, int outputs)
-        {
-            Init(id, inputs, outputs, true);
-        } */
 
         public override PDevice Assign(PDevice source)
         {

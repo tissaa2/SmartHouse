@@ -83,8 +83,6 @@ namespace SmartHouse.Models
             Initialized = true;
         }
 
-
-
         public static T Load<T>(string fileName) where T : class
         {
             T r = null;
