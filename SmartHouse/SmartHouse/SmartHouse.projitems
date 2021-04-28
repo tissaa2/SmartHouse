@@ -91,7 +91,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProjectModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SceneModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DoubleStateDeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceStateModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\LampModel.cs" />

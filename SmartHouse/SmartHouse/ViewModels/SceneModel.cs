@@ -33,22 +33,15 @@ namespace SmartHouse.ViewModels
             get
             {
                 return sources;
-                // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
 
                 OnPropertyChanging("Sources");
-                //devices = value;
-                //OnPropertyChanged("Devices");
-                // devices = CheckIsDirty(devices, value, "Devices") as ObservableCollection<DeviceModel>;
                 CheckIsDirty(sources, value, "Sources", () => sources = value);
             }
         }
-        // закомментил, ибо надо будет добавить групповое событие в список источников устройств и определять тип события исходя и выбранности его
-        //public bool IsGroupEvent { get => isGroupEvent; set { isGroupEvent = value; OnPropertyChanged("IsGroupEvent"); OnPropertyChanged("IsUIDEvent"); } }
-        //public bool IsUIDEvent { get => !isGroupEvent; set { IsGroupEvent = !value; } }
 
         private bool isGroupEvent = false;
         public bool IsGroupEvent
@@ -114,24 +107,9 @@ namespace SmartHouse.ViewModels
             get => typeID;
             set
             {
-                //typeID = value;
-                //OnPropertyChanged("TypeID");
-                // typeID = (byte)CheckIsDirty(typeID, value, "TypeID");
                 CheckIsDirty(typeID, value, "TypeID", () => typeID = value);
             }
         }
-
-        /* private string UID;
-        public string UID { get => inputID; set { inputID = value; OnPropertyChanged("InputID"); } } */
-
-        /* private Event _event = null;
-        public Event Event { get => portNumber; set { portNumber = value; OnPropertyChanged("PortNumber"); } } */
-
-        public SceneModel(Scene source) : base(source.Items.Select(e => DeviceModel.CreateModel(e) as DeviceModel).ToArray(), source.Icon, source.Name)
-        {
-            // Items = items;
-        }
-
 
         public Scene ToBusiness()
 
@@ -146,18 +124,14 @@ namespace SmartHouse.ViewModels
 
         }
 
-        public void Assign(Scene scene, GroupModel groupPage)
+        public void Assign(Scene scene, GroupModel groupModel)
         {
-            Group g = groupPage.Target as Group;
-            Target = scene;
-            // Devices = new ObservableCollection<DeviceModel>(g.Devices.Where(e => e.IsInput).Select(e => e));
-            Sources = new ObservableCollection<DeviceModel>(g.Devices.Where(i => i.IsInput == true).Select(i =>
+            var g = groupModel.Target as Group;
+            Sources = new ObservableCollection<DeviceModel>(groupModel.Devices.Items.Select(e =>
             {
-                var m = DeviceModel.CreateModel(i) as DeviceModel;
-                m.Enabled = true;
-                m.Group = g;
-                m.PropertyChanged += DeviceStateChanged;
-                return m;
+                var dm = e.Clone() as DeviceModel; 
+                dm.PropertyChanged += DeviceStateChanged;
+                return dm;
             }));
             Sources.Insert(0, new GroupSourceModel());
             this.GroupID = (byte)g.ID;
@@ -182,10 +156,6 @@ namespace SmartHouse.ViewModels
             IsDirty = false;
         }
 
-        // в редакторе физ устройства сделать рабочий тип входа
-        // там же пофиксить кнопку 'Привенить'. пофиксить ее вообще везде
-        // > в редакторе сцены автоматически проставлять номер порта (поменять на 'входа') 
-
         public override void Apply(object target)
         {
             base.Apply(target);
@@ -205,9 +175,6 @@ namespace SmartHouse.ViewModels
             }
             else
             {
-                int uid = 0;
-                if (selectedSource != null)
-                    uid = selectedSource.Device.UID.Hash;
                 var uev = new UIDEvent() { DeviceID = selectedSource.ID, TypeID = TypeID };
                 ev = uev;
             }

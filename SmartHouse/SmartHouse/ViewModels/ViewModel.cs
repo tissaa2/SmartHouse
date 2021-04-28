@@ -81,7 +81,7 @@ namespace SmartHouse.ViewModels
         public Boolean IsAdmin { get { return SmartHouse.Models.Settings.Instance.IsAdmin; } }
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
 
-        private object target;
+        protected object target;
         public object Target
         {
             get
@@ -133,7 +133,6 @@ namespace SmartHouse.ViewModels
 
         public virtual ViewModel Clone()
         {
-            
             throw new Exception("Not implemented");
         }
 

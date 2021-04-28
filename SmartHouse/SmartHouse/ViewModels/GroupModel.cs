@@ -12,8 +12,8 @@ namespace SmartHouse.ViewModels
 
     public class GroupModel: IconNamedListViewModel<SceneModel> 
     {
-        private ListViewModel<Scene> scenes = new ListViewModel<Scene>(null);
-        public ListViewModel<Scene> Scenes
+        private ListViewModel<SceneModel> scenes = new ListViewModel<SceneModel>(null);
+        public ListViewModel<SceneModel> Scenes
         {
             get
             {
@@ -79,16 +79,6 @@ namespace SmartHouse.ViewModels
             Name = source.Name;
         }
 
-        private ObservableCollection<Device> GetDevices()
-        {
-            var result = new ObservableCollection<Device>();
-            foreach(var e in Devices.Items)
-            {
-                result.Add(e.Device);
-            }
-            return result;
-        }
-
         public Group ToBusiness()
         {
             var g = new Group();
@@ -101,10 +91,9 @@ namespace SmartHouse.ViewModels
             base.Apply(target);
             if (target is Group)
             {
-                SceneModel
                 var g = target as Group;
-                g.Items = Items.Select(e => e.);
-                g.Devices = GetDevices();
+                g.Items = Items.Select(e => { e.Apply(e.Target); return e.Target as Scene; }).ToList();
+                g.Devices = Devices.Items.Select(;
             }
         }
 

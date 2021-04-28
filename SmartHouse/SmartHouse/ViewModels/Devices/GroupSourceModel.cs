@@ -17,7 +17,7 @@ namespace SmartHouse.ViewModels
 
         public GroupSourceModel()
         {
-            device = new GroupSource();
+            Target = new GroupSource();
         }
     }
 }

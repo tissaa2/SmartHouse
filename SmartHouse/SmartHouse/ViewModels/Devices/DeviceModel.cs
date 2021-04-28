@@ -81,16 +81,6 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        private int portTypeID;
-        public int PortTypeID
-        {
-            get => portTypeID;
-            set
-            {
-                CheckIsDirty(portType, value, "PortTypeID", () => { portTypeID = value; PortType = GetPortType(portTypeID, Device); });
-            }
-        }
-
         private PPortType portType = null;
         public PPortType PortType
         {
@@ -102,8 +92,8 @@ namespace SmartHouse.ViewModels
             {
                 CheckIsDirty(portType, value, "PortType", () => { 
                     portType = value; 
-                    if (value != null)
-                        portTypeID = value.ID;
+                    //if (value != null)
+                    //    portTypeID = value.ID;
                 });
             }
         }
@@ -141,7 +131,7 @@ namespace SmartHouse.ViewModels
         private bool showDeleteButton = true;
         public bool ShowDeleteButton
         {
-            get { return showDeleteButton && Device.IsAdmin; }
+            get { return showDeleteButton && Settings.Instance.IsAdmin; }
             set
             {
                 CheckIsDirty(showDeleteButton, value, "ShowDeleteButton", () => { showDeleteButton = value; });
@@ -173,48 +163,32 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        //protected Device device = null;
-        //[JsonIgnore]
-        //public Device Device
-        //{
-        //    get
-        //    {
-        //        if (device == null)
-        //        {
-        //            device = Group.Devices[id];
-        //        }
-        //        return device;
-        //    }
-        //}
-
         public override void Assign(ViewModel source)
         {
             base.Assign(source);
             if (source is DeviceModel)
             {
                 var sm = source as DeviceModel;
-                // this.Group = sm.Group;
                 this.uid = sm.uid;
-                // this.device = sm.device;
                 this.deviceType = sm.deviceType;
                 this.typeID = sm.typeID;
                 this.securityLevel = sm.securityLevel;
                 this.name = sm.name;
                 this.portID = sm.PortID;
-                this.PortTypeID = sm.PortTypeID;
+                this.PortType = sm.PortType;
                 this.IsInput = sm.IsInput;
             }
         }
 
         public void ApplyState(string state)
         {
-            if (Device is DoubleStateDevice)
-                (Device as DoubleStateDevice).ApplyState(state);
+            if (Target is DoubleStateDevice)
+                (Target as DoubleStateDevice).ApplyState(state);
             else
-            if (Device is BoolStateDevice)
-                (Device as BoolStateDevice).ApplyState(state);
+            if (Target is BoolStateDevice)
+                (Target as BoolStateDevice).ApplyState(state);
         }
-
+        
         private PPortType GetPortType(int id, Device d)
         {
             if (d == null)
@@ -232,7 +206,6 @@ namespace SmartHouse.ViewModels
                 var d = Target as Device;
                 this.ID = d.ID;
                 this.uid = (string)d.UID;
-                this.device = d;
                 this.name = d.Name;
                 this.securityLevel = d.SecurityLevel;
                 this.portID = d.PortID.ToString();
@@ -250,22 +223,19 @@ namespace SmartHouse.ViewModels
         public override void Apply(object target)
         {
             base.Apply(target);
-            var od = device;
-            //if (DeviceType.Type.Name != device.GetType().Name)
-            //{
-            //    device = DeviceType.CreateEntity() as Device;
-            //    var i = Group.Devices.IndexOf(od);
-            //    if (i > -1)
-            //        Group.Devices[i] = device;
-            //}
-            device.ID = id;
-            device.UID = new UID(uid);
-            int v;
-            if (int.TryParse(PortID, out v))
-                device.PortID = (byte)v;
-            if (portType != null)
-                device.PortTypeID = portType.ID;
-            device.SecurityLevel = SecurityLevel;
+            if (target is Device)
+            {
+                var device = target as Device;
+                var od = device;
+                device.ID = id;
+                device.UID = new UID(uid);
+                int v;
+                if (int.TryParse(PortID, out v))
+                    device.PortID = (byte)v;
+                if (portType != null)
+                    device.PortTypeID = portType.ID;
+                device.SecurityLevel = SecurityLevel;
+            }
         }
 
         public DeviceModel(Device source) : base()
@@ -280,8 +250,8 @@ namespace SmartHouse.ViewModels
 
         public override string ToString()
         {
-            if (device != null)
-                return Device.ToString();
+            if (Target != null)
+                return Target.ToString();
             else
                 return "Не определено";
         }

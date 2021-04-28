@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace SmartHouse.ViewModels
 {
 
-    public class LampModel: DeviceStateModel<double>
+    public class LampModel: DeviceModel
     {
         public override ViewModel Clone()
         {

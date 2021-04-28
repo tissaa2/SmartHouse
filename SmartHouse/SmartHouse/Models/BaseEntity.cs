@@ -20,11 +20,6 @@ namespace SmartHouse.Models
             return String.Format("(ID={0}, Sec={1})", e.ID, e.SecurityLevel);
         }
 
-        [JsonIgnore]
-        public Boolean IsAdmin { get { return Settings.Instance.IsAdmin; } }
-        [JsonIgnore]
-        public Boolean NotIsAdmin { get { return !IsAdmin; } }
-
         public virtual int ID { get; set; }
 
         [JsonProperty(PropertyName = "SecurityLevel")]

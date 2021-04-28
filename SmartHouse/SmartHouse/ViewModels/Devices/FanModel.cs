@@ -5,7 +5,7 @@ using SmartHouse.Models;
 namespace SmartHouse.ViewModels
 {
     
-    public class FanModel: DeviceStateModel<double> 
+    public class FanModel: DeviceModel 
     {
         public override ViewModel Clone()
         {
