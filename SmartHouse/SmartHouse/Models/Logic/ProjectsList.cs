@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace SmartHouse.Models.Logic
 {
     // public class ProjectsList : IconListEntity<int, int, Project>
-    public class ProjectsList : IconListEntity<int, Project>
+    public class ProjectsList : IconListEntity<Project>
     {
 
         public static string FileName { get; set; } = "projects.json";

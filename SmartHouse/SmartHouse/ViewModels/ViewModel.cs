@@ -53,6 +53,21 @@ namespace SmartHouse.ViewModels
 
         public ViewModel Parent { get; set; } = null;
 
+        private bool isdeleted = false;
+        public bool IsDeleted
+        {
+            get => isdeleted;
+            set
+            {
+                if (value != isdeleted)
+                {
+                    isdeleted = value;
+                    IsDirty = true;
+                }
+            }
+        }
+
+
         private bool isDirty = false;
         public bool IsDirty
         {
@@ -95,20 +110,6 @@ namespace SmartHouse.ViewModels
                 OnPropertyChanged("Target");
             }
         }
-
-        /* public event PropertyChangingEventHandler PropertyChanging;
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        protected void OnPropertyChanging(string name)
-        {
-            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(name));
-        } */
-
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

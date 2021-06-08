@@ -9,20 +9,6 @@ namespace SmartHouse.Models.Logic
 
         [JsonProperty(PropertyName = "State")]
         public double State { get; set; }
-        //private double state;
-        //[JsonProperty(PropertyName = "State")]
-        //public double State
-        //{
-        //    get { return state; }
-        //    set
-        //    {
-        //        CheckIsDirty(state, value, "State", () => {
-        //            state = value > 90 ? 100 : value < 10 ? 0 : value;
-        //            if (Initialized)
-        //                Port.SetPortValue(UID, PortID, (byte)state, 2);
-        //        });
-        //    }
-        //}
 
         public DoubleStateDevice()
         {
@@ -40,7 +26,6 @@ namespace SmartHouse.Models.Logic
             if (double.TryParse(state, out v))
             {
                 State = v;
-                // Port.SetPortValue(UID, PortID, (byte)v, 2);
             }
         }
 

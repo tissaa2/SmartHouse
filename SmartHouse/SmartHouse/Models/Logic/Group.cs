@@ -10,11 +10,12 @@ using SmartHouse.Models.Logic;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Group : IconListEntity<int, Scene>
+    public class Group : IconNamedEntity
     {
         public Project Project { get; set; }
         public List<Group> Children { get; set; } = new List<Group>();
         public List<int> DeviceIDs { get; set; } = new List<int>();
+        public List<Scene> Scenes { get; set; } = new List<Scene>();
 
         [JsonIgnore]
         private Dictionary<int, Device> devices = null;
@@ -46,10 +47,10 @@ namespace SmartHouse.Models.Logic
 
             g.Items = new List<Scene>()
                                 {
-                                    new Scene("Выключить все", "scene_switchoff.png",
+                                    new Scene(0,"Выключить все", "scene_switchoff.png",
                                          new UIDEvent(2, 2),
                                          new  List<DeviceState>(){ new DeviceState(1, "0")}, 0),
-                                    new Scene("Полный свет", "scene_brightlight.png",
+                                    new Scene(1, "Полный свет", "scene_brightlight.png",
                                          new UIDEvent(3, 3),
                                          new  List<DeviceState>(){new DeviceState(1, "100")}, 100)
                                 };

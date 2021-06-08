@@ -108,6 +108,8 @@ namespace SmartHouse.ViewModels
             }
         }
 
+        public Group Group { get; set; }
+
         private string uid;
         public string UID
         {

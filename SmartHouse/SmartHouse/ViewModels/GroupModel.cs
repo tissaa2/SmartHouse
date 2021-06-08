@@ -6,12 +6,16 @@ using SmartHouse.Models.Logic;
 using System.ComponentModel;
 using SmartHouse.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SmartHouse.ViewModels
 {
 
-    public class GroupModel: IconNamedListViewModel<SceneModel> 
+    // public class GroupModel : IconNamedListViewModel<SceneModel>
+    public class GroupModel : IconNamedModel
     {
+        public Project Project { get; set; }
+
         private ListViewModel<SceneModel> scenes = new ListViewModel<SceneModel>(null);
         public ListViewModel<SceneModel> Scenes
         {
@@ -38,6 +42,8 @@ namespace SmartHouse.ViewModels
         {
             get { return !inputsMode; }
         }
+
+        public int ID { get; set; } = -1;
 
         private bool devicesMode = false;
         public bool DevicesMode
@@ -86,15 +92,35 @@ namespace SmartHouse.ViewModels
             return g;
         }
 
+        //TODO: как быть, если элемент был добавлен в список ViewModel? В этом случае у него не будет сущности бизнес-логики        
         public override void Apply(object target)
         {
-            base.Apply(target);
+            Group g = null; 
             if (target is Group)
             {
-                var g = target as Group;
-                g.Items = Items.Select(e => { e.Apply(e.Target); return e.Target as Scene; }).ToList();
-                g.Devices = Devices.Items.Select(;
+                g = target as Group;
+                if (IsDeleted)
+                {
+                    if (Project != null)
+                    {
+                        Project.Items.Remove(g);
+                    }
+                    else
+                        throw new Exception("Project is null");
+                    IsDirty = false;
+                    return;
+                }
             }
+            else
+            {
+                if (Project != null)
+                {
+                    g = Project.AddNewGroup();
+                }
+            }
+            base.Apply(g);
+            g.DeviceIDs = Devices.Items.Select(e => e.ID).ToList();
+            g.Scenes = Scenes.Items.Select(e => e.Target).ToList() обдумать
         }
 
     }

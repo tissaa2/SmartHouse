@@ -8,38 +8,38 @@ using SmartHouse.Models.Packets;
 
 namespace SmartHouse.Models.Logic
 {
-    public class Scene : IconListEntity<int, DeviceState>
+    public class Scene : IconListEntity<DeviceState>
     {
 
         public static Scene LightsOff(int id, Group group)
         {
-            return new Scene(id, "Выключить все", "scene_switchoff.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
+            return new Scene(id, "Выключить все", "scene_switchoff.png", Event.GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
         }
 
         public static Scene Night(int id, Group group)
         {
-            return new Scene(id, "Ночной свет", "scene_nightlight.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
+            return new Scene(id, "Ночной свет", "scene_nightlight.png", Event.GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
         }
 
         public static Scene BrightLight(int id, Group group)
         {
-            return new Scene(id, "Полный свет", "scene_brightlight.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
+            return new Scene(id, "Полный свет", "scene_brightlight.png", Event.GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
         }
 
         public static Scene SoftLight(int id, Group group)
         {
-            return new Scene(id, "Мягкий свет", "scene_softlight.png", new GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
+            return new Scene(id, "Мягкий свет", "scene_softlight.png", Event.GroupEvent(0, (byte)group.ID, 0, 0), group.Devices.Values);
         }
 
-        public async void Activate(Group group)
-        {
+        //public async void Activate(Group group)
+        //{
 
-            UID id = Event.GetUID(group);
+        //    UID id = Event.GetUID(group);
 
-            var ar = await Utils.P(Packet.CreateActivateSceneRequest(id, Event.InputID, Event.TypeID, 4, 0), 0);
-            if (!ar)
-                Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
-        }
+        //    var ar = await Utils.P(Packet.CreateActivateSceneRequest(id, Event.InputID, Event.TypeID, 4, 0), 0);
+        //    if (!ar)
+        //        Log.Write("Error activating scene : sourceUID = {0} , sceneName = {1}, inputID = {2}", id, this.Name, this.Event.InputID);
+        //}
 
         public Event Event { get; set; }
 

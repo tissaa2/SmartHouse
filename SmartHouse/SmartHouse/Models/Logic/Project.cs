@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace SmartHouse.Models.Logic
 {
-    // public class Project : IconListEntity<int, int, Group>
-    public class Project : IconListEntity<int, Group>
+    public class Project : IconListEntity<Group>
     {
+
 
         public static Project Create(string name, string icon, int id)
         {
@@ -56,7 +56,7 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public override void Clear()
+        public void Clear()
         {
             Items.Clear();
         }
@@ -67,6 +67,21 @@ namespace SmartHouse.Models.Logic
             foreach (var e in Items)
             {
                 e.Project = this;
+            }
+        }
+
+        public int NextGroupID { get; set; } = 0;
+        public object groupLocker = new object();
+
+
+        public Group AddNewGroup()
+        {
+            lock (groupLocker)
+            {
+                var g = new Group() { ID = NextGroupID };
+                NextGroupID++;
+                Items.Add(g);
+                return g;
             }
         }
 

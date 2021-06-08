@@ -4,8 +4,6 @@ namespace SmartHouse.Models.Logic
 {
     public class DeviceState : BaseEntity
     {
-        [JsonIgnore]
-        public Scene Scene { get; set; }
         public int DeviceID { get; set; }
         
         public string Value { get; set; } = null;
