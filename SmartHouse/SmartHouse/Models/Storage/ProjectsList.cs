@@ -1,86 +1,76 @@
-﻿using Newtonsoft.Json;
-using SmartHouse.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
 using System.Text;
+using SmartHouse.Models.Physics;
+using System.Xml.Serialization;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+using SmartHouse.Services;
 using Java.Util.Zip;
-using System.Linq;
-using Xamarin.Forms;
-using SmartHouse.Models.Logic;
 
-namespace SmartHouse.Models
+namespace SmartHouse.Models.Storage
 {
-    [Serializable]
-
-    public class BaseObject: INotifyPropertyChanged
+    // public class ProjectsList : IconListEntity<int, int, Project>
+    public class ProjectsList : IconNamedEntity
     {
-        public static List<EntityInfo> GetInheritors(Type parent, Type[] exclude)
-        {
-            List<EntityInfo> r = new List<EntityInfo>();
-            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if (exclude != null)
-                    if (exclude.FirstOrDefault(e => e.Name == t.Name) != null)
-                        continue;
+        public IDGenerator<int> IntID = new IDGenerator<int>((v) => { return (int)v + 1; });
 
-                if (t.IsSubclassOf(parent))
+        public Dictionary<int, Project> Projects { get; set; }
+
+        public static string FileName { get; set; } = "projects.json";
+        public static ProjectsList TestData {
+            get {
+                var p = Project.Create("Офис", "project_flat.png", ProjectsList.Instance.IntID.NewID());
+                return new ProjectsList()
                 {
-                    var a = t.GetCustomAttribute<IconNameAttribute>();
-                    if (a != null)
+                    Projects = new Dictionary<int, Project>() { {p.ID, p } }
+                };
+            }
+        }
+
+        public static void LoadTestData()
+        {
+            instance = TestData;
+        }
+
+        private static ProjectsList instance = null;
+        private static bool initializing = false;
+        public static ProjectsList Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    initializing = true;
+                    instance = Load<ProjectsList>(FileName);
+                    if (instance == null)
                     {
-                        var hash = a.Name.GetHashCode();
-                        r.Add(new EntityInfo() { Props = a, Type = t, ID = hash });
+                        LoadTestData();
+                        instance.Save();
                     }
+                    initializing = false;
                 }
+                return instance;
             }
-            return r;
-        }
 
-        public delegate void ParameterlessDelegate();
-        protected virtual object CheckIsDirty(object oldValue, object newValue, string eventName, ParameterlessDelegate setter)
-        {
-            if (Object.Equals(oldValue, newValue))
-                return oldValue;
-            else
+            set
             {
-                setter?.Invoke();
-                if (Initialized)
-                {
-                    ProjectsList.SetIsDirty(true);
-                }
-                OnPropertyChanged(eventName);
-                return newValue;
+                instance = value;
             }
         }
+        public bool IsDirty { get; set; } = false;
 
-        [JsonIgnore]
-        public bool Initialized { get; set; } = false;
 
-        private event PropertyChangedEventHandler propertyChanged;
-        public event PropertyChangedEventHandler PropertyChanged
+        public ProjectsList()
         {
-            add
-            {
-                propertyChanged += value;
-            }
 
-            remove
-            {
-                propertyChanged -= value;
-            }
         }
 
-        public void OnPropertyChanged(string name)
+        public void Save()
         {
-            propertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public virtual void Init()
-        {
-            Initialized = true;
+            Save(FileName);
         }
 
         public static T Load<T>(string fileName) where T : class
@@ -93,7 +83,8 @@ namespace SmartHouse.Models
                 string fn = Path.Combine(path, fileName);
                 string data = File.ReadAllText(fn);
 
-                r = JsonConvert.DeserializeObject<T>(data, new JsonSerializerSettings() {
+                r = JsonConvert.DeserializeObject<T>(data, new JsonSerializerSettings()
+                {
                     TypeNameHandling = TypeNameHandling.All,
                     MissingMemberHandling = MissingMemberHandling.Error,
                     Converters = new JsonConverter[] { new IntToUIDConverter() }
@@ -105,11 +96,6 @@ namespace SmartHouse.Models
                 Log.Write(ex);
             }
             return r;
-        }
-
-        public BaseObject()
-        {
-
         }
 
         public virtual void Save(string fileName)

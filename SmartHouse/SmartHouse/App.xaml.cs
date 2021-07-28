@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 using System.Net;
 using SmartHouse.Models.Physics;
 using System.Threading;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SmartHouse

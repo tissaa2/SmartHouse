@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Text;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using System.ComponentModel;
 using SmartHouse.Models;
 using System.Collections.Generic;

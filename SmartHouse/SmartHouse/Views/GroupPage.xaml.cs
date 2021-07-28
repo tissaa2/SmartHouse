@@ -1,4 +1,4 @@
-﻿using SmartHouse.Models.Logic;
+﻿using SmartHouse.Models.Storage;
 using SmartHouse.Services;
 using SmartHouse.ViewModels;
 using System;
@@ -122,14 +122,14 @@ namespace SmartHouse.Views
                 {
                     var p = dbp.Model.SelectedPort;
                     var pd = dbp.Model.SelectedItem;
-                    SmartHouse.Models.Logic.Device d = null;
+                    SmartHouse.Models.Storage.Device d = null;
                     if (p != null)
                     {
                         if (p is InputPort)
                         {
                             if (pd is IRPanel || pd is MSTPanel || pd is Dimmer || pd is Relay)
                             {
-                                d = new SmartHouse.Models.Logic.Switch(Socket.IntID.NewID(), "Новый выключатель", p.value != 0, pd.ID, (byte)p.ID);
+                                d = new SmartHouse.Models.Storage.Switch(Socket.IntID.NewID(), "Новый выключатель", p.value != 0, pd.ID, (byte)p.ID);
                                 Model.InputsMode = true;
                             }
                         }
@@ -147,7 +147,7 @@ namespace SmartHouse.Views
                     {
                         if (pd is IRPanel || pd is MSTPanel)
                         {
-                            d = new SmartHouse.Models.Logic.Panel(Socket.IntID.NewID(), "Новая панель", pd.Inputs.Select(i => i.Value != 0), pd.ID, (byte)p.ID);
+                            d = new SmartHouse.Models.Storage.Panel(Socket.IntID.NewID(), "Новая панель", pd.Inputs.Select(i => i.Value != 0), pd.ID, (byte)p.ID);
                             Model.InputsMode = true;
                         }
 

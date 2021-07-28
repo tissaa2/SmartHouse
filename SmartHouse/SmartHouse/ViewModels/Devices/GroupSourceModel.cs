@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using SmartHouse.ViewModels;
 using System.Collections.Generic;
 
@@ -17,7 +17,11 @@ namespace SmartHouse.ViewModels
 
         public GroupSourceModel()
         {
-            Target = new GroupSource();
+            Device = new Device() {
+                Icon = "device_groupsource.png",
+                Type = DeviceType.Group,
+                Name = "Группа"
+            };
         }
     }
 }

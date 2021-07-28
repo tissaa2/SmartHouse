@@ -1,5 +1,5 @@
 ﻿using SmartHouse.Controls;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using SmartHouse.Models.Packets;
 using SmartHouse.Services;
 using SmartHouse.ViewModels;

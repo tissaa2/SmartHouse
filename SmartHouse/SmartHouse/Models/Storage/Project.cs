@@ -4,18 +4,17 @@ using System.Collections.ObjectModel;
 using SmartHouse.Views;
 using System.Collections.Generic;
 
-namespace SmartHouse.Models.Logic
+namespace SmartHouse.Models.Storage
 {
-    public class Project : IconListEntity<Group>
+    public class Project: IconNamedEntity
     {
-
 
         public static Project Create(string name, string icon, int id)
         {
             var uid0 = new UID(0x2f9);
-            int lampID = Lamp.IntID.NewID();
-            int offSwitchID = Switch.IntID.NewID();
-            int onSwitchID = Switch.IntID.NewID();
+            int lampID = ProjectsList.Instance.IntID.NewID();
+            int offSwitchID = ProjectsList.Instance.IntID.NewID();
+            int onSwitchID = ProjectsList.Instance.IntID.NewID();
             var result = new Project()
             {
                 Name = name,
@@ -30,14 +29,19 @@ namespace SmartHouse.Models.Logic
                 //}
 
                 Devices = new Dictionary<int, Device>() {
-                    {lampID, new Lamp(lampID, "Люстра", 50, uid0, 6) },
-                    {offSwitchID, new Switch(offSwitchID, "Кнопка выкл", true, uid0, 2) },
-                    {onSwitchID, new Switch(onSwitchID, "Кнопка вкл", true, uid0, 3) } }
+                    {lampID, new Device(DeviceType.Lamp, lampID, uid0,  6, "Люстра", "device_lamp.png") },
+                    {offSwitchID, new Device(DeviceType.Switch, offSwitchID, uid0, 2, "Кнопка выкл", "device_switch.png") },
+                    {onSwitchID, new Device(DeviceType.Switch, onSwitchID, uid0, 3, "Кнопка вкл", "device_switch.png") } 
+                }
             };
 
-            result.Items = new List<Group>() {
-                              Group.Create(result, "Тронный зал", "group_toilet.png", IntID.NewID())
-                };
+            var gid = ProjectsList.Instance.IntID.NewID();
+            result.Groups = new Dictionary<int, Group>() {
+                {
+                    gid,
+                    Group.Create(result, "Тронный зал", "group_toilet.png", gid) 
+                }
+            };
             return result;
         }
 
@@ -45,6 +49,7 @@ namespace SmartHouse.Models.Logic
         /// Девайсы у нас лежат в проекте, а все остальные на них ссылаются
         /// </summary>
         public Dictionary<int, Device> Devices { get; set; }
+        public Dictionary<int, Group> Groups { get; set; }
 
 
         public Project()
@@ -58,16 +63,7 @@ namespace SmartHouse.Models.Logic
 
         public void Clear()
         {
-            Items.Clear();
-        }
-
-        public override void Init()
-        {
-            base.Init();
-            foreach (var e in Items)
-            {
-                e.Project = this;
-            }
+            Groups.Clear();
         }
 
         public int NextGroupID { get; set; } = 0;
@@ -78,9 +74,10 @@ namespace SmartHouse.Models.Logic
         {
             lock (groupLocker)
             {
-                var g = new Group() { ID = NextGroupID };
-                NextGroupID++;
-                Items.Add(g);
+
+                var g = new Group() { ID = ProjectsList.Instance.IntID.NewID() };
+
+                Groups.Add(g.ID, g);
                 return g;
             }
         }

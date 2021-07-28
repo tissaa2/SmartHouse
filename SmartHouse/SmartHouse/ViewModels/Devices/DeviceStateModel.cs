@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using SmartHouse.Models;
 using Newtonsoft.Json;
 
@@ -9,7 +9,7 @@ namespace SmartHouse.ViewModels
     public class DeviceStateModel: ViewModel
     {
         public SceneModel Scene { get; set; }
-        public Device Device{ get; set; }
+        public int DeviceID{ get; set; }
         public bool Enabled { get; set; }
 
         private string state;
@@ -26,9 +26,5 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public void Apply()
-        {
-            Device.ApplyState(State);
-        }
     }
 }

@@ -11,9 +11,8 @@ namespace SmartHouse.Models
 {
     [Serializable]
 
-    public class BaseEntity: BaseObject, IUnique<int>
+    public class BaseEntity
     {
-        public static IDGenerator<int> IntID = new IDGenerator<int>((v) => { return (int)v + 1; });
 
         public static explicit operator string(BaseEntity e)
         {
@@ -22,7 +21,6 @@ namespace SmartHouse.Models
 
         public virtual int ID { get; set; }
 
-        [JsonProperty(PropertyName = "SecurityLevel")]
         public virtual byte SecurityLevel { get; set; }
 
         public BaseEntity()

@@ -2,34 +2,30 @@
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Text;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using System.ComponentModel;
 using SmartHouse.Models;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace SmartHouse.ViewModels
 {
-
     public class ListViewModel<T>: ViewModel
     {
 
-        // public ViewEditTemplateSelector TemplateSelector { get; set; }
         private T selectedItem;
         public T SelectedItem
         {
             get
             {
                 return selectedItem;
-                // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
                 OnPropertyChanging("SelectedItem");
                 selectedItem = value;
-                // TemplateSelector?.SetEditedItem(value);
                 OnPropertyChanged("SelectedItem");
-                // SetValue(SelectedItemProperty, value); 
             }
         }
 
@@ -39,14 +35,35 @@ namespace SmartHouse.ViewModels
             get
             {
                 return items;
-                // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
                 OnPropertyChanging("Items");
-                items = value;
+                if (items != value)
+                {
+                    Setup(items);
+                }
                 OnPropertyChanged("Items");
+            }
+        }
+
+        public bool IsChanged { get; set; } = false;
+
+        private void CollectionChangeHandler(object s, NotifyCollectionChangedEventArgs e)
+        {
+            IsChanged = true;
+        }
+
+        private void Setup(ObservableCollection<T> value)
+        {
+            if (items != value)
+            {
+                if (items != null)
+                    items.CollectionChanged -= CollectionChangeHandler;
+                items = value;
+                items.CollectionChanged -= CollectionChangeHandler;
+                items.CollectionChanged += CollectionChangeHandler;
             }
         }
 
@@ -54,13 +71,12 @@ namespace SmartHouse.ViewModels
         {
         }
 
-        public ListViewModel(ICollection<T> items/* , ViewEditTemplateSelector templateSelector */)
+        public ListViewModel(ICollection<T> items)
         {
             if (items == null)
                 Items = new ObservableCollection<T>();
             else
                 Items = new ObservableCollection<T>(items);
-            // TemplateSelector = templateSelector;
         }
     }
 }

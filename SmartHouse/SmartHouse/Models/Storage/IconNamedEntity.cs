@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SmartHouse.Models.Logic
+namespace SmartHouse.Models.Storage
 {
     public class IconNamedEntity : NamedEntity
     {

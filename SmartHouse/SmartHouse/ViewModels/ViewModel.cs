@@ -15,7 +15,7 @@ namespace SmartHouse.ViewModels
         {
             foreach(var e in DirtyModels.Values)
             {
-                e.Apply(e.target);
+                e.Apply();
             }
             DirtyModels.Clear();
         }
@@ -26,7 +26,6 @@ namespace SmartHouse.ViewModels
             var tn = t.Name;
             Type rt = Type.GetType("SmartHouse.ViewModels." + tn + "Model");
             var m = Activator.CreateInstance(rt) as ViewModel;
-            m.target = target;
             m.Setup(t);
             return m;
         }
@@ -74,12 +73,11 @@ namespace SmartHouse.ViewModels
             get
             {
                 return isDirty;
-                // return (Project)GetValue(SelectedItemProperty);
             }
 
             set
             {
-                // OnPropertyChanging("IsDirty");
+                OnPropertyChanging("IsDirty");
                 isDirty = value;
                 if (value)
                     OnIsDirty?.Invoke();
@@ -87,35 +85,13 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public virtual void SetDirty(bool value)
-        {
-            isDirty = true;
-        }
-
-
         public Boolean IsAdmin { get { return SmartHouse.Models.Settings.Instance.IsAdmin; } }
         public Boolean NotIsAdmin { get { return !IsAdmin; } }
-
-        protected object target;
-        public object Target
-        {
-            get
-            {
-                return target;
-            }
-            set
-            {
-                OnPropertyChanging("Target");
-                target = value;
-                OnPropertyChanged("Target");
-            }
-        }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
         }
-
 
         public virtual void Setup(params object[] args)
         {
@@ -124,10 +100,9 @@ namespace SmartHouse.ViewModels
 
         public virtual void Assign(ViewModel source)
         {
-            this.target = source.target;
         }
 
-        public virtual void Apply(object target)
+        public virtual void Apply()
         {
             IsDirty = false;
         }

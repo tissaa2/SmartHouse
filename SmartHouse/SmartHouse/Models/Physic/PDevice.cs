@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SmartHouse.Services;
 using System.Xml.Serialization;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using System.Collections.ObjectModel;
 using SmartHouse.Models.Packets;
 using System.Threading.Tasks;

@@ -2,12 +2,24 @@
 using System.Collections.ObjectModel;
 using SmartHouse.Models.Physics;
 using SmartHouse.Models.Packets;
+using System.Collections.Generic;
 
-namespace SmartHouse.Models.Logic
+namespace SmartHouse.Models.Storage
 {
+    public enum DeviceType
+    {
+        Lamp,
+        Fan,
+        MotionSensor,
+        Panel,
+        Socket,
+        Switch,
+        Group
+    }
+
     public class Device : IconNamedEntity
     {
-        public virtual string TypeName { get; set; }
+        public virtual DeviceType Type { get; set; }
 
         public byte PortID { get; set; }
 
@@ -21,20 +33,11 @@ namespace SmartHouse.Models.Logic
         {
         }
 
-        public Device(int id, UID uid, byte portID, string nameTemplate, string icon) : base(id, nameTemplate, icon)
+        public Device(DeviceType deviceType, int id, UID uid, byte portID, string nameTemplate, string icon) : base(id, nameTemplate, icon)
         {
             this.UID = uid;
             this.PortID = portID;
-        }
-
-        public virtual void ApplyState(string state)
-        {
-
-        }
-
-        public virtual DeviceState GetState()
-        {
-            return null;
+            this.Type = deviceType;
         }
 
     }

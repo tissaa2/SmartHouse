@@ -8,7 +8,8 @@ namespace SmartHouse.Models
     {
         public delegate object IncDelegate(object value);
         IncDelegate Inc { get; set; }
-        private IDType nextID;
+
+        public IDType nextID;
         public IDType NewID()
         {
             nextID = (IDType)Inc(nextID);

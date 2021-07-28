@@ -1,4 +1,4 @@
-﻿using SmartHouse.Models.Logic;
+﻿using SmartHouse.Models.Storage;
 using SmartHouse.ViewModels;
 using System;
 using System.Collections.Generic;

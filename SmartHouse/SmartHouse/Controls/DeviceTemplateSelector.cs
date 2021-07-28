@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using Xamarin.Forms;
 using SmartHouse.ViewModels;
 using SmartHouse.Models;
@@ -30,7 +30,7 @@ namespace SmartHouse.Controls
                     return LampTemplate;
                 if (d is Socket)
                     return SocketTemplate;
-                if (d is SmartHouse.Models.Logic.Switch)
+                if (d is SmartHouse.Models.Storage.Switch)
                     return SwitchTemplate;
                 if (d is Panel)
                     return PanelTemplate;

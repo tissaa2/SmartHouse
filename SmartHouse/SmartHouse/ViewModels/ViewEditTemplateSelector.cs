@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Text;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using Xamarin.Forms;
 
 namespace SmartHouse

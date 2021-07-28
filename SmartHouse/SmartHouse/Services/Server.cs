@@ -8,7 +8,7 @@ using System.Threading;
 using SmartHouse.Models.Packets.Processors;
 using System.Linq;
 using System.Threading.Tasks;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 
 namespace SmartHouse.Services
 {

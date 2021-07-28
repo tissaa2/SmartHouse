@@ -1,11 +1,11 @@
-﻿using SmartHouse.Models.Logic;
+﻿using SmartHouse.Models.Storage;
 using SmartHouse.ViewModels;
 using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using SmartHouse.Controls;
 using Xamarin.Forms;
-using Device = SmartHouse.Models.Logic.Device;
+using Device = SmartHouse.Models.Storage.Device;
 using ImageButton = SmartHouse.Controls.ImageButton;
 
 

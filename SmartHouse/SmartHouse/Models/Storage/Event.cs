@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace SmartHouse.Models.Logic
+namespace SmartHouse.Models.Storage
 {
     public enum EventType
     {
@@ -38,6 +38,15 @@ namespace SmartHouse.Models.Logic
                 UID = new UID(0, 0, groupId),
                 CategoryID = categoryId,
                 TimePar = timePar
+            };
+        }
+        public static Event UIDEvent(UID uid, byte inputID, byte typeID)
+        {
+            return new Event()
+            {
+                UID = uid,
+                InputID = inputID,
+                InputTypeID = typeID
             };
         }
     }

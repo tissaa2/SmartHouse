@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace SmartHouse.Models.Logic
+namespace SmartHouse.Models.Storage
 {
-    public class DeviceState : BaseEntity
+    public class DeviceState
     {
         public int DeviceID { get; set; }
         
@@ -13,9 +13,10 @@ namespace SmartHouse.Models.Logic
 
         }
 
-        public DeviceState (int id, string value): base(id)
+        public DeviceState (int id, string value)
         {
             Value = value;
+            DeviceID = id;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Device = SmartHouse.Models.Logic.Device;
+﻿using Device = SmartHouse.Models.Storage.Device;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SmartHouse.ViewModels;

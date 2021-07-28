@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using SmartHouse.Models;
 
 namespace SmartHouse.ViewModels

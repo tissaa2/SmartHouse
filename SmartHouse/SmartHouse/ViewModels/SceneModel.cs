@@ -2,21 +2,23 @@
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Text;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using System.ComponentModel;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SmartHouse.ViewModels
 {
 
-    public class SceneModel : IconNamedListViewModel<DeviceStateModel>
+    public class SceneModel : IconNamedModel
     {
+        public Scene Scene { get; set; }
         private DeviceModel selectedSource = null;
         public DeviceModel SelectedSource
         {
             get
             {
-                IsGroupEvent = selectedSource is GroupSourceModel;
+                IsGroupEvent = selectedSource.DeviceType == DeviceType.Group;
                 return selectedSource;
             }
 
@@ -101,23 +103,17 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        private byte typeID;
-        public byte TypeID
+        private byte inputTypeID;
+        public byte InputTypeID
         {
-            get => typeID;
+            get => inputTypeID;
             set
             {
-                CheckIsDirty(typeID, value, "TypeID", () => typeID = value);
+                CheckIsDirty(inputTypeID, value, "InputTypeID", () => inputTypeID = value);
             }
         }
 
-        public Scene ToBusiness()
-
-        {
-            var s = new Scene();
-            Apply(s);
-            return s;
-        }
+        public List<DeviceStateModel> States { get; set;}
 
         private void DeviceStateChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -126,7 +122,7 @@ namespace SmartHouse.ViewModels
 
         public void Assign(Scene scene, GroupModel groupModel)
         {
-            var g = groupModel.Target as Group;
+            var g = groupModel.Group;
             Sources = new ObservableCollection<DeviceModel>(groupModel.Devices.Items.Select(e =>
             {
                 var dm = e.Clone() as DeviceModel; 
@@ -136,53 +132,43 @@ namespace SmartHouse.ViewModels
             Sources.Insert(0, new GroupSourceModel());
             this.GroupID = (byte)g.ID;
             this.InputID = scene.Event.InputID;
-            IsGroupEvent = scene.Event is GroupEvent;
+            IsGroupEvent = scene.Event.Type == EventType.GroupEvent;
             Icon = scene.Icon;
             Name = scene.Name;
             if (IsGroupEvent)
             {
-                var ev = scene.Event as GroupEvent;
+                var ev = scene.Event;
                 this.TimePar = ev.TimePar;
                 this.CategoryID = ev.CategoryID;
                 this.SelectedSource = Sources.FirstOrDefault(e => e is GroupSourceModel);
             }
             else
             {
-                var ev = scene.Event as UIDEvent;
-                this.TypeID = ev.TypeID;
+                var ev = scene.Event;
+                this.InputTypeID = ev.InputTypeID;
                 // this.SelectedDevice = g.Devices.FirstOrDefault(e => e.UID == ev.UID && e.PortID == ev.InputID);
-                this.SelectedSource = Sources.FirstOrDefault(e => e.ID == ev.DeviceID);
+                this.SelectedSource = Sources.FirstOrDefault(e => e.UID == ev.UID.ToString());
             }
             IsDirty = false;
         }
 
-        public override void Apply(object target)
+        public override void Apply()
         {
-            base.Apply(target);
-            var t = target as Scene;
-            t.Items.Clear();
-            foreach (var dm in Items)
-                if (dm.Enabled)
-                {
-                    var st = new DeviceState() { DeviceID = dm.Device.ID, Value = dm.State };
-                    t.Items.Add(st);
-                }
+            Scene.States = States.Select(e => new DeviceState() { DeviceID = e.DeviceID, Value = e.State }).ToList();
             Event ev;
             if (isGroupEvent)
             {
-                var gev = new GroupEvent() { CategoryID = CategoryID, TimePar = TimePar, GroupID = GroupID };
-                ev = gev;
+                ev = Event.GroupEvent((byte)InputID, GroupID, CategoryID, TimePar);
             }
             else
             {
-                var uev = new UIDEvent() { DeviceID = selectedSource.ID, TypeID = TypeID };
-                ev = uev;
+                ev = Event.UIDEvent(new Models.UID(selectedSource.UID), byte.Parse(selectedSource.PortID), InputTypeID);
             }
             ev.InputID = (byte)InputID;
-            t.Event = ev;
-            t.Icon = Icon;
-            t.Name = name;
-            IsDirty = false;
+            Scene.Event = ev;
+            Scene.Icon = Icon;
+            Scene.Name = name;
+            base.Apply();
         }
     }
 }

@@ -5,10 +5,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
 using Newtonsoft.Json;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 // using SmartHouse.Models.Physics;
 
-namespace SmartHouse.Models.Logic
+namespace SmartHouse.Models.Storage
 {
     public class Group : IconNamedEntity
     {
@@ -16,23 +16,6 @@ namespace SmartHouse.Models.Logic
         public List<Group> Children { get; set; } = new List<Group>();
         public List<int> DeviceIDs { get; set; } = new List<int>();
         public List<Scene> Scenes { get; set; } = new List<Scene>();
-
-        [JsonIgnore]
-        private Dictionary<int, Device> devices = null;
-        [JsonIgnore]
-        public Dictionary<int, Device> Devices
-        {
-            get
-            {
-                if (devices == null)
-                {
-                    devices = new Dictionary<int, Device>();    
-                    foreach (var e in DeviceIDs)
-                        devices.Add(e, Project.Devices[e]);
-                }
-                return devices;
-            }
-        }
 
         public static Group Create(Project parent, string name, string icon, int id)
         {
@@ -45,41 +28,28 @@ namespace SmartHouse.Models.Logic
                 DeviceIDs = new List<int>(parent.Devices.Keys)
             };
 
-            g.Items = new List<Scene>()
+            var d2 = parent.Devices[2];
+            var d3 = parent.Devices[3];
+
+            g.Scenes = new List<Scene>()
                                 {
-                                    new Scene(0,"Выключить все", "scene_switchoff.png",
-                                         new UIDEvent(2, 2),
+                                    new Scene("Выключить все", "scene_switchoff.png",
+                                         Event.UIDEvent(d2.UID, 2, 0),
                                          new  List<DeviceState>(){ new DeviceState(1, "0")}, 0),
-                                    new Scene(1, "Полный свет", "scene_brightlight.png",
-                                         new UIDEvent(3, 3),
+                                    new Scene("Полный свет", "scene_brightlight.png",
+                                         Event.UIDEvent(d3.UID, 3, 0),
                                          new  List<DeviceState>(){new DeviceState(1, "100")}, 100)
                                 };
             return g;
         }
 
-        private void Setup()
-        {
-        }
-
         public Group()
         {
-            Setup();
         }
 
         public Group(int id, string nameTemplate, string icon) : base(id, nameTemplate, icon)
         {
-            Setup();
         }
-
-        public override void Init()
-        {
-            base.Init();
-            foreach (var e in Items)
-            {
-                e.Init();
-            }
-        }
-
 
     }
 }

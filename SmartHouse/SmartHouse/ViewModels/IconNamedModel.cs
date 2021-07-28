@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Text;
-using SmartHouse.Models.Logic;
+using SmartHouse.Models.Storage;
 using System.ComponentModel;
 using SmartHouse.Models;
 
@@ -33,8 +33,8 @@ namespace SmartHouse.ViewModels
         public override void Apply(object target)
         {
             base.Apply(target);
-            if (target is IconEntity)
-                (target as IconEntity).Icon = Icon;
+            if (target is IconNamedEntity)
+                (target as IconNamedEntity).Icon = Icon;
         }
 
     }
