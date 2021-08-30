@@ -11,6 +11,7 @@ namespace SmartHouse.ViewModels
 
     public class NamedModel: ViewModel
     {
+        public object Target { get; set; }
         protected string name;
         public string Name
         {

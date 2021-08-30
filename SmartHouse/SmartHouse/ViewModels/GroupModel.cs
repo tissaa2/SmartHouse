@@ -13,8 +13,19 @@ namespace SmartHouse.ViewModels
 
     public class GroupModel : IconNamedModel
     {
-        public ProjectModel Project { get; set; }
-        public Group Group { get; set;}
+        private Group group = null;
+
+        public Group Group
+        {
+            get => group;
+            set
+            {
+                if(value != group)
+                {
+                    Target = group = value;
+                }
+            }
+        }
 
         private ListViewModel<SceneModel> scenes = new ListViewModel<SceneModel>(null);
         public ListViewModel<SceneModel> Scenes
@@ -88,35 +99,31 @@ namespace SmartHouse.ViewModels
         //TODO: как быть, если элемент был добавлен в список ViewModel? В этом случае у него не будет сущности бизнес-логики        
         public override void Apply(object target)
         {
+            if (Parent is ProjectModel)
+                throw new Exception("Project is null");
+            var p = Parent as ProjectModel;
+
             Group g = Group; 
             if (Group != null)
             {
                 g = Group; 
                 if (IsDeleted)
                 {
-                    if (Project != null)
-                    {
-                        Project.Groups.Items.Remove(this);
-                    }
-                    else
-                        throw new Exception("Project is null");
+                    // Parent.Groups.Items.Remove(this);
+                    p.Project.RemoveGroup(ID);
                     IsDirty = false;
                     return;
                 }
             }
             else
             {
-                if (Project != null)
-                {
-                    сделать добавление через модель 
-                    g = (Project.Project as Project).AddNewGroup();
-                }
+                g = p.Project.AddNewGroup();
             }
             base.Apply(g);
-            if (Devices.IsChanged)
-                g.DeviceIDs = Devices.Items.Select(e => e.ID).ToList();
-            if (Scenes.IsChanged)
-                g.Scenes = Scenes.Items.Select(e => e.Target as Scene).ToList();
+            //if (Devices.IsChanged)
+            //    g.DeviceIDs = Devices.Items.Select(e => e.ID).ToList();
+            //if (Scenes.IsChanged)
+            //    g.Scenes = Scenes.Items.Select(e => e.Target as Scene).ToList();
         }
 
     }

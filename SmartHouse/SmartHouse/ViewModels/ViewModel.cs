@@ -15,7 +15,7 @@ namespace SmartHouse.ViewModels
         {
             foreach(var e in DirtyModels.Values)
             {
-                e.Apply();
+                e.Apply(e.Target);
             }
             DirtyModels.Clear();
         }
@@ -102,7 +102,7 @@ namespace SmartHouse.ViewModels
         {
         }
 
-        public virtual void Apply()
+        public virtual void Apply(object target)
         {
             IsDirty = false;
         }

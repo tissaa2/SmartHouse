@@ -82,5 +82,14 @@ namespace SmartHouse.Models.Storage
             }
         }
 
+        public void RemoveGroup(int id)
+        {
+            lock (groupLocker)
+            {
+
+                Groups.Remove(id);
+            }
+        }
+
     }
 }

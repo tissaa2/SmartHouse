@@ -62,13 +62,6 @@ namespace SmartHouse.ViewModels
 
         public override void Apply()
         {
-            Project
-            if (target is Project)
-            {
-                var p = target as Project;
-                if (p.)
-                p.Items = Items.Select(e => e.;
-            }
             base.Apply();
         }
     }
