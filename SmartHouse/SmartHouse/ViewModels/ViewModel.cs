@@ -15,7 +15,7 @@ namespace SmartHouse.ViewModels
         {
             foreach(var e in DirtyModels.Values)
             {
-                e.Apply(e.Target);
+                e.Apply();
             }
             DirtyModels.Clear();
         }
@@ -29,6 +29,8 @@ namespace SmartHouse.ViewModels
             m.Setup(t);
             return m;
         }
+
+        public object Target { get; set; }
 
         public delegate void ParameterlessDelegate();
         protected virtual object CheckIsDirty(object oldValue, object newValue, string eventName, ParameterlessDelegate setter)
@@ -102,7 +104,7 @@ namespace SmartHouse.ViewModels
         {
         }
 
-        public virtual void Apply(object target)
+        public virtual void Apply()
         {
             IsDirty = false;
         }
@@ -112,9 +114,9 @@ namespace SmartHouse.ViewModels
             throw new Exception("Not implemented");
         }
 
-        public ViewModel()
+        public ViewModel(object target)
         {
-
+            Target = target;
         }
 
 

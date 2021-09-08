@@ -12,6 +12,11 @@ namespace SmartHouse.ViewModels
 
     public class SceneModel : IconNamedModel
     {
+        public SceneModel(Scene target): base(target.Name, target.Icon, target)
+        {
+            Scene = target;
+        }
+
         public Scene Scene { get; set; }
         private DeviceModel selectedSource = null;
         public DeviceModel SelectedSource

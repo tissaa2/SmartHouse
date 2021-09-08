@@ -10,11 +10,25 @@ using SmartHouse.Models;
 namespace SmartHouse.ViewModels
 {
 
-    public class ProjectsListModel : IconNamedListViewModel<ProjectModel>
+    public class ProjectsListModel : IconNamedModel
     {
-        public ProjectsListModel(ProjectsList source) : base(source.Items.Select(e => new ProjectModel(e)).ToArray(), null, null)
+        private ListViewModel<ProjectModel> scenes = new ListViewModel<ProjectModel>(null);
+        public ListViewModel<ProjectModel> Scenes
         {
-            Target = source;
+            get
+            {
+                return scenes;
+            }
+            set
+            {
+                OnPropertyChanging("Scenes");
+                scenes = value;
+                OnPropertyChanged("Scenes");
+            }
+        }
+
+        public ProjectsListModel(ProjectsList target) : base(target.Name, target.Icon, target)
+        {
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SmartHouse.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SmartHouse.Models
 {
-    public class Settings: BaseObject
+    public class Settings
     {
         public static string FileName { get; set; } = "settings.json";
         private static Settings instance = null;
@@ -14,7 +15,7 @@ namespace SmartHouse.Models
             {
                 if (instance == null)
                 {
-                    instance = Load<Settings>(FileName);
+                    instance = Utils.Load<Settings>(FileName);
                     if (instance == null)
                     {
                         instance = new Settings();
@@ -32,12 +33,13 @@ namespace SmartHouse.Models
 
         public void Save()
         {
-            Save(FileName);
+            Utils.Save(this, FileName);
         }
 
         public Boolean IsAdmin { get; set; } = true;
-        [JsonIgnore]
-        public Boolean NotIsAdmin { get { return !IsAdmin; } }
+        
+        //[JsonIgnore]
+        //public Boolean NotIsAdmin { get { return !IsAdmin; } }
 
 
         public string IP { get; set; } = "0.0.0.0";

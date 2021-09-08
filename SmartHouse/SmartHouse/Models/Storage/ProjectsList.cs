@@ -7,8 +7,9 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using SmartHouse.Services;
+using SmartHouse.Helpers;
 using Java.Util.Zip;
+using SmartHouse.Services;
 
 namespace SmartHouse.Models.Storage
 {
@@ -44,7 +45,7 @@ namespace SmartHouse.Models.Storage
                 if (instance == null)
                 {
                     initializing = true;
-                    instance = Load<ProjectsList>(FileName);
+                    instance = Utils.Load<ProjectsList>(FileName);
                     if (instance == null)
                     {
                         LoadTestData();
@@ -70,45 +71,7 @@ namespace SmartHouse.Models.Storage
 
         public void Save()
         {
-            Save(FileName);
-        }
-
-        public static T Load<T>(string fileName) where T : class
-        {
-            T r = null;
-            // return r;
-            try
-            {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string fn = Path.Combine(path, fileName);
-                string data = File.ReadAllText(fn);
-
-                r = JsonConvert.DeserializeObject<T>(data, new JsonSerializerSettings()
-                {
-                    TypeNameHandling = TypeNameHandling.All,
-                    MissingMemberHandling = MissingMemberHandling.Error,
-                    Converters = new JsonConverter[] { new IntToUIDConverter() }
-                });
-
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex);
-            }
-            return r;
-        }
-
-        public virtual void Save(string fileName)
-        {
-            // string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            string fn = Path.Combine(path, fileName);
-            string data = JsonConvert.SerializeObject(this, new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                Converters = new JsonConverter[] { new IntToUIDConverter() }
-            });
-            File.WriteAllText(fn, data);
+            Utils.Save(this, FileName);
         }
 
         public virtual byte[] Zip()

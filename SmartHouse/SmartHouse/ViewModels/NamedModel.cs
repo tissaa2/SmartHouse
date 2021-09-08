@@ -23,20 +23,15 @@ namespace SmartHouse.ViewModels
         }
 
 
-        public NamedModel()
+        public NamedModel(string name, object target): base(target)
         {
+            Name = name;
         }
 
-        public NamedModel(string name, string icon)
+        public override void Apply()
         {
-
-        }
-
-        public override void Apply(object target)
-        {
-            base.Apply(target);
-            if (target is NamedEntity)
-                (target as NamedEntity).Name = Name;
+            if (Target is NamedEntity)
+                (Target as NamedEntity).Name = Name;
         }
     }
 }

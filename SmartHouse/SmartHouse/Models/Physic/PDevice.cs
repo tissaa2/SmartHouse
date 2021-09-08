@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using SmartHouse.Services;
-using System.Xml.Serialization;
 using SmartHouse.Models.Storage;
 using System.Collections.ObjectModel;
 using SmartHouse.Models.Packets;
@@ -10,13 +8,14 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Reflection;
 using System.Linq;
+using SmartHouse.Helpers;
 using SmartHouse.Models.Packets.Processors.CAN;
 using Newtonsoft.Json;
 
 namespace SmartHouse.Models.Physics
 {
     // public class PDevice : IconEntity<UID>
-    public class PDevice : NamedIconEntity
+    public class PDevice : IconNamedEntity
     {
         private static Dictionary<byte, Type> deviceTypes = null;
         public static Dictionary<byte, Type> DeviceTypes
@@ -279,21 +278,9 @@ namespace SmartHouse.Models.Physics
         // public string StringID { get => ID.ToString(); }
 
 
-        [JsonIgnore]
-        // private IDType id;
-        private UID uid;
-
         [JsonProperty(PropertyName = "UID")]
         // public virtual IDType ID
-        public virtual UID UID
-        {
-            get { return uid; }
-            set
-            {
-                CheckIsDirty(uid, value, "UID", () => { uid = value; });
-            }
-        }
-
+        public virtual UID UID { get; set; }
 
         [JsonIgnore]
         public Dictionary<int, PScene> Scenes { get; set; }
@@ -309,9 +296,9 @@ namespace SmartHouse.Models.Physics
             set
             {
                 fold = value;
-                OnPropertyChanged("Fold");
-                OnPropertyChanged("Height");
-                OnPropertyChanged("Unfold");
+                //OnPropertyChanged("Fold");
+                //OnPropertyChanged("Height");
+                //OnPropertyChanged("Unfold");
             }
         }
 

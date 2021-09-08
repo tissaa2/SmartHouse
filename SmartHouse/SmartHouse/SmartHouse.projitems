@@ -148,7 +148,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Storage\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Storage\Scene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewEditTemplateSelector.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListPageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
       <SubType>Code</SubType>

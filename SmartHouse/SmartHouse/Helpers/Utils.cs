@@ -7,8 +7,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using SmartHouse.Models.Packets;
 using SmartHouse.Models;
+using Newtonsoft.Json;
+using System.IO;
+using SmartHouse.Services;
 
-namespace SmartHouse.Services
+namespace SmartHouse.Helpers
 {
     public static class Utils
     {
@@ -100,6 +103,44 @@ namespace SmartHouse.Services
             }
 
             return confirm && response;
+        }
+
+        public static T Load<T>(string fileName) where T : class
+        {
+            T r = null;
+            // return r;
+            try
+            {
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                string fn = Path.Combine(path, fileName);
+                string data = File.ReadAllText(fn);
+
+                r = JsonConvert.DeserializeObject<T>(data, new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    MissingMemberHandling = MissingMemberHandling.Error,
+                    Converters = new JsonConverter[] { new IntToUIDConverter() }
+                });
+
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return r;
+        }
+
+        public static void Save(object target, string fileName)
+        {
+            // string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string fn = Path.Combine(path, fileName);
+            string data = JsonConvert.SerializeObject(target, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Converters = new JsonConverter[] { new IntToUIDConverter() }
+            });
+            File.WriteAllText(fn, data);
         }
 
     }

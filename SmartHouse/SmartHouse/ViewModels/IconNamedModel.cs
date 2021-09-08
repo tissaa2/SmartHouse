@@ -21,20 +21,16 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public IconNamedModel()
+        public IconNamedModel(string name, string icon, object target): base(name, target)
         {
+            Icon = icon;
         }
 
-        public IconNamedModel(string name, string icon)
+        public override void Apply()
         {
-
-        }
-
-        public override void Apply(object target)
-        {
-            base.Apply(target);
-            if (target is IconNamedEntity)
-                (target as IconNamedEntity).Icon = Icon;
+            base.Apply();
+            if (Target is IconNamedEntity)
+                (Target as IconNamedEntity).Icon = Icon;
         }
 
     }

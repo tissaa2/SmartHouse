@@ -41,12 +41,9 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public ProjectModel() : base()
+        public ProjectModel(Project target) : base(target.Icon, target.Name, target) 
         {
-        }
-
-        public ProjectModel(Project target) : base(target.Icon, target.Name) 
-        {
+            Project = target;
             Groups = new ListViewModel<GroupModel>(target.Groups.Values.Select(e => new GroupModel(e)).ToArray()); 
         }
 

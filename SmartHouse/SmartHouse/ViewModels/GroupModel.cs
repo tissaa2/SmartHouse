@@ -89,24 +89,21 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public GroupModel(Group source)
+        public GroupModel(Group source): base(source.Name, source.Icon, source)
         {
             Group = source;
-            Icon = source.Icon;
-            Name = source.Name;
         }
 
-        //TODO: как быть, если элемент был добавлен в список ViewModel? В этом случае у него не будет сущности бизнес-логики        
-        public override void Apply(object target)
+        public override void Apply()
         {
             if (Parent is ProjectModel)
                 throw new Exception("Project is null");
             var p = Parent as ProjectModel;
 
-            Group g = Group; 
+            Group g = Group;
             if (Group != null)
             {
-                g = Group; 
+                g = Group;
                 if (IsDeleted)
                 {
                     // Parent.Groups.Items.Remove(this);
@@ -117,14 +114,12 @@ namespace SmartHouse.ViewModels
             }
             else
             {
-                g = p.Project.AddNewGroup();
+                Target = Group = g = p.Project.AddNewGroup();
             }
-            base.Apply(g);
-            //if (Devices.IsChanged)
-            //    g.DeviceIDs = Devices.Items.Select(e => e.ID).ToList();
-            //if (Scenes.IsChanged)
-            //    g.Scenes = Scenes.Items.Select(e => e.Target as Scene).ToList();
+            base.Apply();
         }
+
+        //TODO: как быть, если элемент был добавлен в список ViewModel? В этом случае у него не будет сущности бизнес-логики        
 
     }
 }
