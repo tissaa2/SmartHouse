@@ -12,7 +12,7 @@ namespace SmartHouse.ViewModels
     public class IconNamedModel: NamedModel
     {
         private string icon;
-        public string Icon
+        public virtual string Icon
         {
             get => icon;
             set
@@ -21,9 +21,14 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public IconNamedModel(string name, string icon, object target): base(name, target)
+        public override void Setup(params object[] args)
         {
-            Icon = icon;
+            base.Setup(args);
+            var t = Target as IconNamedEntity;
+            if (t != null)
+            {
+                icon = t.Icon;
+            }
         }
 
         public override void Apply()
@@ -31,6 +36,16 @@ namespace SmartHouse.ViewModels
             base.Apply();
             if (Target is IconNamedEntity)
                 (Target as IconNamedEntity).Icon = Icon;
+        }
+
+        public IconNamedModel()
+        {
+
+        }
+
+        public IconNamedModel(params object[] args): base(args)
+        {
+
         }
 
     }

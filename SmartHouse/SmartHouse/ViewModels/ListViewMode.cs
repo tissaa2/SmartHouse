@@ -68,7 +68,7 @@ namespace SmartHouse.ViewModels
         }
 
 
-        public ListViewModel(ICollection<T> items): base(items)
+        public ListViewModel(ICollection<T> items)
         {
             if (items == null)
                 Items = new ObservableCollection<T>();

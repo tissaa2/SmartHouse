@@ -230,15 +230,11 @@ namespace SmartHouse.ViewModels
                 Device.Type = DeviceType;
         }
 
-        public DeviceModel(Device source) : base()
-        {
-            this.Device = source;
-            Setup();
-        }
-
-        public DeviceModel() : base()
-        {
-        }
+        //public DeviceModel(Device source) : base(source.Name, source.ID, source)
+        //{
+        //    this.Device = source;
+        //    Setup();
+        //}
 
         public override string ToString()
         {

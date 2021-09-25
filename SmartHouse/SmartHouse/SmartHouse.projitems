@@ -47,10 +47,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TapEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DeviceTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Converter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\InputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Packets\FileHeaderData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Packets\FileChunkData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Packets\Processors\CAN\CANCaptureDeviceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\PScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CAN.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\CANActionCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServerFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Storage\DeviceState.cs" />
@@ -63,17 +65,27 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Packets\Processors\CANPacketProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Packets\Processors\PacketProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Packets\Processors\CAN\CANCommandAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\DeviceTypeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\MSTPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\IRTranciever.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\MotionSensor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Relay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ActionCallback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DevicesBrowserModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\GroupSourceModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\MotionSensorModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\PanelModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SwitchModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\GroupSourceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\MotionSensorModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\PanelModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\SwitchModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\DeviceTypeAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\DimmerModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\InputPortModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\IRPanelModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\IRTrancieverModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\MotionSensorModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\MSTPanelModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\OutputPortModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\PhysicDeviceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\PortModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Physic\RelayModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Helpers\DeviceTypeInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IconNamedModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListViewMode.cs" />
@@ -82,11 +94,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProjectModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SceneModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\SocketModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceStateModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\LampModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\FanModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\DeviceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\SocketModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\DeviceStateModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\LampModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\FanModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\DeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GroupModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DebugPage.xaml.cs">
@@ -140,7 +152,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\IRPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Dimmer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\OutputPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\InputPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Physic\Port.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\UID.cs" />
@@ -229,5 +240,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Devices\Logic\" />
   </ItemGroup>
 </Project>

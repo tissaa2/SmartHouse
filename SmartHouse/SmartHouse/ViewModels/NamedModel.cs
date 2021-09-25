@@ -9,11 +9,11 @@ using SmartHouse.Models;
 namespace SmartHouse.ViewModels
 {
 
-    public class NamedModel: ViewModel
+    public class NamedModel : ViewModel
     {
-        public object Target { get; set; }
+
         protected string name;
-        public string Name
+        public virtual string Name
         {
             get { return name; }
             set
@@ -22,16 +22,30 @@ namespace SmartHouse.ViewModels
             }
         }
 
-
-        public NamedModel(string name, object target): base(target)
+        public override void Setup(params object[] args)
         {
-            Name = name;
+            base.Setup(args);
+            var t = Target as NamedEntity;
+            if (t != null)
+            {
+                name = t.Name;
+            }
         }
 
         public override void Apply()
         {
             if (Target is NamedEntity)
                 (Target as NamedEntity).Name = Name;
+        }
+
+        public NamedModel()
+        {
+
+        }
+
+        public NamedModel(params object[] args) : base(args)
+        {
+
         }
     }
 }

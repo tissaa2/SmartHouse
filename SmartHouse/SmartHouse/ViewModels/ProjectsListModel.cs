@@ -10,7 +10,7 @@ using SmartHouse.Models;
 namespace SmartHouse.ViewModels
 {
 
-    public class ProjectsListModel : IconNamedModel
+    public class ProjectsListModel : ViewModel
     {
         private ListViewModel<ProjectModel> scenes = new ListViewModel<ProjectModel>(null);
         public ListViewModel<ProjectModel> Scenes
@@ -27,8 +27,5 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public ProjectsListModel(ProjectsList target) : base(target.Name, target.Icon, target)
-        {
-        }
     }
 }

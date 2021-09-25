@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SmartHouse.Models.Physics
+namespace SmartHouse.ViewModels.Devices.Physic
 {
     public class DeviceTypeAttribute : Attribute
     {

@@ -53,8 +53,5 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public DevicesBrowserModel(ObservableCollection<PDevice> items): base("Devices browser", null, items)
-        {
-        }
     }
 }

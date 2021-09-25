@@ -34,14 +34,10 @@ namespace SmartHouse.ViewModels
         }
 
 
-        public SettingsModel()
-        {
-        }
-
-        public SettingsModel(Settings source)
-        {
-            Assign(source);
-        }
+        //public SettingsModel(Settings source):base(0, source)
+        //{
+        //    Assign(source);
+        //}
 
         public void Apply(Settings target)
         {

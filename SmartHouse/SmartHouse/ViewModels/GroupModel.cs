@@ -89,9 +89,35 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        public GroupModel(Group source): base(source.Name, source.Icon, source)
+        private List<DeviceModel> sources = null;
+        public List<DeviceModel> Sources
         {
-            Group = source;
+            get
+            {
+                if (sources == null)
+                {
+                    sources = Devices.Items.Where(e => e.IsInput).ToList();
+                }
+                return sources;
+            }
+
+            set => sources = value;
+        }
+
+        public override void Setup(params object[] args)
+        {
+            base.Setup(args);
+            var t = Target as Group;
+            if (t != null)
+            {
+                Group = t;
+                devices = new ListViewModel<DeviceModel>(t.Project.Devices.Select(e => DeviceModel.CreateModel(e.Value) as DeviceModel).ToArray());
+                scenes = new ListViewModel<SceneModel>(t.Scenes.Select(e => new SceneModel(e, this)).ToArray());
+            }
+        }
+
+        public GroupModel(Group source): base(source)
+        {
         }
 
         public override void Apply()
@@ -118,8 +144,6 @@ namespace SmartHouse.ViewModels
             }
             base.Apply();
         }
-
-        //TODO: как быть, если элемент был добавлен в список ViewModel? В этом случае у него не будет сущности бизнес-логики        
 
     }
 }

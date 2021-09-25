@@ -3,6 +3,7 @@ using System;
 using Xamarin.Forms;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using SmartHouse.Models;
 
 namespace SmartHouse.ViewModels
 {
@@ -32,9 +33,14 @@ namespace SmartHouse.ViewModels
 
         public object Target { get; set; }
 
+        public Boolean Initializing { get; set; }
+
         public delegate void ParameterlessDelegate();
         protected virtual object CheckIsDirty(object oldValue, object newValue, string eventName, ParameterlessDelegate setter)
         {
+
+            if (Initializing)
+                return newValue;
 
             if (Object.Equals(oldValue, newValue))
                 return oldValue;
@@ -52,6 +58,8 @@ namespace SmartHouse.ViewModels
             }
         }
 
+        public int ID { get; set; }
+         
         public ViewModel Parent { get; set; } = null;
 
         private bool isdeleted = false;
@@ -97,7 +105,10 @@ namespace SmartHouse.ViewModels
 
         public virtual void Setup(params object[] args)
         {
-
+            Target = args[0];
+            var t = Target as BaseEntity;
+            if (t != null)
+                ID = t.ID;
         }
 
         public virtual void Assign(ViewModel source)
@@ -114,9 +125,16 @@ namespace SmartHouse.ViewModels
             throw new Exception("Not implemented");
         }
 
-        public ViewModel(object target)
+        public ViewModel()
         {
-            Target = target;
+
+        }
+
+        public ViewModel(params object[] args)
+        {
+            Initializing = true;
+            Setup(args);
+            Initializing = false;
         }
 
 

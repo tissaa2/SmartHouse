@@ -12,10 +12,6 @@ namespace SmartHouse.ViewModels
 
     public class SceneModel : IconNamedModel
     {
-        public SceneModel(Scene target): base(target.Name, target.Icon, target)
-        {
-            Scene = target;
-        }
 
         public Scene Scene { get; set; }
         private DeviceModel selectedSource = null;
@@ -34,20 +30,10 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        private ObservableCollection<DeviceModel> sources;
-        public ObservableCollection<DeviceModel> Sources
+        public List<DeviceModel> Sources
         {
-            get
-            {
-                return sources;
-            }
-
-            set
-            {
-
-                OnPropertyChanging("Sources");
-                CheckIsDirty(sources, value, "Sources", () => sources = value);
-            }
+            get;
+            set;
         }
 
         private bool isGroupEvent = false;
@@ -78,8 +64,8 @@ namespace SmartHouse.ViewModels
             }
         }
 
-        private byte groupID;
-        public byte GroupID
+        private int groupID;
+        public int GroupID
         {
             get => groupID;
             set
@@ -125,21 +111,21 @@ namespace SmartHouse.ViewModels
 
         }
 
-        public void Assign(Scene scene, GroupModel groupModel)
+        public SceneModel(Scene scene, GroupModel groupModel): base(scene, groupModel)
         {
+        }
+
+        public override void Setup(params object[] args)
+        {
+            base.Setup(args);
+            var scene = Target as Scene;
+            var groupModel = args[1] as GroupModel;
+
             var g = groupModel.Group;
-            Sources = new ObservableCollection<DeviceModel>(groupModel.Devices.Items.Select(e =>
-            {
-                var dm = e.Clone() as DeviceModel; 
-                dm.PropertyChanged += DeviceStateChanged;
-                return dm;
-            }));
-            Sources.Insert(0, new GroupSourceModel());
-            this.GroupID = (byte)g.ID;
+            Sources = groupModel.Sources;
+            this.GroupID = g.ID;
             this.InputID = scene.Event.InputID;
             IsGroupEvent = scene.Event.Type == EventType.GroupEvent;
-            Icon = scene.Icon;
-            Name = scene.Name;
             if (IsGroupEvent)
             {
                 var ev = scene.Event;
@@ -151,10 +137,8 @@ namespace SmartHouse.ViewModels
             {
                 var ev = scene.Event;
                 this.InputTypeID = ev.InputTypeID;
-                // this.SelectedDevice = g.Devices.FirstOrDefault(e => e.UID == ev.UID && e.PortID == ev.InputID);
                 this.SelectedSource = Sources.FirstOrDefault(e => e.UID == ev.UID.ToString());
             }
-            IsDirty = false;
         }
 
         public override void Apply()
@@ -163,7 +147,7 @@ namespace SmartHouse.ViewModels
             Event ev;
             if (isGroupEvent)
             {
-                ev = Event.GroupEvent((byte)InputID, GroupID, CategoryID, TimePar);
+                ev = Event.GroupEvent((byte)InputID, (byte)GroupID, CategoryID, TimePar);
             }
             else
             {
